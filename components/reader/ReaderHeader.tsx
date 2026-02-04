@@ -17,6 +17,8 @@ interface ReaderHeaderProps {
   visible: boolean;
   onClose: () => void;
   onSettingsPress: () => void;
+  onSearchPress: () => void;
+  onBookmarksPress: () => void;
   essayUrl?: string;
 }
 
@@ -25,6 +27,8 @@ export function ReaderHeader({
   visible,
   onClose,
   onSettingsPress,
+  onSearchPress,
+  onBookmarksPress,
   essayUrl,
 }: ReaderHeaderProps) {
   const { theme } = useReader();
@@ -47,6 +51,16 @@ export function ReaderHeader({
   const handleSettings = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onSettingsPress();
+  };
+
+  const handleSearch = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onSearchPress();
+  };
+
+  const handleBookmarks = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onBookmarksPress();
   };
 
   const handleShare = async () => {
@@ -92,6 +106,22 @@ export function ReaderHeader({
       </Text>
 
       <View style={styles.rightButtons}>
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={handleBookmarks}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={[styles.icon, { color: theme.colors.text }]}>🔖</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={handleSearch}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={[styles.icon, { color: theme.colors.text }]}>🔍</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.iconButton}
           onPress={handleShare}

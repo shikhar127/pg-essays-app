@@ -5,6 +5,7 @@ const KEYS = {
   SETTINGS: '@pg_essays_settings',
   SCROLL_POSITIONS: '@pg_essays_scroll_positions',
   READ_ESSAYS: '@pg_essays_read',
+  BOOKMARKS: '@pg_essays_bookmarks',
 };
 
 export interface Settings {
@@ -92,4 +93,64 @@ export async function markEssayAsRead(essayId: string): Promise<void> {
 export async function isEssayRead(essayId: string): Promise<boolean> {
   const readEssays = await loadReadEssays();
   return readEssays.includes(essayId);
+}
+
+// Bookmarks
+export interface Bookmark {
+  id: string;
+  position: number; // 0 to 1 (scroll percentage)
+  note?: string;
+  createdAt: number;
+}
+
+export interface EssayBookmarks {
+  [essayId: string]: Bookmark[];
+}
+
+export async function loadBookmarks(): Promise<EssayBookmarks> {
+  try {
+    const json = await AsyncStorage.getItem(KEYS.BOOKMARKS);
+    return json ? JSON.parse(json) : {};
+  } catch (error) {
+    console.warn('Failed to load bookmarks:', error);
+    return {};
+  }
+}
+
+export async function getEssayBookmarks(essayId: string): Promise<Bookmark[]> {
+  const bookmarks = await loadBookmarks();
+  return bookmarks[essayId] || [];
+}
+
+export async function addBookmark(essayId: string, position: number, note?: string): Promise<Bookmark> {
+  try {
+    const bookmarks = await loadBookmarks();
+    if (!bookmarks[essayId]) {
+      bookmarks[essayId] = [];
+    }
+    const newBookmark: Bookmark = {
+      id: Date.now().toString(),
+      position,
+      note,
+      createdAt: Date.now(),
+    };
+    bookmarks[essayId].push(newBookmark);
+    await AsyncStorage.setItem(KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+    return newBookmark;
+  } catch (error) {
+    console.warn('Failed to add bookmark:', error);
+    throw error;
+  }
+}
+
+export async function removeBookmark(essayId: string, bookmarkId: string): Promise<void> {
+  try {
+    const bookmarks = await loadBookmarks();
+    if (bookmarks[essayId]) {
+      bookmarks[essayId] = bookmarks[essayId].filter((b) => b.id !== bookmarkId);
+      await AsyncStorage.setItem(KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+    }
+  } catch (error) {
+    console.warn('Failed to remove bookmark:', error);
+  }
 }

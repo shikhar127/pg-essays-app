@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useRef, useCallback, useMemo, useEffect, forwardRef, useImperativeHandle } from 'react';
 import {
   ScrollView,
   View,
@@ -22,9 +22,14 @@ interface ReaderViewProps {
   onTap: () => void;
   headerVisible: boolean;
   initialScrollPosition?: number;
+  searchText?: string;
 }
 
-export function ReaderView({
+export interface ReaderViewHandle {
+  scrollToPosition: (position: number) => void;
+}
+
+export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function ReaderView({
   title,
   content,
   readingTime,
@@ -32,7 +37,8 @@ export function ReaderView({
   onTap,
   headerVisible,
   initialScrollPosition = 0,
-}: ReaderViewProps) {
+  searchText = '',
+}, ref) {
   const { theme, fontSizeConfig } = useReader();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
@@ -43,6 +49,19 @@ export function ReaderView({
   const hasRestoredPosition = useRef(false);
   const contentHeight = useRef(0);
   const layoutHeight = useRef(0);
+
+  // Expose scrollToPosition for search navigation
+  useImperativeHandle(ref, () => ({
+    scrollToPosition: (position: number) => {
+      if (contentHeight.current > 0 && layoutHeight.current > 0) {
+        const maxScrollY = contentHeight.current - layoutHeight.current;
+        if (maxScrollY > 0) {
+          const scrollY = maxScrollY * Math.min(Math.max(position, 0), 1);
+          scrollViewRef.current?.scrollTo({ y: scrollY, animated: true });
+        }
+      }
+    },
+  }), []);
 
   // Restore scroll position when content is laid out
   const handleContentLayout = useCallback((event: LayoutChangeEvent) => {
@@ -105,6 +124,10 @@ export function ReaderView({
     });
     return false; // Prevent default behavior
   }, []);
+
+  // Calculate max content width for tablets
+  const maxContentWidth = Math.min(width - 48, 680);
+  const horizontalPadding = (width - maxContentWidth) / 2;
 
   const markdownStyles = useMemo(
     () =>
@@ -191,13 +214,15 @@ export function ReaderView({
           height: 1,
           marginVertical: 24,
         },
+        image: {
+          width: '100%',
+          maxWidth: maxContentWidth,
+          borderRadius: 8,
+          marginVertical: 16,
+        },
       }),
-    [theme, fontSizeConfig]
+    [theme, fontSizeConfig, maxContentWidth]
   );
-
-  // Calculate max content width for tablets
-  const maxContentWidth = Math.min(width - 48, 680);
-  const horizontalPadding = (width - maxContentWidth) / 2;
 
   return (
     <ScrollView
@@ -237,7 +262,7 @@ export function ReaderView({
       </View>
     </ScrollView>
   );
-}
+});
 
 const styles = StyleSheet.create({
   scrollView: {

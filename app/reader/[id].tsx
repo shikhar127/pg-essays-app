@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { View, StyleSheet, BackHandler, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useKeepAwake } from 'expo-keep-awake';
@@ -7,6 +7,8 @@ import { ReaderView } from '../../components/reader/ReaderView';
 import { ReaderHeader } from '../../components/reader/ReaderHeader';
 import { ProgressBar } from '../../components/reader/ProgressBar';
 import { SettingsSheet } from '../../components/reader/SettingsSheet';
+import { SearchBar } from '../../components/reader/SearchBar';
+import { BookmarksSheet } from '../../components/reader/BookmarksSheet';
 import { mockEssay } from '../../lib/mockEssay';
 import { saveScrollPosition, getScrollPosition, markEssayAsRead } from '../../lib/storage';
 
@@ -23,6 +25,15 @@ export default function ReaderScreen() {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [initialScrollPosition, setInitialScrollPosition] = useState(0);
+
+  // Search state
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
+  const readerViewRef = useRef<{ scrollToPosition: (position: number) => void } | null>(null);
+
+  // Bookmarks state
+  const [bookmarksVisible, setBookmarksVisible] = useState(false);
 
   // Auto-hide header timer
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -123,6 +134,67 @@ export default function ReaderScreen() {
     setSettingsVisible(true);
   }, []);
 
+  const handleSearchPress = useCallback(() => {
+    setSearchVisible(true);
+    setHeaderVisible(false);
+  }, []);
+
+  const handleBookmarksPress = useCallback(() => {
+    setBookmarksVisible(true);
+  }, []);
+
+  const handleNavigateToBookmark = useCallback((position: number) => {
+    readerViewRef.current?.scrollToPosition(position);
+  }, []);
+
+  const handleSearchClose = useCallback(() => {
+    setSearchVisible(false);
+    setSearchText('');
+    setCurrentMatchIndex(0);
+  }, []);
+
+  // Calculate search matches
+  const searchMatches = useMemo(() => {
+    if (!searchText || searchText.length < 2) return [];
+    const content = essay.content.toLowerCase();
+    const query = searchText.toLowerCase();
+    const matches: number[] = [];
+    let index = content.indexOf(query);
+    while (index !== -1) {
+      // Calculate approximate scroll position (0-1) based on character position
+      matches.push(index / content.length);
+      index = content.indexOf(query, index + 1);
+    }
+    return matches;
+  }, [searchText, essay.content]);
+
+  const handleSearchTextChange = useCallback((text: string) => {
+    setSearchText(text);
+    setCurrentMatchIndex(0);
+  }, []);
+
+  const handlePrevMatch = useCallback(() => {
+    if (searchMatches.length === 0) return;
+    const newIndex = currentMatchIndex <= 1 ? searchMatches.length : currentMatchIndex - 1;
+    setCurrentMatchIndex(newIndex);
+    readerViewRef.current?.scrollToPosition(searchMatches[newIndex - 1]);
+  }, [searchMatches, currentMatchIndex]);
+
+  const handleNextMatch = useCallback(() => {
+    if (searchMatches.length === 0) return;
+    const newIndex = currentMatchIndex >= searchMatches.length ? 1 : currentMatchIndex + 1;
+    setCurrentMatchIndex(newIndex);
+    readerViewRef.current?.scrollToPosition(searchMatches[newIndex - 1]);
+  }, [searchMatches, currentMatchIndex]);
+
+  // Auto-navigate to first match when search text changes
+  useEffect(() => {
+    if (searchMatches.length > 0 && searchText.length >= 2) {
+      setCurrentMatchIndex(1);
+      readerViewRef.current?.scrollToPosition(searchMatches[0]);
+    }
+  }, [searchMatches]);
+
   // Show loading while settings or scroll position is loading
   if (settingsLoading || isLoading) {
     return (
@@ -137,26 +209,49 @@ export default function ReaderScreen() {
       <ProgressBar progress={progress} />
 
       <ReaderView
+        ref={readerViewRef}
         title={essay.title}
         content={essay.content}
         readingTime={essay.readingTimeMinutes}
         onScroll={handleScroll}
         onTap={handleTap}
-        headerVisible={headerVisible}
+        headerVisible={headerVisible || searchVisible}
         initialScrollPosition={initialScrollPosition}
+        searchText={searchVisible ? searchText : ''}
       />
 
       <ReaderHeader
         title={essay.title}
-        visible={headerVisible}
+        visible={headerVisible && !searchVisible}
         onClose={handleClose}
         onSettingsPress={handleSettingsPress}
+        onSearchPress={handleSearchPress}
+        onBookmarksPress={handleBookmarksPress}
         essayUrl={essay.url}
+      />
+
+      <SearchBar
+        visible={searchVisible}
+        searchText={searchText}
+        onSearchTextChange={handleSearchTextChange}
+        onClose={handleSearchClose}
+        currentMatch={currentMatchIndex}
+        totalMatches={searchMatches.length}
+        onPrevMatch={handlePrevMatch}
+        onNextMatch={handleNextMatch}
       />
 
       <SettingsSheet
         visible={settingsVisible}
         onClose={() => setSettingsVisible(false)}
+      />
+
+      <BookmarksSheet
+        visible={bookmarksVisible}
+        onClose={() => setBookmarksVisible(false)}
+        essayId={essayId}
+        currentPosition={progress}
+        onNavigateToBookmark={handleNavigateToBookmark}
       />
     </View>
   );
