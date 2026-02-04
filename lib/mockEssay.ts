@@ -1,6 +1,7 @@
 export const mockEssay = {
   id: 'how-to-do-great-work',
   title: 'How to Do Great Work',
+  url: 'https://paulgraham.com/greatwork.html',
   content: `If you collected lists of techniques for doing great work in a lot of different fields, what would the intersection look like? I decided to find out by making it.
 
 Partly my goal was to create a guide that could be used by someone working in any field. But I was also curious about the shape of the intersection. And one thing this exercise shows is that it does have a definite shape; it's not just a point labelled "work hard."

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 3,
+    height: 4,
     zIndex: 100,
   },
   fill: {

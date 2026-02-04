@@ -151,6 +151,7 @@ export default function ReaderScreen() {
         visible={headerVisible}
         onClose={handleClose}
         onSettingsPress={handleSettingsPress}
+        essayUrl={essay.url}
       />
 
       <SettingsSheet

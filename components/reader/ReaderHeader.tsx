@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Platform,
   Animated,
+  Share,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import { useReader } from '../../context/ReaderContext';
 
 interface ReaderHeaderProps {
@@ -15,6 +17,7 @@ interface ReaderHeaderProps {
   visible: boolean;
   onClose: () => void;
   onSettingsPress: () => void;
+  essayUrl?: string;
 }
 
 export function ReaderHeader({
@@ -22,6 +25,7 @@ export function ReaderHeader({
   visible,
   onClose,
   onSettingsPress,
+  essayUrl,
 }: ReaderHeaderProps) {
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
@@ -34,6 +38,28 @@ export function ReaderHeader({
       useNativeDriver: true,
     }).start();
   }, [visible, opacity]);
+
+  const handleClose = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onClose();
+  };
+
+  const handleSettings = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onSettingsPress();
+  };
+
+  const handleShare = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    try {
+      await Share.share({
+        message: `"${title}" by Paul Graham\n\n${essayUrl || 'https://paulgraham.com/articles.html'}`,
+        title: title,
+      });
+    } catch (error) {
+      console.warn('Share failed:', error);
+    }
+  };
 
   return (
     <Animated.View
@@ -49,8 +75,8 @@ export function ReaderHeader({
       ]}
     >
       <TouchableOpacity
-        style={styles.closeButton}
-        onPress={onClose}
+        style={styles.iconButton}
+        onPress={handleClose}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
         <Text style={[styles.closeIcon, { color: theme.colors.text }]}>
@@ -65,15 +91,25 @@ export function ReaderHeader({
         {title}
       </Text>
 
-      <TouchableOpacity
-        style={styles.settingsButton}
-        onPress={onSettingsPress}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      >
-        <Text style={[styles.settingsIcon, { color: theme.colors.text }]}>
-          Aa
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.rightButtons}>
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={handleShare}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={[styles.icon, { color: theme.colors.text }]}>↗</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={handleSettings}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={[styles.settingsIcon, { color: theme.colors.text }]}>
+            Aa
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 }
@@ -86,12 +122,12 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingBottom: 12,
     zIndex: 50,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  closeButton: {
+  iconButton: {
     width: 40,
     height: 40,
     justifyContent: 'center',
@@ -101,17 +137,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '300',
   },
+  icon: {
+    fontSize: 20,
+  },
   title: {
     flex: 1,
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
-    marginHorizontal: 8,
+    marginHorizontal: 4,
   },
-  settingsButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
+  rightButtons: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   settingsIcon: {

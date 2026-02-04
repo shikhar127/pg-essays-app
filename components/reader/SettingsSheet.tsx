@@ -8,6 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import { useReader } from '../../context/ReaderContext';
 import { ThemeName, FontSize } from '../../lib/themes';
 
@@ -32,14 +33,29 @@ export function SettingsSheet({ visible, onClose }: SettingsSheetProps) {
     { size: 'large', label: 'L' },
   ];
 
+  const handleThemeChange = (name: ThemeName) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setThemeName(name);
+  };
+
+  const handleFontSizeChange = (size: FontSize) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setFontSize(size);
+  };
+
+  const handleClose = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onClose();
+  };
+
   return (
     <Modal
       visible={visible}
       transparent
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
-      <Pressable style={styles.overlay} onPress={onClose}>
+      <Pressable style={styles.overlay} onPress={handleClose}>
         <Pressable
           style={[
             styles.sheet,
@@ -70,7 +86,8 @@ export function SettingsSheet({ visible, onClose }: SettingsSheetProps) {
                     borderWidth: themeName === option.name ? 2 : 1,
                   },
                 ]}
-                onPress={() => setThemeName(option.name)}
+                onPress={() => handleThemeChange(option.name)}
+                activeOpacity={0.7}
               >
                 <Text
                   style={[
@@ -106,7 +123,8 @@ export function SettingsSheet({ visible, onClose }: SettingsSheetProps) {
                         : theme.colors.border,
                   },
                 ]}
-                onPress={() => setFontSize(option.size)}
+                onPress={() => handleFontSizeChange(option.size)}
+                activeOpacity={0.7}
               >
                 <Text
                   style={[
