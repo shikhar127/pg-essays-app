@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { themes, fontSizes, Theme, ThemeName, FontSize, FontSizeConfig } from '../lib/themes';
+import { loadSettings, saveSettings } from '../lib/storage';
 
 interface ReaderContextType {
   theme: Theme;
@@ -8,13 +9,40 @@ interface ReaderContextType {
   fontSize: FontSize;
   fontSizeConfig: FontSizeConfig;
   setFontSize: (size: FontSize) => void;
+  isLoading: boolean;
 }
 
 const ReaderContext = createContext<ReaderContextType | undefined>(undefined);
 
 export function ReaderProvider({ children }: { children: ReactNode }) {
-  const [themeName, setThemeName] = useState<ThemeName>('light');
-  const [fontSize, setFontSize] = useState<FontSize>('medium');
+  const [themeName, setThemeNameState] = useState<ThemeName>('light');
+  const [fontSize, setFontSizeState] = useState<FontSize>('medium');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load settings on mount
+  useEffect(() => {
+    async function load() {
+      const settings = await loadSettings();
+      if (settings) {
+        setThemeNameState(settings.themeName);
+        setFontSizeState(settings.fontSize);
+      }
+      setIsLoading(false);
+    }
+    load();
+  }, []);
+
+  // Save settings when theme changes
+  const setThemeName = useCallback((name: ThemeName) => {
+    setThemeNameState(name);
+    saveSettings({ themeName: name, fontSize });
+  }, [fontSize]);
+
+  // Save settings when font size changes
+  const setFontSize = useCallback((size: FontSize) => {
+    setFontSizeState(size);
+    saveSettings({ themeName, fontSize: size });
+  }, [themeName]);
 
   const value: ReaderContextType = {
     theme: themes[themeName],
@@ -23,6 +51,7 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
     fontSize,
     fontSizeConfig: fontSizes[fontSize],
     setFontSize,
+    isLoading,
   };
 
   return (

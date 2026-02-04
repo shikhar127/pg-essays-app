@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -6,8 +6,9 @@ import {
   StyleSheet,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  Pressable,
+  LayoutChangeEvent,
   useWindowDimensions,
+  Linking,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Markdown from 'react-native-markdown-display';
@@ -20,6 +21,7 @@ interface ReaderViewProps {
   onScroll: (progress: number, direction: 'up' | 'down') => void;
   onTap: () => void;
   headerVisible: boolean;
+  initialScrollPosition?: number;
 }
 
 export function ReaderView({
@@ -29,11 +31,39 @@ export function ReaderView({
   onScroll,
   onTap,
   headerVisible,
+  initialScrollPosition = 0,
 }: ReaderViewProps) {
   const { theme, fontSizeConfig } = useReader();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
+  const scrollViewRef = useRef<ScrollView>(null);
   const lastScrollY = useRef(0);
+  const isScrolling = useRef(false);
+  const scrollTimer = useRef<NodeJS.Timeout | null>(null);
+  const hasRestoredPosition = useRef(false);
+  const contentHeight = useRef(0);
+  const layoutHeight = useRef(0);
+
+  // Restore scroll position when content is laid out
+  const handleContentLayout = useCallback((event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    contentHeight.current = height;
+
+    // Restore position once we have both content height and layout height
+    if (!hasRestoredPosition.current && initialScrollPosition > 0 && layoutHeight.current > 0) {
+      const maxScrollY = height - layoutHeight.current;
+      if (maxScrollY > 0) {
+        const scrollY = maxScrollY * initialScrollPosition;
+        scrollViewRef.current?.scrollTo({ y: scrollY, animated: false });
+        hasRestoredPosition.current = true;
+      }
+    }
+  }, [initialScrollPosition]);
+
+  const handleLayout = useCallback((event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    layoutHeight.current = height;
+  }, []);
 
   const handleScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -44,10 +74,37 @@ export function ReaderView({
       const direction = currentY > lastScrollY.current ? 'down' : 'up';
 
       lastScrollY.current = currentY;
+      isScrolling.current = true;
+
+      // Clear previous timer
+      if (scrollTimer.current) {
+        clearTimeout(scrollTimer.current);
+      }
+
+      // Reset scrolling flag after scroll ends
+      scrollTimer.current = setTimeout(() => {
+        isScrolling.current = false;
+      }, 150);
+
       onScroll(progress, direction);
     },
     [onScroll]
   );
+
+  const handleTap = useCallback(() => {
+    // Only trigger tap if not scrolling
+    if (!isScrolling.current) {
+      onTap();
+    }
+  }, [onTap]);
+
+  // Handle link presses
+  const handleLinkPress = useCallback((url: string) => {
+    Linking.openURL(url).catch((err) => {
+      console.warn('Failed to open URL:', err);
+    });
+    return false; // Prevent default behavior
+  }, []);
 
   const markdownStyles = useMemo(
     () =>
@@ -143,31 +200,42 @@ export function ReaderView({
   const horizontalPadding = (width - maxContentWidth) / 2;
 
   return (
-    <Pressable style={{ flex: 1 }} onPress={onTap}>
-      <ScrollView
-        style={[styles.scrollView, { backgroundColor: theme.colors.background }]}
-        contentContainerStyle={[
-          styles.content,
-          {
-            paddingTop: headerVisible ? insets.top + 80 : insets.top + 48,
-            paddingBottom: insets.bottom + 80,
-            paddingHorizontal: Math.max(horizontalPadding, 24),
-          },
-        ]}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={[styles.title, { color: theme.colors.text, fontSize: fontSizeConfig.title }]}>
+    <ScrollView
+      ref={scrollViewRef}
+      style={[styles.scrollView, { backgroundColor: theme.colors.background }]}
+      contentContainerStyle={[
+        styles.content,
+        {
+          paddingTop: headerVisible ? insets.top + 80 : insets.top + 48,
+          paddingBottom: insets.bottom + 80,
+          paddingHorizontal: Math.max(horizontalPadding, 24),
+        },
+      ]}
+      onScroll={handleScroll}
+      onLayout={handleLayout}
+      scrollEventThrottle={16}
+      showsVerticalScrollIndicator={false}
+      onTouchEnd={handleTap}
+    >
+      <View onLayout={handleContentLayout}>
+        <Text
+          style={[styles.title, { color: theme.colors.text, fontSize: fontSizeConfig.title }]}
+          selectable={true}
+        >
           {title}
         </Text>
         <Text style={[styles.readingTime, { color: theme.colors.textSecondary }]}>
           {readingTime} min read
         </Text>
         <View style={styles.divider} />
-        <Markdown style={markdownStyles}>{content}</Markdown>
-      </ScrollView>
-    </Pressable>
+        <Markdown
+          style={markdownStyles}
+          onLinkPress={handleLinkPress}
+        >
+          {content}
+        </Markdown>
+      </View>
+    </ScrollView>
   );
 }
 

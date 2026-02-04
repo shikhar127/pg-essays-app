@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Animated,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useReader } from '../../context/ReaderContext';
 
 interface ReaderHeaderProps {
@@ -25,19 +25,26 @@ export function ReaderHeader({
 }: ReaderHeaderProps) {
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
+  const opacity = useRef(new Animated.Value(visible ? 1 : 0)).current;
 
-  if (!visible) return null;
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: visible ? 1 : 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [visible, opacity]);
 
   return (
     <Animated.View
-      entering={FadeIn.duration(200)}
-      exiting={FadeOut.duration(200)}
+      pointerEvents={visible ? 'auto' : 'none'}
       style={[
         styles.container,
         {
           backgroundColor: theme.colors.headerBackground,
           paddingTop: insets.top + 8,
           borderBottomColor: theme.colors.border,
+          opacity,
         },
       ]}
     >
