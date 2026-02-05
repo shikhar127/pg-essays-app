@@ -10,8 +10,9 @@ import { SettingsSheet } from '../../components/reader/SettingsSheet';
 import { SearchBar } from '../../components/reader/SearchBar';
 import { BookmarksSheet } from '../../components/reader/BookmarksSheet';
 import { TOCSheet } from '../../components/reader/TOCSheet';
-import { mockEssay } from '../../lib/mockEssay';
 import { getEssayById } from '../../lib/essays';
+import { getEssayContent } from '../../lib/essayContent';
+import { mockEssay } from '../../lib/mockEssay';
 import { saveScrollPosition, getScrollPosition, saveReadHistory } from '../../lib/storage';
 
 export default function ReaderScreen() {
@@ -45,14 +46,14 @@ export default function ReaderScreen() {
   const lastScrollDirectionRef = useRef<'up' | 'down'>('up');
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Resolve essay: use metadata from index if available, content always from mockEssay
+  // Resolve essay: metadata from index, content from bundled essays (fallback to mockEssay)
   const essayMeta = id ? getEssayById(id) : null;
   const essay = {
     id: essayMeta?.id || mockEssay.id,
     title: essayMeta?.title || mockEssay.title,
     url: essayMeta?.url || mockEssay.url,
     readingTimeMinutes: essayMeta?.readingTimeMinutes || mockEssay.readingTimeMinutes,
-    content: mockEssay.content, // All essays use mock content until real .md files are added
+    content: (id && getEssayContent(id)) || mockEssay.content,
   };
   const essayId = essay.id;
 

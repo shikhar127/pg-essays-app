@@ -14,6 +14,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Markdown from 'react-native-markdown-display';
 import { useReader } from '../../context/ReaderContext';
 
+// Override inline text rendering to enable native text selection + share
+const selectableRules = {
+  inline: (node: any, children: any, parent: any, styles: any) => (
+    <Text key={node.key} style={styles.inline} selectable={true}>
+      {children}
+    </Text>
+  ),
+};
+
 interface ReaderViewProps {
   title: string;
   content: string;
@@ -273,6 +282,7 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
         <Markdown
           style={markdownStyles}
           onLinkPress={handleLinkPress}
+          rules={selectableRules}
         >
           {content}
         </Markdown>
