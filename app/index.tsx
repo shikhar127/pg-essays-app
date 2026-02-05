@@ -1,21 +1,53 @@
-import { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReader } from '../context/ReaderContext';
+import { loadEssayIndex, EssayMeta } from '../lib/essays';
+import { loadFavorites } from '../lib/storage';
 
-export default function HomeScreen() {
+export default function LibraryScreen() {
   const router = useRouter();
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
+  const [essays, setEssays] = useState<EssayMeta[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-  // For Step 1, auto-navigate to reader on mount
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push('/reader/how-to-do-great-work');
-    }, 100);
-    return () => clearTimeout(timer);
+    const sorted = loadEssayIndex().sort((a, b) => a.title.localeCompare(b.title));
+    setEssays(sorted);
+    loadFavorites().then(setFavorites);
   }, []);
+
+  const handlePress = useCallback((id: string) => {
+    router.push(`/reader/${id}`);
+  }, [router]);
+
+  const renderItem = useCallback(({ item }: { item: EssayMeta }) => (
+    <TouchableOpacity
+      style={[styles.item, { borderBottomColor: theme.colors.border }]}
+      onPress={() => handlePress(item.id)}
+      activeOpacity={0.7}
+    >
+      <View style={styles.itemContent}>
+        <Text style={[styles.itemTitle, { color: theme.colors.text }]} numberOfLines={2}>
+          {item.title}
+        </Text>
+        <View style={styles.itemMeta}>
+          <Text style={[styles.itemDetail, { color: theme.colors.textSecondary }]}>
+            {item.readingTimeMinutes} min
+          </Text>
+          <Text style={[styles.itemSeparator, { color: theme.colors.textSecondary }]}>·</Text>
+          <Text style={[styles.itemDetail, { color: theme.colors.textSecondary }]}>
+            {item.year}
+          </Text>
+        </View>
+      </View>
+      {favorites.includes(item.id) && (
+        <Text style={[styles.heartIcon, { color: theme.colors.accent }]}>♥</Text>
+      )}
+    </TouchableOpacity>
+  ), [theme, favorites, handlePress]);
 
   return (
     <View
@@ -28,26 +60,16 @@ export default function HomeScreen() {
         },
       ]}
     >
-      <View style={styles.content}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>
-          PG Essays
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-          228 essays by Paul Graham
-        </Text>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.colors.accent }]}
-          onPress={() => router.push('/reader/how-to-do-great-work')}
-        >
-          <Text style={styles.buttonText}>Start Reading</Text>
-        </TouchableOpacity>
-
-        <Text style={[styles.hint, { color: theme.colors.textSecondary }]}>
-          Step 1: The Perfect Reader{'\n'}
-          Testing with "How to Do Great Work"
-        </Text>
+      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>PG Essays</Text>
       </View>
+
+      <FlatList
+        data={essays}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
@@ -56,35 +78,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 40,
-  },
-  button: {
-    paddingHorizontal: 32,
+  header: {
+    paddingHorizontal: 20,
     paddingVertical: 16,
-    borderRadius: 12,
-    marginBottom: 24,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  itemContent: {
+    flex: 1,
+  },
+  itemTitle: {
+    fontSize: 17,
     fontWeight: '600',
+    marginBottom: 4,
   },
-  hint: {
-    fontSize: 13,
-    textAlign: 'center',
-    lineHeight: 20,
+  itemMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  itemDetail: {
+    fontSize: 14,
+  },
+  itemSeparator: {
+    fontSize: 14,
+  },
+  heartIcon: {
+    fontSize: 20,
+    marginLeft: 12,
   },
 });

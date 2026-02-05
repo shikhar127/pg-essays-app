@@ -9,8 +9,10 @@ import { ProgressBar } from '../../components/reader/ProgressBar';
 import { SettingsSheet } from '../../components/reader/SettingsSheet';
 import { SearchBar } from '../../components/reader/SearchBar';
 import { BookmarksSheet } from '../../components/reader/BookmarksSheet';
+import { TOCSheet } from '../../components/reader/TOCSheet';
 import { mockEssay } from '../../lib/mockEssay';
-import { saveScrollPosition, getScrollPosition, markEssayAsRead } from '../../lib/storage';
+import { getEssayById } from '../../lib/essays';
+import { saveScrollPosition, getScrollPosition, saveReadHistory } from '../../lib/storage';
 
 export default function ReaderScreen() {
   const router = useRouter();
@@ -35,14 +37,24 @@ export default function ReaderScreen() {
   // Bookmarks state
   const [bookmarksVisible, setBookmarksVisible] = useState(false);
 
+  // TOC state
+  const [tocVisible, setTocVisible] = useState(false);
+
   // Auto-hide header timer
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollDirectionRef = useRef<'up' | 'down'>('up');
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // For Step 1, we use mock data
-  const essay = mockEssay;
-  const essayId = id || essay.id;
+  // Resolve essay: use metadata from index if available, content always from mockEssay
+  const essayMeta = id ? getEssayById(id) : null;
+  const essay = {
+    id: essayMeta?.id || mockEssay.id,
+    title: essayMeta?.title || mockEssay.title,
+    url: essayMeta?.url || mockEssay.url,
+    readingTimeMinutes: essayMeta?.readingTimeMinutes || mockEssay.readingTimeMinutes,
+    content: mockEssay.content, // All essays use mock content until real .md files are added
+  };
+  const essayId = essay.id;
 
   // Load saved scroll position
   useEffect(() => {
@@ -113,9 +125,9 @@ export default function ReaderScreen() {
     saveTimerRef.current = setTimeout(() => {
       saveScrollPosition(essayId, scrollProgress);
 
-      // Mark as read if scrolled past 90%
+      // Mark as read and save history if scrolled past 90%
       if (scrollProgress > 0.9) {
-        markEssayAsRead(essayId);
+        saveReadHistory(essayId);
       }
     }, 500);
   }, [headerVisible, essayId]);
@@ -141,6 +153,10 @@ export default function ReaderScreen() {
 
   const handleBookmarksPress = useCallback(() => {
     setBookmarksVisible(true);
+  }, []);
+
+  const handleTOCPress = useCallback(() => {
+    setTocVisible(true);
   }, []);
 
   const handleNavigateToBookmark = useCallback((position: number) => {
@@ -218,6 +234,7 @@ export default function ReaderScreen() {
         headerVisible={headerVisible || searchVisible}
         initialScrollPosition={initialScrollPosition}
         searchText={searchVisible ? searchText : ''}
+        progress={progress}
       />
 
       <ReaderHeader
@@ -227,7 +244,10 @@ export default function ReaderScreen() {
         onSettingsPress={handleSettingsPress}
         onSearchPress={handleSearchPress}
         onBookmarksPress={handleBookmarksPress}
+        onTOCPress={handleTOCPress}
         essayUrl={essay.url}
+        content={essay.content}
+        progress={progress}
       />
 
       <SearchBar
@@ -239,6 +259,7 @@ export default function ReaderScreen() {
         totalMatches={searchMatches.length}
         onPrevMatch={handlePrevMatch}
         onNextMatch={handleNextMatch}
+        content={essay.content}
       />
 
       <SettingsSheet
@@ -252,6 +273,14 @@ export default function ReaderScreen() {
         essayId={essayId}
         currentPosition={progress}
         onNavigateToBookmark={handleNavigateToBookmark}
+        content={essay.content}
+      />
+
+      <TOCSheet
+        visible={tocVisible}
+        onClose={() => setTocVisible(false)}
+        content={essay.content}
+        onNavigate={handleNavigateToBookmark}
       />
     </View>
   );

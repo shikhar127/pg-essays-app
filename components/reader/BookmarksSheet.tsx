@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Modal,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -19,6 +18,7 @@ interface BookmarksSheetProps {
   essayId: string;
   currentPosition: number;
   onNavigateToBookmark: (position: number) => void;
+  content?: string;
 }
 
 export function BookmarksSheet({
@@ -27,19 +27,32 @@ export function BookmarksSheet({
   essayId,
   currentPosition,
   onNavigateToBookmark,
+  content = '',
 }: BookmarksSheetProps) {
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Undo toast state
+  const [toastVisible, setToastVisible] = useState(false);
+  const deletedBookmarkRef = useRef<Bookmark | null>(null);
+  const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     if (visible) {
-      loadBookmarks();
+      fetchBookmarks();
     }
   }, [visible, essayId]);
 
-  const loadBookmarks = async () => {
+  // Cleanup toast timer on unmount
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
+
+  const fetchBookmarks = async () => {
     setIsLoading(true);
     const loaded = await getEssayBookmarks(essayId);
     setBookmarks(loaded.sort((a, b) => a.position - b.position));
@@ -48,37 +61,56 @@ export function BookmarksSheet({
 
   const handleAddBookmark = async () => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    try {
-      await addBookmark(essayId, currentPosition);
-      await loadBookmarks();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to add bookmark');
-    }
+    await addBookmark(essayId, currentPosition);
+    await fetchBookmarks();
   };
 
-  const handleRemoveBookmark = (bookmarkId: string) => {
+  const handleRemoveBookmark = useCallback((bookmark: Bookmark) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    Alert.alert(
-      'Remove Bookmark',
-      'Are you sure you want to remove this bookmark?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Remove',
-          style: 'destructive',
-          onPress: async () => {
-            await removeBookmark(essayId, bookmarkId);
-            await loadBookmarks();
-          },
-        },
-      ]
-    );
-  };
+
+    // Optimistic remove
+    setBookmarks((prev) => prev.filter((b) => b.id !== bookmark.id));
+    deletedBookmarkRef.current = bookmark;
+
+    // Show toast
+    setToastVisible(true);
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(async () => {
+      // Persist the deletion after 3s if no undo
+      setToastVisible(false);
+      await removeBookmark(essayId, bookmark.id);
+      deletedBookmarkRef.current = null;
+    }, 3000);
+  }, [essayId]);
+
+  const handleUndo = useCallback(async () => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setToastVisible(false);
+    const restored = deletedBookmarkRef.current;
+    if (restored) {
+      // Re-add to local state (sorted)
+      setBookmarks((prev) => [...prev, restored].sort((a, b) => a.position - b.position));
+      deletedBookmarkRef.current = null;
+      // No need to call removeBookmark — it was never persisted
+    }
+  }, []);
 
   const handleNavigate = (position: number) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onNavigateToBookmark(position);
     onClose();
+  };
+
+  const extractSnippet = (position: number): string => {
+    if (!content) return `${Math.round(position * 100)}% through essay`;
+    const charIndex = Math.round(position * content.length);
+    const start = Math.max(0, charIndex - 30);
+    const end = Math.min(content.length, charIndex + 30);
+    let snippet = content.slice(start, end).replace(/\n/g, ' ').trim();
+    if (snippet.length > 60) snippet = snippet.slice(0, 60);
+    const prefix = start > 0 ? '...' : '';
+    const suffix = end < content.length ? '...' : '';
+    return prefix + snippet + suffix;
   };
 
   const formatPosition = (position: number) => {
@@ -135,7 +167,7 @@ export function BookmarksSheet({
             <Text style={[styles.emptyText, { color: theme.colors.textSecondary }]}>
               Loading...
             </Text>
-          ) : bookmarks.length === 0 ? (
+          ) : bookmarks.length === 0 && !toastVisible ? (
             <Text style={[styles.emptyText, { color: theme.colors.textSecondary }]}>
               No bookmarks yet. Add one to save your place!
             </Text>
@@ -154,8 +186,8 @@ export function BookmarksSheet({
                     onPress={() => handleNavigate(bookmark.position)}
                   >
                     <View style={styles.bookmarkInfo}>
-                      <Text style={[styles.bookmarkPosition, { color: theme.colors.text }]}>
-                        {formatPosition(bookmark.position)} through essay
+                      <Text style={[styles.bookmarkSnippet, { color: theme.colors.text }]}>
+                        {extractSnippet(bookmark.position)}
                       </Text>
                       <Text style={[styles.bookmarkDate, { color: theme.colors.textSecondary }]}>
                         Added {formatDate(bookmark.createdAt)}
@@ -167,7 +199,7 @@ export function BookmarksSheet({
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.deleteButton}
-                    onPress={() => handleRemoveBookmark(bookmark.id)}
+                    onPress={() => handleRemoveBookmark(bookmark)}
                   >
                     <Text style={[styles.deleteIcon, { color: theme.colors.textSecondary }]}>
                       ×
@@ -176,6 +208,25 @@ export function BookmarksSheet({
                 </View>
               ))}
             </ScrollView>
+          )}
+
+          {/* Undo Toast */}
+          {toastVisible && (
+            <View
+              style={[
+                styles.toast,
+                { backgroundColor: theme.colors.headerBackground, borderTopColor: theme.colors.border },
+              ]}
+            >
+              <Text style={[styles.toastText, { color: theme.colors.text }]}>
+                Bookmark removed
+              </Text>
+              <TouchableOpacity onPress={handleUndo}>
+                <Text style={[styles.toastUndo, { color: theme.colors.accent }]}>
+                  Undo
+                </Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
       </View>
@@ -250,10 +301,11 @@ const styles = StyleSheet.create({
   bookmarkInfo: {
     flex: 1,
   },
-  bookmarkPosition: {
-    fontSize: 16,
+  bookmarkSnippet: {
+    fontSize: 15,
     fontWeight: '500',
     marginBottom: 2,
+    lineHeight: 22,
   },
   bookmarkDate: {
     fontSize: 13,
@@ -272,5 +324,31 @@ const styles = StyleSheet.create({
   deleteIcon: {
     fontSize: 24,
     fontWeight: '300',
+  },
+  toast: {
+    position: 'absolute',
+    bottom: 16,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  toastText: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  toastUndo: {
+    fontSize: 15,
+    fontWeight: '700',
   },
 });

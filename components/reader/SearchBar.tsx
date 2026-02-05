@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import {
   View,
   TextInput,
@@ -21,6 +21,7 @@ interface SearchBarProps {
   totalMatches: number;
   onPrevMatch: () => void;
   onNextMatch: () => void;
+  content?: string;
 }
 
 export function SearchBar({
@@ -32,6 +33,7 @@ export function SearchBar({
   totalMatches,
   onPrevMatch,
   onNextMatch,
+  content = '',
 }: SearchBarProps) {
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
@@ -67,6 +69,28 @@ export function SearchBar({
     onNextMatch();
   };
 
+  // Extract snippet around current match
+  const snippet = useMemo(() => {
+    if (!content || !searchText || searchText.length < 2 || totalMatches === 0 || currentMatch === 0) return null;
+    const lower = content.toLowerCase();
+    const query = searchText.toLowerCase();
+    // Find the nth match (currentMatch is 1-based)
+    let idx = -1;
+    let pos = 0;
+    for (let i = 0; i < currentMatch; i++) {
+      idx = lower.indexOf(query, pos);
+      if (idx === -1) return null;
+      pos = idx + 1;
+    }
+    const snippetRadius = 40;
+    const start = Math.max(0, idx - snippetRadius);
+    const end = Math.min(content.length, idx + searchText.length + snippetRadius);
+    const prefix = content.slice(start, idx);
+    const match = content.slice(idx, idx + searchText.length);
+    const suffix = content.slice(idx + searchText.length, end);
+    return { prefix: (start > 0 ? '...' : '') + prefix, match, suffix: suffix + (end < content.length ? '...' : '') };
+  }, [content, searchText, currentMatch, totalMatches]);
+
   return (
     <Animated.View
       pointerEvents={visible ? 'auto' : 'none'}
@@ -91,7 +115,7 @@ export function SearchBar({
           ]}
         >
           <Text style={[styles.searchIcon, { color: theme.colors.textSecondary }]}>
-            🔍
+            ⌕
           </Text>
           <TextInput
             ref={inputRef}
@@ -123,7 +147,13 @@ export function SearchBar({
         </TouchableOpacity>
       </View>
 
-      {searchText.length > 0 && (
+      {searchText.length === 1 && (
+        <Text style={[styles.hintText, { color: theme.colors.textSecondary }]}>
+          Type at least 2 characters
+        </Text>
+      )}
+
+      {searchText.length >= 2 && (
         <View style={styles.resultsRow}>
           <Text style={[styles.resultsText, { color: theme.colors.textSecondary }]}>
             {totalMatches === 0
@@ -167,6 +197,16 @@ export function SearchBar({
               </Text>
             </TouchableOpacity>
           </View>
+        </View>
+      )}
+
+      {snippet && (
+        <View style={[styles.snippetBox, { backgroundColor: theme.colors.border, borderRadius: 8 }]}>
+          <Text style={[styles.snippetText, { color: theme.colors.text }]}>
+            {snippet.prefix}
+            <Text style={styles.snippetMatch}>{snippet.match}</Text>
+            {snippet.suffix}
+          </Text>
         </View>
       )}
     </Animated.View>
@@ -221,6 +261,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  hintText: {
+    fontSize: 13,
+    marginTop: 8,
+    paddingHorizontal: 4,
+  },
   resultsRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -248,5 +293,16 @@ const styles = StyleSheet.create({
   navIcon: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  snippetBox: {
+    marginTop: 8,
+    padding: 10,
+  },
+  snippetText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  snippetMatch: {
+    fontWeight: '700',
   },
 });

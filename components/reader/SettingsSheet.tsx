@@ -66,6 +66,13 @@ export function SettingsSheet({ visible, onClose }: SettingsSheetProps) {
           ]}
           onPress={(e) => e.stopPropagation()}
         >
+          <View style={styles.settingsHeader}>
+            <Text style={[styles.settingsTitle, { color: theme.colors.text }]}>Settings</Text>
+            <TouchableOpacity onPress={handleClose}>
+              <Text style={[styles.settingsDone, { color: theme.colors.accent }]}>Done</Text>
+            </TouchableOpacity>
+          </View>
+
           <View style={styles.handle} />
 
           <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
@@ -207,6 +214,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   fontSizeLabel: {
+    fontWeight: '600',
+  },
+  settingsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 0,
+    marginBottom: 4,
+  },
+  settingsTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  settingsDone: {
+    fontSize: 16,
     fontWeight: '600',
   },
 });

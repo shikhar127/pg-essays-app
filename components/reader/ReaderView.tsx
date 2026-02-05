@@ -23,6 +23,7 @@ interface ReaderViewProps {
   headerVisible: boolean;
   initialScrollPosition?: number;
   searchText?: string;
+  progress?: number;
 }
 
 export interface ReaderViewHandle {
@@ -38,6 +39,7 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
   headerVisible,
   initialScrollPosition = 0,
   searchText = '',
+  progress = 0,
 }, ref) {
   const { theme, fontSizeConfig } = useReader();
   const insets = useSafeAreaInsets();
@@ -49,6 +51,7 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
   const hasRestoredPosition = useRef(false);
   const contentHeight = useRef(0);
   const layoutHeight = useRef(0);
+  const touchStartX = useRef(0);
 
   // Expose scrollToPosition for search navigation
   useImperativeHandle(ref, () => ({
@@ -110,12 +113,19 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
     [onScroll]
   );
 
-  const handleTap = useCallback(() => {
-    // Only trigger tap if not scrolling
-    if (!isScrolling.current) {
+  const handleTouchStart = useCallback((event: NativeSyntheticEvent<any>) => {
+    touchStartX.current = event.nativeEvent.pageX;
+  }, []);
+
+  const handleTap = useCallback((event: NativeSyntheticEvent<any>) => {
+    if (isScrolling.current) return;
+    const x = touchStartX.current;
+    const leftBound = width * 0.33;
+    const rightBound = width * 0.66;
+    if (x >= leftBound && x <= rightBound) {
       onTap();
     }
-  }, [onTap]);
+  }, [onTap, width]);
 
   // Handle link presses
   const handleLinkPress = useCallback((url: string) => {
@@ -240,6 +250,7 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
       onLayout={handleLayout}
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
+      onTouchStart={handleTouchStart}
       onTouchEnd={handleTap}
     >
       <View onLayout={handleContentLayout}>
@@ -250,7 +261,13 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
           {title}
         </Text>
         <Text style={[styles.readingTime, { color: theme.colors.textSecondary }]}>
-          {readingTime} min read
+          {progress === 0
+            ? `${readingTime} min read`
+            : progress >= 0.95
+            ? 'Almost done'
+            : Math.ceil(readingTime * (1 - progress)) <= 1
+            ? 'Less than a minute remaining'
+            : `${Math.ceil(readingTime * (1 - progress))} min remaining`}
         </Text>
         <View style={styles.divider} />
         <Markdown

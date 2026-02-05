@@ -1,0 +1,92 @@
+[
+  {
+    "id": "how-to-do-great-work",
+    "title": "How to Do Great Work",
+    "wordCount": 1923,
+    "readingTimeMinutes": 8,
+    "year": 2023,
+    "month": 7,
+    "url": "https://paulgraham.com/greatwork.html"
+  },
+  {
+    "id": "how-to-start-a-startup",
+    "title": "How to Start a Startup",
+    "wordCount": 3800,
+    "readingTimeMinutes": 16,
+    "year": 2003,
+    "month": 9,
+    "url": "https://paulgraham.com/startup.html"
+  },
+  {
+    "id": "maker-schedule-manager-schedule",
+    "title": "Maker's Schedule, Manager's Schedule",
+    "wordCount": 1100,
+    "readingTimeMinutes": 5,
+    "year": 2010,
+    "month": 7,
+    "url": "https://paulgraham.com/maker.html"
+  },
+  {
+    "id": "what-to-do-with-your-life",
+    "title": "What to Do with Your Life",
+    "wordCount": 870,
+    "readingTimeMinutes": 4,
+    "year": 2023,
+    "month": 2,
+    "url": "https://paulgraham.com/life.html"
+  },
+  {
+    "id": "keep-your-identity-small",
+    "title": "Keep Your Identity Small",
+    "wordCount": 950,
+    "readingTimeMinutes": 4,
+    "year": 2008,
+    "month": 2,
+    "url": "https://paulgraham.com/identity.html"
+  },
+  {
+    "id": "why-to-write",
+    "title": "Why to Write",
+    "wordCount": 1400,
+    "readingTimeMinutes": 6,
+    "year": 2024,
+    "month": 2,
+    "url": "https://paulgraham.com/why.html"
+  },
+  {
+    "id": "the-thing-i-most-disagree-with",
+    "title": "The Thing I Most Disagree With",
+    "wordCount": 1250,
+    "readingTimeMinutes": 5,
+    "year": 2023,
+    "month": 6,
+    "url": "https://paulgraham.com/disagree.html"
+  },
+  {
+    "id": "what-makes-a-good-manager",
+    "title": "What Makes a Good Manager",
+    "wordCount": 1600,
+    "readingTimeMinutes": 7,
+    "year": 2022,
+    "month": 8,
+    "url": "https://paulgraham.com/manager.html"
+  },
+  {
+    "id": "how-to-be-a-good-writer",
+    "title": "How to Be a Good Writer",
+    "wordCount": 1800,
+    "readingTimeMinutes": 8,
+    "year": 2024,
+    "month": 3,
+    "url": "https://paulgraham.com/goodwriter.html"
+  },
+  {
+    "id": "on-doing-less",
+    "title": "On Doing Less",
+    "wordCount": 740,
+    "readingTimeMinutes": 3,
+    "year": 2024,
+    "month": 1,
+    "url": "https://paulgraham.com/less.html"
+  }
+]

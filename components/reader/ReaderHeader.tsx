@@ -19,7 +19,10 @@ interface ReaderHeaderProps {
   onSettingsPress: () => void;
   onSearchPress: () => void;
   onBookmarksPress: () => void;
+  onTOCPress: () => void;
   essayUrl?: string;
+  content?: string;
+  progress?: number;
 }
 
 export function ReaderHeader({
@@ -29,7 +32,10 @@ export function ReaderHeader({
   onSettingsPress,
   onSearchPress,
   onBookmarksPress,
+  onTOCPress,
   essayUrl,
+  content = '',
+  progress = 0,
 }: ReaderHeaderProps) {
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
@@ -63,13 +69,29 @@ export function ReaderHeader({
     onBookmarksPress();
   };
 
+  const handleTOC = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onTOCPress();
+  };
+
   const handleShare = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     try {
-      await Share.share({
-        message: `"${title}" by Paul Graham\n\n${essayUrl || 'https://paulgraham.com/articles.html'}`,
-        title: title,
-      });
+      let excerpt = '';
+      if (content && progress > 0) {
+        const charIndex = Math.round(progress * content.length);
+        const start = Math.max(0, charIndex - 50);
+        const end = Math.min(content.length, charIndex + 50);
+        excerpt = content.slice(start, end).replace(/\n/g, ' ').trim();
+        if (excerpt.length > 100) excerpt = excerpt.slice(0, 100);
+        if (start > 0) excerpt = '...' + excerpt;
+        if (end < content.length) excerpt = excerpt + '...';
+      }
+      const url = essayUrl || 'https://paulgraham.com/articles.html';
+      const message = excerpt
+        ? `"${title}" by Paul Graham\n\n${excerpt}\n\nRead more: ${url}`
+        : `"${title}" by Paul Graham\n\nRead more: ${url}`;
+      await Share.share({ message, title });
     } catch (error) {
       console.warn('Share failed:', error);
     }
@@ -108,10 +130,18 @@ export function ReaderHeader({
       <View style={styles.rightButtons}>
         <TouchableOpacity
           style={styles.iconButton}
+          onPress={handleTOC}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={[styles.icon, { color: theme.colors.text }]}>≡</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconButton}
           onPress={handleBookmarks}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>🔖</Text>
+          <Text style={[styles.icon, { color: theme.colors.text }]}>⛖</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -119,7 +149,7 @@ export function ReaderHeader({
           onPress={handleSearch}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>🔍</Text>
+          <Text style={[styles.icon, { color: theme.colors.text }]}>⌕</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -135,7 +165,7 @@ export function ReaderHeader({
           onPress={handleSettings}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={[styles.settingsIcon, { color: theme.colors.text }]}>
+          <Text style={[styles.icon, { color: theme.colors.text }]}>
             Aa
           </Text>
         </TouchableOpacity>
@@ -180,9 +210,5 @@ const styles = StyleSheet.create({
   rightButtons: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  settingsIcon: {
-    fontSize: 18,
-    fontWeight: '600',
   },
 });

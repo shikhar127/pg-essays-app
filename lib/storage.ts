@@ -6,6 +6,8 @@ const KEYS = {
   SCROLL_POSITIONS: '@pg_essays_scroll_positions',
   READ_ESSAYS: '@pg_essays_read',
   BOOKMARKS: '@pg_essays_bookmarks',
+  FAVORITES: '@pg_essays_favorites',
+  READ_HISTORY: '@pg_essays_read_history',
 };
 
 export interface Settings {
@@ -152,5 +154,66 @@ export async function removeBookmark(essayId: string, bookmarkId: string): Promi
     }
   } catch (error) {
     console.warn('Failed to remove bookmark:', error);
+  }
+}
+
+// Favorites
+export async function loadFavorites(): Promise<string[]> {
+  try {
+    const json = await AsyncStorage.getItem(KEYS.FAVORITES);
+    return json ? JSON.parse(json) : [];
+  } catch (error) {
+    console.warn('Failed to load favorites:', error);
+    return [];
+  }
+}
+
+export async function saveFavorite(essayId: string): Promise<void> {
+  try {
+    const favorites = await loadFavorites();
+    if (!favorites.includes(essayId)) {
+      favorites.push(essayId);
+      await AsyncStorage.setItem(KEYS.FAVORITES, JSON.stringify(favorites));
+    }
+  } catch (error) {
+    console.warn('Failed to save favorite:', error);
+  }
+}
+
+export async function removeFavorite(essayId: string): Promise<void> {
+  try {
+    const favorites = await loadFavorites();
+    const updated = favorites.filter((id) => id !== essayId);
+    await AsyncStorage.setItem(KEYS.FAVORITES, JSON.stringify(updated));
+  } catch (error) {
+    console.warn('Failed to remove favorite:', error);
+  }
+}
+
+// Reading History
+export interface ReadHistoryEntry {
+  essayId: string;
+  readAt: number;
+}
+
+export async function loadReadHistory(): Promise<ReadHistoryEntry[]> {
+  try {
+    const json = await AsyncStorage.getItem(KEYS.READ_HISTORY);
+    const entries: ReadHistoryEntry[] = json ? JSON.parse(json) : [];
+    return entries.sort((a, b) => b.readAt - a.readAt);
+  } catch (error) {
+    console.warn('Failed to load read history:', error);
+    return [];
+  }
+}
+
+export async function saveReadHistory(essayId: string): Promise<void> {
+  try {
+    const history = await loadReadHistory();
+    const filtered = history.filter((entry) => entry.essayId !== essayId);
+    filtered.unshift({ essayId, readAt: Date.now() });
+    await AsyncStorage.setItem(KEYS.READ_HISTORY, JSON.stringify(filtered));
+  } catch (error) {
+    console.warn('Failed to save read history:', error);
   }
 }
