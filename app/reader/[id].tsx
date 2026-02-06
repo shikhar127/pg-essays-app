@@ -113,14 +113,7 @@ export default function ReaderScreen() {
       clearTimeout(saveTimerRef.current);
     }
 
-    // Auto-hide header
-    if (direction === 'down' && headerVisible) {
-      hideTimerRef.current = setTimeout(() => {
-        setHeaderVisible(false);
-      }, 500);
-    } else if (direction === 'up' && !headerVisible) {
-      setHeaderVisible(true);
-    }
+    // Header is only toggled via tap, not on scroll (removed auto-hide)
 
     // Debounce save scroll position (save after 500ms of no scrolling)
     saveTimerRef.current = setTimeout(() => {

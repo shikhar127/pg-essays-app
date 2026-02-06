@@ -649,6 +649,608 @@ The answer will probably be a short list. Everything else on your week — the m
 Over time, you'll develop a better sense of what deserves your attention and what doesn't. And your life will get quieter, and your work will get better, and you'll wonder why you spent so long doing so much of nothing.
 
 *January 2024*`,
+
+  'ideas-for-startups': `## The Question
+
+The most common question I'm asked about startups is how to get ideas. People act as if the difficulty is coming up with ideas, when the real difficulty is recognizing good ones.
+
+The way to get startup ideas is not to try to think of startup ideas. It's to look for problems, preferably problems you have yourself.
+
+## Why This Works
+
+The very best startup ideas have three things in common: they're something the founders themselves want, that they themselves can build, and that few others realize are worth doing. Microsoft, Apple, Yahoo, Google, and Facebook all began this way.
+
+**If you don't have a problem you can solve yourself, you're at a disadvantage.** You won't have the natural conviction that comes from personal experience. You'll have to rely on market research, which is a weak substitute for personal knowledge.
+
+## Problems You Have
+
+The verb you want to use is "notice" rather than "think up." At YC we call ideas that grow naturally out of the founders' own experiences "organic" startup ideas. The most successful startups are almost all organic.
+
+If you look at the way successful founders got their ideas, it's generally the result of some external stimulus hitting a prepared mind. Bill Gates and Paul Allen heard about the Altair and thought "I bet we could write a Basic interpreter for it." Drew Houston realized he was always forgetting his USB stick and thought "Why not make files live in the cloud?"
+
+The problems that are right for startups are ones that you wish someone would solve for you. Those are questions you can answer without doing research, because you're living them.
+
+## The Unsexy Filter
+
+If you look at the way successful founders got their ideas, it's generally the result of some external stimulus hitting a prepared mind. Most good ideas initially look like bad ideas, and most bad ideas initially look good.
+
+Live in the future and build what seems interesting. Strange as it sounds, that's the real recipe. Don't try to think up startup ideas. Just position yourself at the leading edge of some rapidly changing field — live in the future — and then notice what's missing.
+
+**The key to coming up with good startup ideas is to notice them organically.** To position yourself so that you naturally have ideas, and naturally have ideas that are valuable.
+
+## What to Build
+
+Don't worry about competitors. The question is not whether you have competitors, but whether you have users. Almost every successful startup has had competitors, and they still succeeded.
+
+Don't worry about people copying your idea. The place to fight competitors is not in the market for ideas, but in the market for implementations. Ideas are cheap. What matters is how well you execute them.
+
+The most important thing is to make something people want. If you make something that a small number of people want a large amount, you can usually expand into adjacent markets. But if you make something that a large number of people want a small amount, you'll probably never grow much.
+
+## Timing
+
+Why is it so important to work on a problem you have yourself? Among other reasons, it ensures the problem really exists. It sounds obvious to say that you should only work on problems that exist. And yet by far the most common mistake startups make is to solve problems no one has.
+
+This is particularly dangerous because it can fool you. You can convince yourself that people will want your solution. You can even find a handful of early adopters. But if you're solving a problem that only exists in your imagination, those early adopters will never turn into a real market.
+
+The best way to avoid this is to work on a problem you have yourself. Then at least you can be sure that one person wants your solution.
+
+*October 2005*`,
+
+  'do-things-that-dont-scale': `## The Advice
+
+One of the most common pieces of advice we give at Y Combinator is to do things that don't scale. A lot of would-be founders believe that startups either take off or don't. They think the key is to get some magical viral growth mechanism going, and then sit back and watch users roll in.
+
+That's not how it works. The most successful startups almost all begin by doing things that don't scale.
+
+## Recruit Users Manually
+
+You should go out and recruit users manually. That's what all startups have to do initially. You can't wait for users to come to you. You have to go out and get them.
+
+Airbnb is a classic example. The founders went door to door in New York, asking people if they'd rent out their places. They photographed the apartments themselves. Imagine how crazy that would seem at scale — a company with billions in revenue, and the founders are out there taking pictures of apartments. But that's what you do when you're starting.
+
+**The thing about doing things that don't scale is that you often end up changing the product.** When you're manually onboarding users, you're forced to understand what they need. You can't hide behind analytics. You have to talk to them, watch them use your product, and see where they get confused.
+
+## Delight Users
+
+You should focus obsessively on your first users. Make them extraordinarily happy. Do things for them that don't scale. If you have to manually process their orders, do it. If you have to provide customer service at midnight, do it. Go out of your way to make them love you.
+
+Why does this work? Because the first users are the ones who will tell other people. They're the ones who will give you useful feedback. And they're the ones who will stick with you through the inevitable problems that come with an early product.
+
+The standard of customer service should be: make users feel you've gone out of your way for them. This is so rare in technology that it's a huge competitive advantage when you do it.
+
+## The Marginal Work
+
+There's always a limit to how much you can do manually. But the limit is usually much higher than founders think. You can do manual customer support for quite a while before it becomes too painful. You can manually process orders. You can even manually implement features that you'll eventually automate.
+
+The key is to do what's necessary to get the product in front of users and make them happy, even if it's not sustainable at scale. Because until you have users, scale doesn't matter.
+
+**Don't worry about doing things that don't scale until scaling becomes a problem.** And if it becomes a problem, that's a good problem to have. Most startups die because they never get to the point where scaling is a problem.
+
+## Why It's Hard
+
+The reason founders resist doing things that don't scale is that it feels like work they shouldn't have to do. They think startups should be about building something people want so badly that it spreads by word of mouth.
+
+That is the ultimate goal. But the way you get there is usually by doing things that don't scale first. You recruit your first users manually. You delight them so much that they tell their friends. And eventually, if you're lucky, you reach a point where you have enough users that word of mouth starts to work.
+
+But you can't skip the early manual stage. It's not a distraction from building your product. It's an essential part of figuring out what product to build.
+
+*July 2013*`,
+
+  'default-alive-or-default-dead': `## The Question
+
+The most important question for any startup is whether it's default alive or default dead. Default alive means you'll make it to profitability on the money you have left. Default dead means you won't.
+
+This is surprisingly easy to calculate, and yet most founders don't do it. They raise a round, start spending, and assume they'll raise more money when they need it. But that's not how it works.
+
+## Why It Matters
+
+If you're default dead, you're at the mercy of investors. You have to raise money or die. And investors know this. It changes the whole dynamic of fundraising. When you're default alive, investors are trying to convince you. When you're default dead, you're trying to convince them.
+
+The way to make investors want to invest in you is not to need them. Strange as it sounds, the best way to get investors to fund you is to be doing well enough that you don't need them.
+
+**Being default dead means you've given up control of your destiny.** You're now on a treadmill where you have to keep convincing investors to give you more money, or die trying.
+
+## How to Calculate
+
+Default alive or dead is not a complicated calculation. Take your current burn rate. Estimate your growth rate. Project out your cash flow. If you hit profitability before you run out of money, you're default alive. If you don't, you're default dead.
+
+Most founders avoid doing this calculation because they don't want to know the answer. If they're default dead, that means they have to change something. And change is uncomfortable.
+
+But not knowing doesn't make you less dead. It just means you'll be surprised when you run out of money.
+
+## What to Do
+
+If you find you're default dead, you have two choices: raise more money, or cut your burn rate. Raising money might not be possible. The market might be bad. Investors might not like your metrics. You might not have time before you run out of money.
+
+Cutting burn rate is always possible. You can spend less on marketing. You can freeze hiring. You can reduce salaries. You can even lay people off. None of these things are fun, but they're better than dying.
+
+**The best time to cut burn rate is when you don't have to.** If you wait until you're about to run out of money, it's often too late. Investors can smell desperation, and it makes them less likely to invest.
+
+## The Default Alive Mindset
+
+Being default alive changes everything about how you run your company. You make different decisions. You spend money differently. You're more focused on revenue and less focused on growth at all costs.
+
+This doesn't mean you shouldn't grow. It means you should grow in a way that's sustainable. You should always know that you could become profitable if you needed to. And you should always have a plan for how to get there.
+
+The successful startups are almost all default alive, at least eventually. They may not start out that way — many raise large rounds and burn quickly in the beginning. But at some point, they figure out how to become default alive, and that's when they start to pull away from the pack.
+
+*October 2015*`,
+
+  'mean-people-fail': `## The Pattern
+
+I've noticed something about startup founders: mean people fail. Not always, of course. But way more often than you'd expect. Mean founders rarely build great companies.
+
+Why? It's not because being mean is morally wrong, though it is. It's because being mean is a sign of bad judgment, and bad judgment kills startups.
+
+## What Mean Looks Like
+
+By "mean" I don't mean occasionally losing your temper or being impatient. Everyone does that. I mean consistently treating people badly — employees, users, investors, even competitors.
+
+Mean founders are the ones who yell at employees in front of others. Who shaft early employees on equity. Who lie to investors. Who badmouth competitors publicly. Who treat anyone who can't help them with contempt.
+
+**The reason mean people fail is not just that they make enemies.** It's that being mean is a symptom of a deeper problem: they see the world as zero-sum. They think success means taking from others rather than creating new value.
+
+## Why It Matters
+
+In a zero-sum worldview, you succeed by making others fail. This leads to a certain kind of behavior: backstabbing, empire-building, politics. And that behavior is toxic to a startup.
+
+Startups succeed by creating value. By making something people want. By solving problems. None of this requires hurting anyone. In fact, hurting people is usually a distraction from creating value.
+
+Mean founders spend enormous amounts of energy on the wrong things. They worry about who gets credit. They fight over equity splits. They try to screw their competitors instead of focusing on building a better product. And all of this slows them down.
+
+## The Alternatives
+
+The opposite of mean isn't nice. It's fair. Fair people are willing to be tough when they need to be. They'll fire people who aren't working out. They'll tell users no. They'll negotiate hard on term sheets.
+
+But they do all of this in a way that's honest and respectful. They don't enjoy making others feel bad. They don't see every interaction as a win-lose proposition. They treat people as ends in themselves, not just as means.
+
+**Fair founders build better companies because they attract better people.** The best employees want to work for someone they respect. The best investors want to back someone they trust. The best users want to support someone they like.
+
+Mean founders end up with employees who are just there for the paycheck, investors who are just there for the return, and users who will leave at the first better alternative. They build companies that work against them rather than with them.
+
+## The Long Game
+
+Startups are a long game. You're going to be working with these people — your co-founders, your employees, your investors — for years. And the relationships you build matter.
+
+If you're mean, people remember. They might not be able to do anything about it at the time. But years later, when you're trying to recruit someone, or raise another round, or get press coverage, they'll remember how you treated them.
+
+The startup world is smaller than you think. Treat people well, and word gets around. Treat people badly, and word gets around even faster.
+
+*November 2014*`,
+
+  'how-to-convince-investors': `## The Core Principle
+
+Convincing investors is not about pitching. It's about being the kind of company investors want to invest in. The way to convince investors is to actually be successful.
+
+This sounds circular, but it's not. You don't need to be successful in the sense of having made it. You need to be successful in the sense of having momentum. Growing. Improving. Making progress.
+
+## What Investors Look For
+
+Investors are looking for one thing: startups that are going to be big. They want to invest in companies that will return their entire fund. That means they're looking for companies that have a chance of becoming worth billions.
+
+This is why most of what founders think matters about pitching doesn't actually matter. Investors don't care about your deck. They don't care about your financial projections. They definitely don't care about your mission statement.
+
+**What they care about is whether you're going to be big.** And the best evidence of that is growth. If you can show investors a graph of your growth rate, and it's going up and to the right, you're halfway there.
+
+## The Other Half
+
+The other half is convincing them that you can sustain that growth. That it's not a fluke. That you understand why you're growing, and that you can keep doing it.
+
+This is where the pitch actually matters. Not to convince them you're growing — they can see that from your metrics. But to convince them you know what you're doing.
+
+Tell them why users like your product. Tell them what you've learned about your market. Tell them what you're going to do next and why you think it will work. Show them you're thoughtful and analytical about your business.
+
+## Common Mistakes
+
+The most common mistake founders make when pitching is trying to hide their weaknesses. Every startup has weaknesses. Investors know this. If you pretend you don't have weaknesses, investors will think you're either dishonest or naive.
+
+The right approach is to be honest about your weaknesses, but to frame them as problems you're aware of and working to solve. Show them you're self-aware and strategic about your challenges.
+
+Another mistake is spending too much time on the market opportunity and too little on why you specifically can win. Investors have heard about large markets before. What they haven't heard is why you're the right team to capture that market.
+
+## The Real Secret
+
+Here's the real secret to convincing investors: have other investors interested. Nothing makes investors want to invest in you more than knowing other investors want to invest in you.
+
+This is not just FOMO, though that's part of it. It's that investors use other investors as a filter. If other smart investors think you're worth backing, that's strong evidence that you are.
+
+**The way to get investors interested is to create a competitive dynamic.** Talk to multiple investors at the same time. Get a few meetings set up. And when one expresses interest, let the others know. This is not manipulation — it's just how the process works.
+
+## Timing
+
+The best time to raise money is when you don't need it. When you're growing fast, when morale is high, when you have plenty of cash in the bank. That's when investors most want to invest in you.
+
+The worst time to raise money is when you need it. When you're running out of cash, when growth is slowing, when you're desperate. Investors can smell desperation, and it makes them run away.
+
+So think of fundraising as something you do because you want to accelerate, not because you need to survive. If you're raising to survive, you're probably already dead.
+
+*August 2006*`,
+
+  'relentlessly-resourceful': `## The Two Words
+
+If I had to describe the quality that successful founders have in common, I'd use two words: relentlessly resourceful.
+
+Not intelligent, though they're usually that too. Not hardworking, though they definitely are. The thing that really distinguishes them is their attitude toward problems. They see every problem as something that can be solved, and they won't stop until they've solved it.
+
+## What It Means
+
+Being relentlessly resourceful means not taking no for an answer. When someone tells you something is impossible, you figure out how to make it possible. When you hit a wall, you find a way around it, or through it, or over it.
+
+It means being creative about solutions. If the obvious approach doesn't work, you try something non-obvious. If that doesn't work, you try something completely crazy. And you keep trying until something works.
+
+**The opposite of relentlessly resourceful is hapless.** Hapless people accept defeat. When they hit an obstacle, they stop. They shrug and say "well, we tried." They blame external circumstances for their failures.
+
+## Examples
+
+When Airbnb was running out of money, they made custom cereal boxes for the 2008 election — Obama O's and Cap'n McCain's. They sold them for $40 a box and made $30,000. That kept them alive. That's relentlessly resourceful.
+
+When Stripe couldn't get users to sign up for their payment API, they went to startups and said "let us do the integration for you." They would sit with founders and write the integration code themselves. That's relentlessly resourceful.
+
+These aren't just clever hacks. They're examples of a mindset: we will not let anything stop us. We will do whatever it takes to succeed.
+
+## Why It Matters
+
+Being relentlessly resourceful matters more than almost any other quality in a founder because startups are just a series of problems. Some are big problems, some are small. But they keep coming. And if you're not the kind of person who refuses to be stopped, you will be stopped.
+
+The thing about startup problems is that they're usually novel. You can't just follow a playbook. The solutions require creativity, persistence, and a willingness to try things that might not work.
+
+**People who are relentlessly resourceful find ways.** Other people find excuses. That's the difference.
+
+## How to Develop It
+
+Can you learn to be relentlessly resourceful? Probably not entirely — some of it is temperament. But you can definitely get better at it.
+
+The key is to develop a bias toward action. When you hit a problem, don't sit around thinking about it. Try something. Even if it's probably wrong, trying something gives you information. And information helps you figure out what to try next.
+
+Also, pay attention to your internal monologue. When you hit an obstacle, do you think "this is hard" or do you think "how can I solve this"? The first mindset is passive. The second is active. Practice shifting from the first to the second.
+
+*March 2009*`,
+
+  'cities-and-ambition': `## The Messages Cities Send
+
+Great cities attract ambitious people. They're like magnets for anyone who wants to accomplish something significant. But not all cities send the same message about what to be ambitious about.
+
+New York tells you to make money. Los Angeles tells you to be famous. Washington tells you to have power. The question is not whether to be ambitious, but what to be ambitious about.
+
+## How Cities Work
+
+Cities send messages in subtle ways. Through the people you meet, the conversations you overhear, the values that are taken for granted. You don't notice it at first, but over time the city's values become your values.
+
+If you live in New York long enough, you start to care about money even if you didn't before. Not because you're shallow, but because everyone around you cares about it. It's like background radiation — you absorb it whether you want to or not.
+
+**The danger is not that cities change you.** The danger is that they change you in ways you don't notice, and by the time you notice, you've already made decisions based on values that aren't really yours.
+
+## Choosing a City
+
+The question of which city to live in is really a question about what kind of person you want to become. If you want to be rich, live in New York. If you want to be famous, live in LA. If you want to do great work, live in Cambridge or Silicon Valley.
+
+This doesn't mean you can't do great work in New York. Obviously you can. But you'll be fighting the current instead of swimming with it. The ambient message will be pulling you in a different direction.
+
+**The right city amplifies your ambitions.** If you want to start a tech company and you move to Silicon Valley, suddenly everyone you meet is either starting a company or works at one. It goes from feeling like an unusual thing to do to feeling like the default.
+
+## The Power of Messages
+
+Some people are strong enough to ignore the message of their city. But most people aren't, and there's no shame in that. It's just how humans work. We're social creatures. We absorb the values of the people around us.
+
+So the question is not whether you'll be influenced by your city, but whether you want to be influenced in that particular way. If you do, great. If you don't, move.
+
+The good news is that cities are becoming more specialized. You don't have to move to one of the traditional centers anymore. Smaller cities and even towns can have their own distinct messages now, especially if they cluster people with similar interests.
+
+## What to Optimize For
+
+The thing to optimize for when choosing where to live is not the weather, or the cost of living, or even the job opportunities. It's the people. Who do you want to become like? Because that's what will happen.
+
+Live among people who are doing what you want to do. Not what you want to do for money, but what you want to spend your time on. The people you spend time with will determine what seems normal to you, and what seems normal to you will determine what you do.
+
+*May 2008*`,
+
+  'life-is-short': `## The Realization
+
+Life is short. This is not a new insight. Seneca was writing about it two thousand years ago. But it becomes more real as you get older. In your twenties, you have time for everything. By your thirties, you're starting to see the end of the runway. By your forties, you realize you've already made most of your big choices.
+
+The question is not whether life is short, but what to do about it.
+
+## What We Waste Time On
+
+The obvious form of wasted time is doing things you don't enjoy. Staying in a job you hate. Spending time with people you don't like. Living in a place that doesn't suit you.
+
+But there's a more subtle form of waste: spending time on things that don't matter. Things that feel productive but aren't. Busywork. Meetings that could have been emails. Projects that won't go anywhere.
+
+**The problem with this kind of waste is that it feels like work.** You're busy. You're checking things off your list. But at the end of the day, or the end of the year, or the end of your life, you realize you haven't actually done anything important.
+
+## What Matters
+
+So what should you spend time on? The obvious answer is things that matter to you. But that's not specific enough. Lots of things matter in theory. The question is what matters enough that you'd be happy you spent time on it even if you died tomorrow.
+
+Family and friends, probably. Work that you care about, definitely. Learning things, creating things, helping people. The specifics vary, but the pattern is clear: you should spend time on things that have lasting value.
+
+**The way to have a good life is to have things you look forward to when you're young, and things you look back on with satisfaction when you're old.** That means doing things worth doing, and doing them with people you care about.
+
+## Saying No
+
+The hard part is not knowing what matters. The hard part is saying no to everything else. Every time you say yes to something, you're saying no to something else. And if you say yes to too many things that don't matter, you won't have time for the things that do.
+
+This is why successful people are ruthless about their time. They say no to almost everything. Not because they're antisocial or rude, but because they've realized that time is their most valuable resource, and they can't afford to waste it.
+
+The way to say no is to be clear about your priorities. If you know what matters to you, it's easy to see what doesn't. And once you can see what doesn't matter, saying no becomes a relief rather than a sacrifice.
+
+## The Urgency
+
+The reason to think about this now, regardless of how old you are, is that life is shorter than you think. Not just in absolute terms, but in terms of the time you have left to do the things you want to do.
+
+If you want to learn a language, or write a book, or start a company, or spend more time with your kids — you need to start now. Not next year. Not after you finish this project. Now.
+
+**The older you get, the clearer it becomes that the only real currency is time.** Money can be made and lost. Jobs come and go. But time only goes in one direction, and you can't get it back.
+
+*January 2016*`,
+
+  'schlep-blindness': `## The Problem
+
+There's a kind of startup idea that's invisible to most people because it involves too much "schlep" — too much annoying, tedious work. I call this phenomenon schlep blindness.
+
+Schlep blindness prevents people from seeing startup ideas right in front of them. The tedious work is so off-putting that they don't even consider the idea. But often, the schlep is exactly what makes the opportunity valuable.
+
+## Examples
+
+Stripe is a great example. Online payments were obviously a huge problem before Stripe. Every startup had to spend weeks integrating with payment processors. Everyone knew it was terrible. But nobody wanted to start a payments company because it seemed like it would involve dealing with banks, regulations, and lots of other unsexy work.
+
+Turns out it did involve all of that. But that's also why Stripe became so valuable. The schlep was a moat. It kept out competitors and made customers grateful.
+
+**The schlep is not a bug; it's a feature.** If something is easy and obvious, lots of people will do it. But if it requires grinding through tedious work, most people will avoid it. That's your opportunity.
+
+## Why It Happens
+
+People have schlep blindness for a simple reason: they're thinking like consumers, not founders. As a consumer, you want someone else to solve your problem. As a founder, you have to be the person who solves it.
+
+The way to overcome schlep blindness is to be willing to do work that other people aren't willing to do. Not dangerous work, not unethical work — just tedious, unglamorous work that needs to be done.
+
+## What to Look For
+
+Some of the best startup ideas are ones where the hard part is not the technical challenge, but the schlep. You have to talk to dozens of potential customers. You have to understand complex regulations. You have to deal with old, entrenched systems that don't want to change.
+
+This is actually good news. It means you don't need to be a genius to succeed. You just need to be willing to do the work.
+
+**Most of the big ideas in business are not clever innovations.** They're obvious ideas that everyone knows about but nobody wants to execute because of the schlep involved. The way to find these ideas is to look for problems people complain about but don't try to solve.
+
+## How to Beat It
+
+The cure for schlep blindness is to consciously look for ideas that involve schlep. When you notice yourself shying away from an idea because it seems like too much work, that's exactly when you should pay attention.
+
+Ask yourself: is this idea bad because it's genuinely not worth doing, or because I'm just intimidated by the work involved? If it's the latter, that's a sign you've found something valuable.
+
+The best founders are willing to do the schlep. They understand that hard, tedious work is often what creates the most value. And they're willing to spend years grinding away at problems that other people find too boring or too difficult to bother with.
+
+*January 2012*`,
+
+  'fierce-nerds': `## The Lesson Schools Teach
+
+There's a lesson everyone learns in school, and it's the wrong lesson. The lesson is: win by hacking the test.
+
+You don't have to actually understand the material. You just have to figure out what the teacher wants and give it to them. You learn to write essays that sound impressive without saying anything. You learn to guess what will be on the test. You learn to optimize for grades rather than knowledge.
+
+**This is a terrible lesson to learn.** Because in the real world, there is no test. Or rather, the test is: did you do something useful? And you can't hack that.
+
+## Why It Works in School
+
+The reason this strategy works in school is that school is not trying to teach you to do useful things. It's trying to measure how well you've absorbed certain ideas. And measuring is easier than teaching, so the curriculum ends up being designed around what's easy to measure rather than what's useful to learn.
+
+This is why so much of school feels arbitrary. You're learning things that don't connect to anything real. You're jumping through hoops that exist only to test whether you can jump through hoops. And you're rewarded for playing the game, not for learning.
+
+## What Happens Later
+
+The problem is that by the time you graduate, you've spent 15-20 years learning to optimize for tests. That's a hard habit to break. So people carry it into their careers. They try to figure out what their boss wants. They try to look busy. They try to game performance reviews.
+
+And this works, to a point. You can build a decent career by being good at corporate politics. But you won't do great work. Great work comes from caring about the problem more than about the appearance of solving it.
+
+**The lesson you need to unlearn is that success comes from impressing other people.** In the real world, success comes from making things that are genuinely useful. And those are very different skills.
+
+## How to Unlearn It
+
+The way to unlearn the school lesson is to work on projects where there's no one to fool. Where the only question is whether the thing works or not. Where you can't bullshit your way through.
+
+Startups are good for this. You can't fake having users. You can't fake revenue. Either people want your product or they don't. And that kind of harsh feedback is exactly what you need to break the habit of optimizing for appearance.
+
+But you don't need to start a startup to unlearn this lesson. You can do it by working on any project where the results are objective. Where you're judged by what you produce, not by how well you play politics.
+
+## The Real Test
+
+The real test in life is not how well you can impress the teacher. It's whether you can make something useful. Whether you can solve real problems. Whether you can create value for other people.
+
+And the way to get good at that is to stop worrying about what other people think and start worrying about whether what you're making actually works. Stop optimizing for grades and start optimizing for results.
+
+*December 2019*`,
+
+  'how-to-work-hard': `## The Discovery
+
+Working hard is not as simple as it sounds. There are different kinds of hard work, and they're not all equally valuable. The question is not just whether you're working hard, but whether you're working hard on the right things.
+
+## Types of Hard Work
+
+There's hard work that's about grinding through tedious tasks. Filing papers, answering emails, attending meetings. This kind of work can fill up your entire day if you let it. And it feels like work — you're tired at the end of it. But it doesn't actually move anything important forward.
+
+Then there's hard work that's about pushing yourself intellectually. Solving a difficult problem. Learning a new skill. Figuring out a better way to do something. This kind of work is exhausting in a different way. But it's the kind of exhaustion that comes from growth.
+
+**The distinction matters because the first kind of hard work can actually prevent the second kind.** If you spend all your time on busy work, you won't have energy left for the work that matters. You'll be tired, but you won't have accomplished anything meaningful.
+
+## Focus
+
+The key to working hard in a way that matters is focus. Not just concentrating while you work, but choosing what to work on in the first place. You can work incredibly hard on the wrong things and get nowhere.
+
+This is why some people who work moderate hours accomplish more than people who work much longer hours. They're more selective about what they spend time on. They work on things that have high leverage — where an hour of work produces significantly more value than an hour spent on something else.
+
+**Focus requires saying no.** Every time you say yes to something, you're saying no to something else. And if you say yes to too many low-leverage things, you won't have time for high-leverage ones.
+
+## Consistency
+
+The other key to working hard is consistency. It's not about heroic bursts of effort. It's about showing up every day and putting in the work, even when you don't feel like it.
+
+The people who accomplish the most are not the ones who work insane hours for a few months and then burn out. They're the ones who work consistently for years. They make their work a habit, something they do regardless of how motivated they feel on any particular day.
+
+## The Learning Curve
+
+When you're young, working hard is mostly about building skills. You need to put in the hours to get good at something. There's no substitute for practice. But as you get better, working hard becomes more about choosing the right problems.
+
+Once you're competent, the limiting factor is not your skill but your judgment. The question is not whether you can solve a problem, but whether it's the right problem to solve. And that requires a different kind of thinking.
+
+**The transition from working hard on execution to working hard on strategy is one of the most important career transitions.** And most people never make it, because they get stuck in execution mode. They keep solving problems that are put in front of them, without ever stepping back to ask whether they're the right problems.
+
+## Energy Management
+
+Working hard is not just about time management. It's about energy management. You only have so much mental energy in a day, and you need to use it wisely.
+
+Do the most important work when you have the most energy. For most people, that's early in the day. Don't waste your peak hours on email or meetings. Use them for the work that requires deep concentration.
+
+## The Long View
+
+Finally, remember that working hard is not a sprint. It's a marathon. You need to find a pace you can sustain for years, not months. And that means taking care of yourself — getting enough sleep, exercising, taking breaks.
+
+The people who last in demanding fields are not the ones who work themselves into the ground. They're the ones who figure out how to work hard in a way that's sustainable. They work intensely when they need to, but they also know when to step back and recharge.
+
+*June 2021*`,
+
+  'founder-mode': `## Two Modes
+
+There are two distinct modes of running a company: manager mode and founder mode. Most people think there's only one way — the manager mode taught in business schools. But the most successful founders operate differently.
+
+## Manager Mode
+
+Manager mode is what you learn in business school. You hire good people, give them clear objectives, and let them do their jobs. You don't micromanage. You delegate. You focus on metrics and processes. You have regular meetings and reviews.
+
+This sounds sensible, and for established companies with stable businesses, it often works. But for startups, it usually doesn't. Because startups are not stable. They're trying to do something new, in a way that's never been done before.
+
+**The problem with manager mode in a startup is that it assumes the job is to execute a known plan.** But in a startup, the job is to figure out the plan while you're executing it. And that requires a different approach.
+
+## Founder Mode
+
+Founder mode is messier. You get into the details. You talk to people at all levels of the company, not just your direct reports. You override decisions when you need to. You jump into projects that aren't going well. You do things that "don't scale."
+
+From the outside, this looks like micromanagement. And sometimes it is. But more often, it's about maintaining the company's vision and quality standards as it grows. It's about knowing what's actually happening, not what you're being told is happening.
+
+**The best founders are deeply involved in the details of their products.** Steve Jobs famously obsessed over every pixel. Elon Musk lives at the factory floor. They don't delegate the things that matter most.
+
+## When to Switch
+
+The question is not whether founder mode or manager mode is better. It's when to use each. In the early days, founder mode is essential. You can't delegate when there's no one to delegate to. And you need to be in the details to figure out what works.
+
+As the company grows, you have to delegate more. You can't be involved in everything. But you still need to stay in founder mode for the things that define the company — the product, the culture, the key strategic decisions.
+
+**The mistake most founders make is switching too completely to manager mode.** They hire executives from big companies, and those executives tell them to get out of the details. But the details are where the quality lives. If you get too far from the details, the quality degrades without you noticing.
+
+## The Balance
+
+The hard part is finding the balance. You need to delegate enough that you're not the bottleneck. But you need to stay involved enough that you maintain quality and direction. You need to trust your team, but also verify that they're executing the way you want.
+
+This is why being a founder-CEO is so difficult. You're constantly navigating between being too involved and not involved enough. There's no formula. It's a judgment call that changes as the company grows.
+
+## Trust Your Instincts
+
+If something feels off, don't ignore it just because you're supposed to delegate. Go look. Talk to people. Get into the details. You hired these people because you trust them, but that doesn't mean you should be blind to problems.
+
+The best companies are built by founders who never fully hand over control. They stay engaged, they stay demanding, and they stay true to their vision even as the company grows around them.
+
+*September 2024*`,
+
+  'being-a-noob': `## The Value of Starting Over
+
+One of the best things you can do for your career is to occasionally start over as a noob. To take on something you know nothing about and have to learn from scratch. To be the person in the room who asks the basic questions.
+
+This is uncomfortable. Most people avoid it. But the discomfort is exactly what makes it valuable.
+
+## What You Learn
+
+When you're a noob, you can't hide behind expertise. You have to actually understand things. You can't nod along when people use jargon — you have to ask them what they mean. And when you do, you often discover they don't really know either.
+
+Being a noob forces you to think from first principles. You can't rely on rules of thumb or industry best practices, because you don't know what those are yet. So you have to figure things out yourself. And often, your naive approach turns out to be better than the conventional wisdom.
+
+**Experts have blind spots.** They know so much about how things are done that they stop questioning whether that's the right way. Noobs, by contrast, question everything. Not because they're smart, but because they don't know any better.
+
+## The Freedom
+
+There's a kind of freedom in being a noob. You're not invested in the way things are. You don't have a reputation to protect. You can suggest crazy ideas without worrying about looking stupid, because everyone already expects you to be stupid.
+
+This is why some of the best innovations come from people who are new to a field. They don't know what's impossible, so they try it anyway. They don't know the "right" way to do things, so they invent a new way.
+
+## Staying a Noob
+
+The challenge is to maintain that noob mindset even as you gain expertise. This is surprisingly hard. As you learn more, you start to accumulate assumptions. You start to think you know how things work. And gradually, you lose the ability to see things fresh.
+
+**The way to fight this is to keep putting yourself in situations where you're a noob.** Learn a new programming language. Take on a project in a different field. Work with people who have completely different backgrounds. Force yourself to ask basic questions.
+
+## The Questions
+
+Being a noob is mostly about asking good questions. And the best questions are the most basic ones. "Why do we do it this way?" "What problem is this solving?" "Is there a simpler approach?"
+
+Experts often can't ask these questions anymore. They've forgotten that there was ever any other way. But these are exactly the questions that lead to breakthroughs.
+
+*January 2020*`,
+
+  'fashionable-problems': `## The Trap
+
+There's a certain kind of problem that attracts a lot of attention not because it's important, but because it's fashionable. These are the problems everyone talks about, everyone has opinions on, everyone wants to work on. But often, they're not actually the most important problems.
+
+The trap is that fashionable problems feel important. They're what everyone is talking about. If you work on them, people will understand what you do. You'll fit into the conversation. But that doesn't mean you're having impact.
+
+## Why Problems Become Fashionable
+
+Problems become fashionable for various reasons, not all good. Sometimes they're genuinely important. Sometimes they're just trendy. Sometimes they get attention because they're emotionally resonant, or politically charged, or easy to talk about.
+
+**The fashionable problems are not necessarily the ones where you can make the most difference.** In fact, they're often the opposite. When everyone is working on something, the marginal contribution of one more person working on it is small.
+
+## The Unfashionable Opportunities
+
+The best opportunities are often in areas that are unfashionable. Problems that are important but unsexy. Problems that require technical depth rather than broad appeal. Problems that won't get you on the cover of magazines but will actually help people.
+
+These problems are less crowded. There's less competition. And paradoxically, you often have more impact working on an unfashionable problem than a fashionable one, precisely because fewer people are working on it.
+
+## How to Identify Them
+
+The way to identify fashionable problems is to notice when something is getting a lot of attention relative to its actual importance. When there are more people talking about a problem than working on it. When the problem has become a signaling mechanism — a way for people to show they're smart or virtuous — rather than something anyone is seriously trying to solve.
+
+**Unfashionable problems, by contrast, are the ones no one wants to talk about at parties.** They're technical. They're boring. They require specialized knowledge. They don't fit into simple narratives. But they're the problems where real progress happens.
+
+## The Courage to Be Unfashionable
+
+It takes courage to work on unfashionable problems. You won't get as much recognition. People won't immediately understand what you do. You might feel like you're missing out on the exciting stuff everyone else is working on.
+
+But if you care about having an impact, unfashionable problems are often where you should be. Not always — some fashionable problems really are important. But it's worth being skeptical and asking whether the attention a problem gets is proportional to its actual importance.
+
+*December 2022*`,
+
+  'crazy-new-ideas': `## The Pattern
+
+Truly new ideas almost always seem crazy at first. Not just slightly odd, but genuinely crazy. The kind of idea where people say "that will never work" with complete confidence.
+
+This is not an accident. If an idea seemed obviously good, someone would have already done it. The good ideas that are left are the ones that seem bad.
+
+## Why They Seem Crazy
+
+New ideas seem crazy for a specific reason: they violate some assumption that everyone takes for granted. They depend on something being possible that everyone "knows" is impossible. Or they solve a problem that everyone has decided is unsolvable.
+
+The idea of riding in a stranger's car seemed crazy before Uber. The idea of staying in a stranger's house seemed crazy before Airbnb. The idea that you could build a multi-billion dollar company on top of AWS seemed crazy before Stripe.
+
+**These ideas seemed crazy because they violated assumptions about trust, or economics, or what was technically feasible.** And those assumptions weren't entirely wrong — they were just out of date.
+
+## The Challenge
+
+The challenge for anyone with a crazy new idea is distinguishing between ideas that are crazy-good and ideas that are just crazy. Most ideas that seem crazy are, in fact, just crazy. They won't work. The assumptions they violate are correct.
+
+But a small number of crazy ideas are actually breakthrough insights. The trick is figuring out which ones.
+
+## How to Tell
+
+The way to tell is not by how crazy the idea seems, but by looking at the details. Why does everyone think it won't work? What assumption are they making? Is that assumption actually true, or is it just conventional wisdom?
+
+If you can identify a specific reason why the conventional wisdom is wrong — some change in technology, or economics, or behavior that makes the previously impossible now possible — that's a good sign.
+
+**The best way to evaluate a crazy idea is to try it.** Not just think about it, but actually build it and see what happens. Most crazy ideas fail. But the ones that succeed change the world.
+
+## Living With Crazy Ideas
+
+If you're working on something genuinely new, you have to be comfortable with people thinking you're crazy. Not just at first, but for years. Even after you've proven it works, people will find reasons to dismiss it.
+
+This is why founder psychology matters so much. You need enough confidence to believe in an idea that everyone else thinks is crazy. But not so much confidence that you ignore evidence that you're wrong. It's a delicate balance.
+
+*May 2021*`,
 };
 
 export function getEssayContent(id: string): string | null {
