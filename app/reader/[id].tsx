@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { View, StyleSheet, BackHandler, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, BackHandler, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useReader } from '../../context/ReaderContext';
@@ -10,6 +10,7 @@ import { SettingsSheet } from '../../components/reader/SettingsSheet';
 import { SearchBar } from '../../components/reader/SearchBar';
 import { BookmarksSheet } from '../../components/reader/BookmarksSheet';
 import { TOCSheet } from '../../components/reader/TOCSheet';
+import { MenuSheet } from '../../components/reader/MenuSheet';
 import { getEssayById } from '../../lib/essays';
 import { getEssayContent } from '../../lib/essayContent';
 import { mockEssay } from '../../lib/mockEssay';
@@ -32,14 +33,19 @@ export default function ReaderScreen() {
   // Search state
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [searchInput, setSearchInput] = useState(''); // Immediate input value
   const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
   const readerViewRef = useRef<{ scrollToPosition: (position: number) => void } | null>(null);
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Bookmarks state
   const [bookmarksVisible, setBookmarksVisible] = useState(false);
 
   // TOC state
   const [tocVisible, setTocVisible] = useState(false);
+
+  // Menu state
+  const [menuVisible, setMenuVisible] = useState(false);
 
   // Auto-hide header timer
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -98,6 +104,9 @@ export default function ReaderScreen() {
       if (saveTimerRef.current) {
         clearTimeout(saveTimerRef.current);
       }
+      if (searchDebounceRef.current) {
+        clearTimeout(searchDebounceRef.current);
+      }
     };
   }, []);
 
@@ -153,6 +162,10 @@ export default function ReaderScreen() {
     setTocVisible(true);
   }, []);
 
+  const handleMenuPress = useCallback(() => {
+    setMenuVisible(true);
+  }, []);
+
   const handleNavigateToBookmark = useCallback((position: number) => {
     readerViewRef.current?.scrollToPosition(position);
   }, []);
@@ -160,7 +173,11 @@ export default function ReaderScreen() {
   const handleSearchClose = useCallback(() => {
     setSearchVisible(false);
     setSearchText('');
+    setSearchInput('');
     setCurrentMatchIndex(0);
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
   }, []);
 
   // Calculate search matches
@@ -179,8 +196,17 @@ export default function ReaderScreen() {
   }, [searchText, essay.content]);
 
   const handleSearchTextChange = useCallback((text: string) => {
-    setSearchText(text);
+    setSearchInput(text); // Update input immediately for responsive typing
     setCurrentMatchIndex(0);
+
+    // Debounce the actual search calculation
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+
+    searchDebounceRef.current = setTimeout(() => {
+      setSearchText(text);
+    }, 300);
   }, []);
 
   const handlePrevMatch = useCallback(() => {
@@ -210,6 +236,26 @@ export default function ReaderScreen() {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.colors.background }]}>
         <ActivityIndicator size="large" color={theme.colors.accent} />
+        <Text style={[styles.loadingText, { color: theme.colors.textSecondary }]}>
+          Loading essay...
+        </Text>
+      </View>
+    );
+  }
+
+  // Show error if essay content is missing or empty
+  if (!essay.content || essay.content.trim().length === 0) {
+    return (
+      <View style={[styles.loadingContainer, { backgroundColor: theme.colors.background }]}>
+        <Text style={[styles.errorText, { color: theme.colors.text }]}>
+          Essay content unavailable
+        </Text>
+        <TouchableOpacity
+          style={[styles.errorButton, { backgroundColor: theme.colors.accent }]}
+          onPress={handleClose}
+        >
+          <Text style={styles.errorButtonText}>Go Back</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -239,6 +285,7 @@ export default function ReaderScreen() {
         onSearchPress={handleSearchPress}
         onBookmarksPress={handleBookmarksPress}
         onTOCPress={handleTOCPress}
+        onMenuPress={handleMenuPress}
         essayUrl={essay.url}
         content={essay.content}
         progress={progress}
@@ -246,7 +293,7 @@ export default function ReaderScreen() {
 
       <SearchBar
         visible={searchVisible}
-        searchText={searchText}
+        searchText={searchInput}
         onSearchTextChange={handleSearchTextChange}
         onClose={handleSearchClose}
         currentMatch={currentMatchIndex}
@@ -276,6 +323,17 @@ export default function ReaderScreen() {
         content={essay.content}
         onNavigate={handleNavigateToBookmark}
       />
+
+      <MenuSheet
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+        onTOCPress={handleTOCPress}
+        onSettingsPress={handleSettingsPress}
+        essayTitle={essay.title}
+        essayUrl={essay.url}
+        content={essay.content}
+        progress={progress}
+      />
     </View>
   );
 }
@@ -288,5 +346,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 24,
+  },
+  errorButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  errorButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

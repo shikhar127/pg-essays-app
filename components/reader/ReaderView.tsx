@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useCallback, useMemo, useEffect, forwardRef, useImperativeHandle, useState } from 'react';
 import {
   ScrollView,
   View,
@@ -9,19 +9,69 @@ import {
   LayoutChangeEvent,
   useWindowDimensions,
   Linking,
+  AccessibilityInfo,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Markdown from 'react-native-markdown-display';
 import { useReader } from '../../context/ReaderContext';
 
-// Override inline text rendering to enable native text selection + share
-const selectableRules = {
-  inline: (node: any, children: any, parent: any, styles: any) => (
-    <Text key={node.key} style={styles.inline} selectable={true}>
-      {children}
-    </Text>
-  ),
-};
+// Override inline text rendering to enable native text selection + share + search highlighting
+const createSelectableRules = (searchText: string, accentColor: string) => ({
+  inline: (node: any, children: any, parent: any, styles: any) => {
+    // If no search or search too short, just render normally
+    if (!searchText || searchText.length < 2) {
+      return (
+        <Text key={node.key} style={styles.inline} selectable={true}>
+          {children}
+        </Text>
+      );
+    }
+
+    // Process children to highlight search matches
+    const highlightedChildren = React.Children.map(children, (child) => {
+      if (typeof child !== 'string') return child;
+
+      const lowerChild = child.toLowerCase();
+      const lowerSearch = searchText.toLowerCase();
+
+      if (!lowerChild.includes(lowerSearch)) return child;
+
+      // Split text by search term and rebuild with highlights
+      const parts: React.ReactNode[] = [];
+      let remaining = child;
+      let lowerRemaining = lowerChild;
+      let keyIndex = 0;
+
+      while (lowerRemaining.includes(lowerSearch)) {
+        const index = lowerRemaining.indexOf(lowerSearch);
+        const before = remaining.substring(0, index);
+        const match = remaining.substring(index, index + searchText.length);
+
+        if (before) parts.push(before);
+        parts.push(
+          <Text
+            key={`highlight-${keyIndex++}`}
+            style={{ backgroundColor: `${accentColor}30` }}
+          >
+            {match}
+          </Text>
+        );
+
+        remaining = remaining.substring(index + searchText.length);
+        lowerRemaining = lowerRemaining.substring(index + searchText.length);
+      }
+
+      if (remaining) parts.push(remaining);
+      return parts;
+    });
+
+    return (
+      <Text key={node.key} style={styles.inline} selectable={true}>
+        {highlightedChildren}
+      </Text>
+    );
+  },
+});
 
 interface ReaderViewProps {
   title: string;
@@ -51,6 +101,12 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
   progress = 0,
 }, ref) {
   const { theme, fontSizeConfig } = useReader();
+
+  // Create selectable rules with search highlighting
+  const selectableRules = useMemo(
+    () => createSelectableRules(searchText, theme.colors.accent),
+    [searchText, theme.colors.accent]
+  );
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const scrollViewRef = useRef<ScrollView>(null);
@@ -61,6 +117,14 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
   const contentHeight = useRef(0);
   const layoutHeight = useRef(0);
   const touchStartX = useRef(0);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  // Check reduce motion preference
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      setReduceMotion(enabled || false);
+    });
+  }, []);
 
   // Expose scrollToPosition for search navigation
   useImperativeHandle(ref, () => ({
@@ -69,11 +133,11 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
         const maxScrollY = contentHeight.current - layoutHeight.current;
         if (maxScrollY > 0) {
           const scrollY = maxScrollY * Math.min(Math.max(position, 0), 1);
-          scrollViewRef.current?.scrollTo({ y: scrollY, animated: true });
+          scrollViewRef.current?.scrollTo({ y: scrollY, animated: !reduceMotion });
         }
       }
     },
-  }), []);
+  }), [reduceMotion]);
 
   // Restore scroll position when content is laid out
   const handleContentLayout = useCallback((event: LayoutChangeEvent) => {
@@ -278,7 +342,7 @@ export const ReaderView = forwardRef<ReaderViewHandle, ReaderViewProps>(function
             ? 'Less than a minute remaining'
             : `${Math.ceil(readingTime * (1 - progress))} min remaining`}
         </Text>
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
         <Markdown
           style={markdownStyles}
           onLinkPress={handleLinkPress}
@@ -309,7 +373,6 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#E5E5E5',
     marginBottom: 24,
     opacity: 0.5,
   },

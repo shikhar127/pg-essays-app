@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import {
   View,
   TextInput,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Animated,
   Keyboard,
+  AccessibilityInfo,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -39,20 +40,27 @@ export function SearchBar({
   const insets = useSafeAreaInsets();
   const translateY = useRef(new Animated.Value(-100)).current;
   const inputRef = useRef<TextInput>(null);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      setReduceMotion(enabled || false);
+    });
+  }, []);
 
   useEffect(() => {
     Animated.timing(translateY, {
       toValue: visible ? 0 : -100,
-      duration: 200,
+      duration: reduceMotion ? 0 : 200,
       useNativeDriver: true,
     }).start();
 
     if (visible) {
-      setTimeout(() => inputRef.current?.focus(), 250);
+      setTimeout(() => inputRef.current?.focus(), reduceMotion ? 0 : 250);
     } else {
       Keyboard.dismiss();
     }
-  }, [visible, translateY]);
+  }, [visible, translateY, reduceMotion]);
 
   const handleClose = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -153,27 +161,30 @@ export function SearchBar({
         </Text>
       )}
 
-      {searchText.length >= 2 && (
+      {searchText.length >= 2 && totalMatches === 0 && (
+        <View style={styles.emptyState}>
+          <Text style={[styles.emptyIcon, { color: theme.colors.textSecondary }]}>⌀</Text>
+          <Text style={[styles.emptyText, { color: theme.colors.textSecondary }]}>
+            No matches found
+          </Text>
+        </View>
+      )}
+
+      {searchText.length >= 2 && totalMatches > 0 && (
         <View style={styles.resultsRow}>
           <Text style={[styles.resultsText, { color: theme.colors.textSecondary }]}>
-            {totalMatches === 0
-              ? 'No matches'
-              : `${currentMatch} of ${totalMatches}`}
+            {`${currentMatch} of ${totalMatches}`}
           </Text>
 
           <View style={styles.navButtons}>
             <TouchableOpacity
               onPress={handlePrev}
-              disabled={totalMatches === 0}
-              style={[
-                styles.navButton,
-                totalMatches === 0 && styles.navButtonDisabled,
-              ]}
+              style={styles.navButton}
             >
               <Text
                 style={[
                   styles.navIcon,
-                  { color: totalMatches === 0 ? theme.colors.textSecondary : theme.colors.text },
+                  { color: theme.colors.text },
                 ]}
               >
                 ↑
@@ -181,16 +192,12 @@ export function SearchBar({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleNext}
-              disabled={totalMatches === 0}
-              style={[
-                styles.navButton,
-                totalMatches === 0 && styles.navButtonDisabled,
-              ]}
+              style={styles.navButton}
             >
               <Text
                 style={[
                   styles.navIcon,
-                  { color: totalMatches === 0 ? theme.colors.textSecondary : theme.colors.text },
+                  { color: theme.colors.text },
                 ]}
               >
                 ↓
@@ -265,6 +272,18 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 8,
     paddingHorizontal: 4,
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 16,
+    marginTop: 8,
+  },
+  emptyIcon: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  emptyText: {
+    fontSize: 17,
   },
   resultsRow: {
     flexDirection: 'row',

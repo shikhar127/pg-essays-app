@@ -49,13 +49,15 @@ export async function loadScrollPositions(): Promise<ScrollPositions> {
   }
 }
 
-export async function saveScrollPosition(essayId: string, position: number): Promise<void> {
+export async function saveScrollPosition(essayId: string, position: number): Promise<boolean> {
   try {
     const positions = await loadScrollPositions();
     positions[essayId] = position;
     await AsyncStorage.setItem(KEYS.SCROLL_POSITIONS, JSON.stringify(positions));
+    return true;
   } catch (error) {
     console.warn('Failed to save scroll position:', error);
+    return false;
   }
 }
 
@@ -168,25 +170,29 @@ export async function loadFavorites(): Promise<string[]> {
   }
 }
 
-export async function saveFavorite(essayId: string): Promise<void> {
+export async function saveFavorite(essayId: string): Promise<boolean> {
   try {
     const favorites = await loadFavorites();
     if (!favorites.includes(essayId)) {
       favorites.push(essayId);
       await AsyncStorage.setItem(KEYS.FAVORITES, JSON.stringify(favorites));
     }
+    return true;
   } catch (error) {
     console.warn('Failed to save favorite:', error);
+    return false;
   }
 }
 
-export async function removeFavorite(essayId: string): Promise<void> {
+export async function removeFavorite(essayId: string): Promise<boolean> {
   try {
     const favorites = await loadFavorites();
     const updated = favorites.filter((id) => id !== essayId);
     await AsyncStorage.setItem(KEYS.FAVORITES, JSON.stringify(updated));
+    return true;
   } catch (error) {
     console.warn('Failed to remove favorite:', error);
+    return false;
   }
 }
 
@@ -207,13 +213,15 @@ export async function loadReadHistory(): Promise<ReadHistoryEntry[]> {
   }
 }
 
-export async function saveReadHistory(essayId: string): Promise<void> {
+export async function saveReadHistory(essayId: string): Promise<boolean> {
   try {
     const history = await loadReadHistory();
     const filtered = history.filter((entry) => entry.essayId !== essayId);
     filtered.unshift({ essayId, readAt: Date.now() });
     await AsyncStorage.setItem(KEYS.READ_HISTORY, JSON.stringify(filtered));
+    return true;
   } catch (error) {
     console.warn('Failed to save read history:', error);
+    return false;
   }
 }

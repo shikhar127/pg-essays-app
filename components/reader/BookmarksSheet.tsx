@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
   Modal,
@@ -39,16 +40,29 @@ export function BookmarksSheet({
   const deletedBookmarkRef = useRef<Bookmark | null>(null);
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Add bookmark toast state
+  const [addToastVisible, setAddToastVisible] = useState(false);
+  const addToastTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Storage error toast state
+  const [errorToastVisible, setErrorToastVisible] = useState(false);
+  const errorToastTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Note input state
+  const [noteInput, setNoteInput] = useState('');
+
   useEffect(() => {
     if (visible) {
       fetchBookmarks();
     }
   }, [visible, essayId]);
 
-  // Cleanup toast timer on unmount
+  // Cleanup toast timers on unmount
   useEffect(() => {
     return () => {
       if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+      if (addToastTimerRef.current) clearTimeout(addToastTimerRef.current);
+      if (errorToastTimerRef.current) clearTimeout(errorToastTimerRef.current);
     };
   }, []);
 
@@ -60,9 +74,28 @@ export function BookmarksSheet({
   };
 
   const handleAddBookmark = async () => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    await addBookmark(essayId, currentPosition);
-    await fetchBookmarks();
+    try {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      const note = noteInput.trim() || undefined;
+      await addBookmark(essayId, currentPosition, note);
+      setNoteInput(''); // Clear note input after adding
+      await fetchBookmarks();
+
+      // Show add toast
+      setAddToastVisible(true);
+      if (addToastTimerRef.current) clearTimeout(addToastTimerRef.current);
+      addToastTimerRef.current = setTimeout(() => {
+        setAddToastVisible(false);
+      }, 2000);
+    } catch (error) {
+      // Show error toast
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      setErrorToastVisible(true);
+      if (errorToastTimerRef.current) clearTimeout(errorToastTimerRef.current);
+      errorToastTimerRef.current = setTimeout(() => {
+        setErrorToastVisible(false);
+      }, 3000);
+    }
   };
 
   const handleRemoveBookmark = useCallback((bookmark: Bookmark) => {
@@ -151,6 +184,24 @@ export function BookmarksSheet({
             </TouchableOpacity>
           </View>
 
+          <TextInput
+            style={[
+              styles.noteInput,
+              {
+                backgroundColor: theme.colors.border,
+                color: theme.colors.text,
+                borderColor: theme.colors.border,
+              },
+            ]}
+            placeholder="Add a note (optional)"
+            placeholderTextColor={theme.colors.textSecondary}
+            value={noteInput}
+            onChangeText={setNoteInput}
+            multiline
+            numberOfLines={2}
+            maxLength={200}
+          />
+
           <TouchableOpacity
             style={[
               styles.addButton,
@@ -189,6 +240,11 @@ export function BookmarksSheet({
                       <Text style={[styles.bookmarkSnippet, { color: theme.colors.text }]}>
                         {extractSnippet(bookmark.position)}
                       </Text>
+                      {bookmark.note && (
+                        <Text style={[styles.bookmarkNote, { color: theme.colors.textSecondary }]}>
+                          "{bookmark.note}"
+                        </Text>
+                      )}
                       <Text style={[styles.bookmarkDate, { color: theme.colors.textSecondary }]}>
                         Added {formatDate(bookmark.createdAt)}
                       </Text>
@@ -226,6 +282,34 @@ export function BookmarksSheet({
                   Undo
                 </Text>
               </TouchableOpacity>
+            </View>
+          )}
+
+          {/* Add Bookmark Toast */}
+          {addToastVisible && (
+            <View
+              style={[
+                styles.toast,
+                { backgroundColor: theme.colors.headerBackground, borderTopColor: theme.colors.border },
+              ]}
+            >
+              <Text style={[styles.toastText, { color: theme.colors.accent }]}>
+                Bookmark added ✓
+              </Text>
+            </View>
+          )}
+
+          {/* Error Toast */}
+          {errorToastVisible && (
+            <View
+              style={[
+                styles.toast,
+                { backgroundColor: theme.colors.headerBackground, borderTopColor: theme.colors.border },
+              ]}
+            >
+              <Text style={[styles.toastText, { color: '#ff4444' }]}>
+                Could not save bookmark. Storage may be full.
+              </Text>
             </View>
           )}
         </View>
@@ -276,6 +360,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  noteInput: {
+    marginHorizontal: 20,
+    marginBottom: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 8,
+    fontSize: 15,
+    minHeight: 60,
+    textAlignVertical: 'top',
+  },
   emptyText: {
     textAlign: 'center',
     paddingHorizontal: 40,
@@ -306,6 +400,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 2,
     lineHeight: 22,
+  },
+  bookmarkNote: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    marginTop: 4,
+    marginBottom: 4,
+    lineHeight: 20,
   },
   bookmarkDate: {
     fontSize: 13,

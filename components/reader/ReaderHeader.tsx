@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Platform,
   Animated,
   Share,
+  AccessibilityInfo,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -20,6 +21,7 @@ interface ReaderHeaderProps {
   onSearchPress: () => void;
   onBookmarksPress: () => void;
   onTOCPress: () => void;
+  onMenuPress: () => void;
   essayUrl?: string;
   content?: string;
   progress?: number;
@@ -33,6 +35,7 @@ export function ReaderHeader({
   onSearchPress,
   onBookmarksPress,
   onTOCPress,
+  onMenuPress,
   essayUrl,
   content = '',
   progress = 0,
@@ -40,14 +43,21 @@ export function ReaderHeader({
   const { theme } = useReader();
   const insets = useSafeAreaInsets();
   const opacity = useRef(new Animated.Value(visible ? 1 : 0)).current;
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      setReduceMotion(enabled || false);
+    });
+  }, []);
 
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: visible ? 1 : 0,
-      duration: 200,
+      duration: reduceMotion ? 0 : 200,
       useNativeDriver: true,
     }).start();
-  }, [visible, opacity]);
+  }, [visible, opacity, reduceMotion]);
 
   const handleClose = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -69,32 +79,9 @@ export function ReaderHeader({
     onBookmarksPress();
   };
 
-  const handleTOC = () => {
+  const handleMenu = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    onTOCPress();
-  };
-
-  const handleShare = async () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    try {
-      let excerpt = '';
-      if (content && progress > 0) {
-        const charIndex = Math.round(progress * content.length);
-        const start = Math.max(0, charIndex - 50);
-        const end = Math.min(content.length, charIndex + 50);
-        excerpt = content.slice(start, end).replace(/\n/g, ' ').trim();
-        if (excerpt.length > 100) excerpt = excerpt.slice(0, 100);
-        if (start > 0) excerpt = '...' + excerpt;
-        if (end < content.length) excerpt = excerpt + '...';
-      }
-      const url = essayUrl || 'https://paulgraham.com/articles.html';
-      const message = excerpt
-        ? `"${title}" by Paul Graham\n\n${excerpt}\n\nRead more: ${url}`
-        : `"${title}" by Paul Graham\n\nRead more: ${url}`;
-      await Share.share({ message, title });
-    } catch (error) {
-      console.warn('Share failed:', error);
-    }
+    onMenuPress();
   };
 
   return (
@@ -115,9 +102,7 @@ export function ReaderHeader({
         onPress={handleClose}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <Text style={[styles.closeIcon, { color: theme.colors.text }]}>
-          {Platform.OS === 'ios' ? '✕' : '←'}
-        </Text>
+        <Text style={[styles.closeIcon, { color: theme.colors.text }]}>✕</Text>
       </TouchableOpacity>
 
       <Text
@@ -130,10 +115,10 @@ export function ReaderHeader({
       <View style={styles.rightButtons}>
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={handleTOC}
+          onPress={handleSearch}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>≡</Text>
+          <Text style={[styles.icon, { color: theme.colors.text }]}>⌕</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -146,28 +131,10 @@ export function ReaderHeader({
 
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={handleSearch}
+          onPress={handleMenu}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>⌕</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={handleShare}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>↗</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={handleSettings}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <Text style={[styles.icon, { color: theme.colors.text }]}>
-            Aa
-          </Text>
+          <Text style={[styles.icon, { color: theme.colors.text }]}>⋮</Text>
         </TouchableOpacity>
       </View>
     </Animated.View>
