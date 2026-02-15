@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   ScrollView,
@@ -6,18 +6,24 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Markdown from 'react-native-markdown-display';
 import { loadEssayContent, loadEssayIndex, EssayMetadata } from '@/lib/essays';
+import { useAppState } from '@/contexts/AppStateContext';
 
 export default function ReaderScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  const { readingProgress, updateProgress } = useAppState();
   const [content, setContent] = useState<string>('');
   const [metadata, setMetadata] = useState<EssayMetadata | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const updateProgressTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     async function loadContent() {
@@ -52,6 +58,55 @@ export default function ReaderScreen() {
     loadContent();
   }, [id]);
 
+  // Restore scroll position when content loads
+  useEffect(() => {
+    if (!loading && id && content && scrollViewRef.current) {
+      const progress = readingProgress[id];
+      if (progress && progress.scrollPosition > 0) {
+        // Small delay to ensure content is rendered
+        setTimeout(() => {
+          scrollViewRef.current?.scrollTo({
+            y: progress.scrollPosition,
+            animated: false,
+          });
+        }, 100);
+      }
+    }
+  }, [loading, id, content, readingProgress]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (updateProgressTimerRef.current) {
+        clearTimeout(updateProgressTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Handle scroll events with debouncing
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!id) return;
+
+    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
+    const scrollPosition = contentOffset.y;
+    const scrollViewHeight = layoutMeasurement.height;
+    const contentHeight = contentSize.height;
+
+    // Calculate progress as a percentage (0-1)
+    const maxScroll = contentHeight - scrollViewHeight;
+    const progress = maxScroll > 0 ? Math.min(scrollPosition / maxScroll, 1) : 0;
+
+    // Clear existing timer
+    if (updateProgressTimerRef.current) {
+      clearTimeout(updateProgressTimerRef.current);
+    }
+
+    // Debounce: wait 500ms after last scroll before saving
+    updateProgressTimerRef.current = setTimeout(() => {
+      updateProgress(id, scrollPosition, progress);
+    }, 500);
+  };
+
   if (loading) {
     return (
       <View style={styles.centerContainer}>
@@ -80,8 +135,11 @@ export default function ReaderScreen() {
   return (
     <View style={styles.container}>
       <ScrollView
+        ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
       >
         {metadata && (
           <View style={styles.header}>

@@ -10,9 +10,11 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
+import { useAppState } from '@/contexts/AppStateContext';
 
 export default function LibraryScreen() {
   const router = useRouter();
+  const { readingProgress } = useAppState();
   const [essays, setEssays] = useState<EssayMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,23 +60,36 @@ export default function LibraryScreen() {
     router.push(`/reader/${essay.id}`);
   };
 
-  const renderEssayCard = ({ item }: { item: EssayMetadata }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => handleEssayPress(item)}
-      accessibilityLabel={`Read ${item.title}`}
-      accessibilityRole="button"
-    >
-      <View style={styles.cardContent}>
-        <Text style={styles.title}>{item.title}</Text>
-        <View style={styles.metadata}>
-          <Text style={styles.metadataText}>{item.year}</Text>
-          <Text style={styles.metadataText}>•</Text>
-          <Text style={styles.metadataText}>{item.wordCount.toLocaleString()} words</Text>
+  const renderEssayCard = ({ item }: { item: EssayMetadata }) => {
+    const progress = readingProgress[item.id];
+    const progressPercentage = progress ? Math.round(progress.progress * 100) : 0;
+    const hasProgress = progress && progress.progress > 0;
+
+    return (
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => handleEssayPress(item)}
+        accessibilityLabel={`Read ${item.title}${hasProgress ? `, ${progressPercentage}% complete` : ''}`}
+        accessibilityRole="button"
+      >
+        <View style={styles.cardContent}>
+          <View style={styles.titleRow}>
+            <Text style={styles.title}>{item.title}</Text>
+            {hasProgress && (
+              <View style={styles.progressBadge}>
+                <Text style={styles.progressText}>{progressPercentage}%</Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.metadata}>
+            <Text style={styles.metadataText}>{item.year}</Text>
+            <Text style={styles.metadataText}>•</Text>
+            <Text style={styles.metadataText}>{item.wordCount.toLocaleString()} words</Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
@@ -178,11 +193,31 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 16,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
   title: {
+    flex: 1,
     fontSize: 18,
     fontWeight: '600',
     color: '#000',
-    marginBottom: 8,
+    marginRight: 8,
+  },
+  progressBadge: {
+    backgroundColor: '#007AFF',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    minWidth: 50,
+    alignItems: 'center',
+  },
+  progressText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
   },
   metadata: {
     flexDirection: 'row',
