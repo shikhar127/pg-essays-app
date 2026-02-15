@@ -1,15 +1,8 @@
 import { essayContentMap } from './essayContentMap';
+import type { EssayMetadata } from '@/types/essay';
 
-export interface EssayMetadata {
-  id: string;
-  title: string;
-  wordCount: number;
-  readingTimeMinutes: number;
-  year: number;
-  month: number;
-  url: string;
-  filename: string;
-}
+// Re-export types for convenience
+export type { EssayMetadata, Essay } from '@/types/essay';
 
 // Cache for essay index to avoid reloading
 let essayIndexCache: EssayMetadata[] | null = null;

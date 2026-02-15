@@ -1,25 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { ReadingProgress, Settings, AppState } from '@/types/essay';
 
-// Type definitions
-export interface ReadingProgress {
-  essayId: string;
-  scrollPosition: number;
-  progress: number; // 0-1
-  isRead: boolean;
-  lastReadAt: string; // ISO date string
-}
-
-export interface Settings {
-  hasCompletedOnboarding: boolean;
-  // Future settings can be added here (theme, font size, etc.)
-}
-
-interface AppState {
-  readingProgress: Record<string, ReadingProgress>;
-  favorites: Set<string>; // Set of essay IDs
-  settings: Settings;
-}
+// Re-export types for convenience
+export type { ReadingProgress, Settings } from '@/types/essay';
 
 interface AppStateContextValue extends AppState {
   updateProgress: (essayId: string, scrollPosition: number, progress: number) => Promise<void>;

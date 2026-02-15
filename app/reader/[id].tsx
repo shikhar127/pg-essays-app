@@ -11,11 +11,13 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Markdown from 'react-native-markdown-display';
-import { loadEssayContent, loadEssayIndex, EssayMetadata } from '@/lib/essays';
+import { loadEssayContent, loadEssayIndex } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
+import type { EssayMetadata } from '@/types/essay';
+import type { ReaderParams } from '@/types/navigation';
 
 export default function ReaderScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useLocalSearchParams<ReaderParams>();
   const router = useRouter();
   const { readingProgress, updateProgress } = useAppState();
   const [content, setContent] = useState<string>('');

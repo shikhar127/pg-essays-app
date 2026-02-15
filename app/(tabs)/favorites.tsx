@@ -6,12 +6,14 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  GestureResponderEvent,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
+import { loadEssayIndex } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
+import type { EssayMetadata } from '@/types/essay';
 
 // Memoized essay card component for better scroll performance
 interface EssayCardProps {
@@ -19,7 +21,7 @@ interface EssayCardProps {
   progress: { progress: number; isRead?: boolean; lastReadAt?: string } | undefined;
   isFavorite: boolean;
   onPress: (essay: EssayMetadata) => void;
-  onToggleFavorite: (essayId: string, event: any) => void;
+  onToggleFavorite: (essayId: string, event: GestureResponderEvent) => void;
 }
 
 const EssayCard = React.memo(({ essay, progress, isFavorite, onPress, onToggleFavorite }: EssayCardProps) => {
@@ -105,7 +107,7 @@ export default function FavoritesScreen() {
     router.push(`/reader/${essay.id}`);
   };
 
-  const handleToggleFavorite = (essayId: string, event: any) => {
+  const handleToggleFavorite = (essayId: string, event: GestureResponderEvent) => {
     event.stopPropagation(); // Prevent navigation when tapping heart
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     toggleFavorite(essayId);
@@ -125,7 +127,7 @@ export default function FavoritesScreen() {
 
   // Performance optimization: getItemLayout for faster scrolling
   const ITEM_HEIGHT = 88 + 16; // card minHeight (88) + marginBottom (16)
-  const getItemLayout = (_data: any, index: number) => ({
+  const getItemLayout = (_data: ArrayLike<EssayMetadata> | null | undefined, index: number) => ({
     length: ITEM_HEIGHT,
     offset: ITEM_HEIGHT * index,
     index,
