@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,10 @@ import {
   TouchableOpacity,
   TextInput,
   GestureResponderEvent,
+  ScrollView,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -207,13 +211,42 @@ export default function LibraryScreen() {
     );
   }
 
+  const filters: FilterTab[] = ['all', 'in-progress', 'read'];
+  const scrollViewRef = useRef<ScrollView>(null);
+  const screenWidth = Dimensions.get('window').width;
+
+  const handleFilterScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / screenWidth);
+    const newFilter = filters[index];
+    if (newFilter && newFilter !== activeFilter) {
+      setActiveFilter(newFilter);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+  };
+
+  const switchToFilter = (filter: FilterTab) => {
+    const index = filters.indexOf(filter);
+    setActiveFilter(filter);
+    scrollViewRef.current?.scrollTo({ x: index * screenWidth, animated: true });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  // Set initial scroll position on mount
+  useEffect(() => {
+    const initialIndex = filters.indexOf(activeFilter);
+    setTimeout(() => {
+      scrollViewRef.current?.scrollTo({ x: initialIndex * screenWidth, animated: false });
+    }, 100);
+  }, []);
+
   return (
     <View style={styles.container}>
       {/* Filter Tabs */}
       <View style={styles.filterContainer}>
         <TouchableOpacity
           style={[styles.filterTab, activeFilter === 'all' && styles.filterTabActive]}
-          onPress={() => setActiveFilter('all')}
+          onPress={() => switchToFilter('all')}
           accessibilityLabel={`All essays, ${counts.all} total`}
           accessibilityRole="button"
         >
@@ -223,7 +256,7 @@ export default function LibraryScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.filterTab, activeFilter === 'in-progress' && styles.filterTabActive]}
-          onPress={() => setActiveFilter('in-progress')}
+          onPress={() => switchToFilter('in-progress')}
           accessibilityLabel={`In progress essays, ${counts.inProgress} total`}
           accessibilityRole="button"
         >
@@ -233,7 +266,7 @@ export default function LibraryScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.filterTab, activeFilter === 'read' && styles.filterTabActive]}
-          onPress={() => setActiveFilter('read')}
+          onPress={() => switchToFilter('read')}
           accessibilityLabel={`Read essays, ${counts.read} total`}
           accessibilityRole="button"
         >
@@ -243,42 +276,57 @@ export default function LibraryScreen() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search essays..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          autoCapitalize="none"
-          autoCorrect={false}
-          clearButtonMode="never"
-          accessibilityLabel="Search essays"
-          accessibilityHint="Type to filter essays by title"
-        />
-        {searchQuery.length > 0 && (
-          <TouchableOpacity
-            style={styles.clearButton}
-            onPress={handleClearSearch}
-            accessibilityLabel="Clear search"
-            accessibilityRole="button"
-          >
-            <Text style={styles.clearButtonText}>✕</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-      <FlatList
-        data={filteredEssays}
-        renderItem={renderEssayCard}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
-        getItemLayout={getItemLayout}
-        initialNumToRender={20}
-        maxToRenderPerBatch={10}
-        windowSize={21}
-        removeClippedSubviews={true}
-        accessibilityLabel="Essay library"
-        accessibilityHint={`Showing ${filteredEssays.length} essay${filteredEssays.length === 1 ? '' : 's'}`}
-      />
+      {/* Swipeable Filter Content */}
+      <ScrollView
+        ref={scrollViewRef}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={handleFilterScroll}
+        scrollEventThrottle={16}
+        style={styles.swipeContainer}
+      >
+        {filters.map((filter) => (
+          <View key={filter} style={[styles.filterPage, { width: screenWidth }]}>
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search essays..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                autoCapitalize="none"
+                autoCorrect={false}
+                clearButtonMode="never"
+                accessibilityLabel="Search essays"
+                accessibilityHint="Type to filter essays by title"
+              />
+              {searchQuery.length > 0 && (
+                <TouchableOpacity
+                  style={styles.clearButton}
+                  onPress={handleClearSearch}
+                  accessibilityLabel="Clear search"
+                  accessibilityRole="button"
+                >
+                  <Text style={styles.clearButtonText}>✕</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <FlatList
+              data={activeFilter === filter ? filteredEssays : []}
+              renderItem={renderEssayCard}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.listContent}
+              getItemLayout={getItemLayout}
+              initialNumToRender={20}
+              maxToRenderPerBatch={10}
+              windowSize={21}
+              removeClippedSubviews={true}
+              accessibilityLabel="Essay library"
+              accessibilityHint={`Showing ${filteredEssays.length} essay${filteredEssays.length === 1 ? '' : 's'}`}
+            />
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -293,6 +341,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  swipeContainer: {
+    flex: 1,
+  },
+  filterPage: {
+    flex: 1,
   },
   filterContainer: {
     flexDirection: 'row',
