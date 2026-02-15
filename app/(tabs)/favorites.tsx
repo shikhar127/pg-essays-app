@@ -13,6 +13,65 @@ import * as Haptics from 'expo-haptics';
 import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
 
+// Memoized essay card component for better scroll performance
+interface EssayCardProps {
+  essay: EssayMetadata;
+  progress: { progress: number; isRead?: boolean; lastReadAt?: string } | undefined;
+  isFavorite: boolean;
+  onPress: (essay: EssayMetadata) => void;
+  onToggleFavorite: (essayId: string, event: any) => void;
+}
+
+const EssayCard = React.memo(({ essay, progress, isFavorite, onPress, onToggleFavorite }: EssayCardProps) => {
+  const progressPercentage = progress ? Math.round(progress.progress * 100) : 0;
+  const hasProgress = progress && progress.progress > 0;
+  const isRead = progress?.isRead || false;
+
+  return (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => onPress(essay)}
+      accessibilityLabel={`Read ${essay.title}${isRead ? ', read' : hasProgress ? `, ${progressPercentage}% complete` : ''}${isFavorite ? ', favorited' : ''}`}
+      accessibilityRole="button"
+    >
+      <View style={styles.cardContent}>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{essay.title}</Text>
+          <View style={styles.badgeContainer}>
+            {isRead ? (
+              <View style={styles.readBadge}>
+                <Text style={styles.readBadgeText}>✓ Read</Text>
+              </View>
+            ) : hasProgress ? (
+              <View style={styles.progressBadge}>
+                <Text style={styles.progressText}>{progressPercentage}%</Text>
+              </View>
+            ) : null}
+            <TouchableOpacity
+              style={styles.favoriteButton}
+              onPress={(e) => onToggleFavorite(essay.id, e)}
+              accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              accessibilityRole="button"
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Ionicons
+                name={isFavorite ? 'heart' : 'heart-outline'}
+                size={24}
+                color={isFavorite ? '#FF3B30' : '#999'}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.metadata}>
+          <Text style={styles.metadataText}>{essay.year}</Text>
+          <Text style={styles.metadataText}>•</Text>
+          <Text style={styles.metadataText}>{essay.wordCount.toLocaleString()} words</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+});
+
 export default function FavoritesScreen() {
   const router = useRouter();
   const { readingProgress, favorites, toggleFavorite } = useAppState();
@@ -47,56 +106,24 @@ export default function FavoritesScreen() {
   };
 
   const renderEssayCard = ({ item }: { item: EssayMetadata }) => {
-    const progress = readingProgress[item.id];
-    const progressPercentage = progress ? Math.round(progress.progress * 100) : 0;
-    const hasProgress = progress && progress.progress > 0;
-    const isRead = progress?.isRead || false;
-    const isFavorite = favorites.has(item.id);
-
     return (
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => handleEssayPress(item)}
-        accessibilityLabel={`Read ${item.title}${isRead ? ', read' : hasProgress ? `, ${progressPercentage}% complete` : ''}${isFavorite ? ', favorited' : ''}`}
-        accessibilityRole="button"
-      >
-        <View style={styles.cardContent}>
-          <View style={styles.titleRow}>
-            <Text style={styles.title}>{item.title}</Text>
-            <View style={styles.badgeContainer}>
-              {isRead ? (
-                <View style={styles.readBadge}>
-                  <Text style={styles.readBadgeText}>✓ Read</Text>
-                </View>
-              ) : hasProgress ? (
-                <View style={styles.progressBadge}>
-                  <Text style={styles.progressText}>{progressPercentage}%</Text>
-                </View>
-              ) : null}
-              <TouchableOpacity
-                style={styles.favoriteButton}
-                onPress={(e) => handleToggleFavorite(item.id, e)}
-                accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                accessibilityRole="button"
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              >
-                <Ionicons
-                  name={isFavorite ? 'heart' : 'heart-outline'}
-                  size={24}
-                  color={isFavorite ? '#FF3B30' : '#999'}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.metadata}>
-            <Text style={styles.metadataText}>{item.year}</Text>
-            <Text style={styles.metadataText}>•</Text>
-            <Text style={styles.metadataText}>{item.wordCount.toLocaleString()} words</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <EssayCard
+        essay={item}
+        progress={readingProgress[item.id]}
+        isFavorite={favorites.has(item.id)}
+        onPress={handleEssayPress}
+        onToggleFavorite={handleToggleFavorite}
+      />
     );
   };
+
+  // Performance optimization: getItemLayout for faster scrolling
+  const ITEM_HEIGHT = 88 + 16; // card minHeight (88) + marginBottom (16)
+  const getItemLayout = (_data: any, index: number) => ({
+    length: ITEM_HEIGHT,
+    offset: ITEM_HEIGHT * index,
+    index,
+  });
 
   if (loading) {
     return (
@@ -132,6 +159,11 @@ export default function FavoritesScreen() {
         renderItem={renderEssayCard}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
+        getItemLayout={getItemLayout}
+        initialNumToRender={20}
+        maxToRenderPerBatch={10}
+        windowSize={21}
+        removeClippedSubviews={true}
         accessibilityLabel="Favorited essays"
         accessibilityHint={`Showing ${favoritedEssays.length} favorited essay${favoritedEssays.length === 1 ? '' : 's'}`}
       />
