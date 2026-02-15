@@ -75,6 +75,8 @@ const EssayCard = React.memo(({ essay, progress, isFavorite, onPress, onToggleFa
   );
 });
 
+type FilterTab = 'all' | 'in-progress' | 'read';
+
 export default function LibraryScreen() {
   const router = useRouter();
   const { readingProgress, favorites, toggleFavorite } = useAppState();
@@ -82,6 +84,7 @@ export default function LibraryScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('in-progress');
 
   const loadEssays = () => {
     try {
@@ -112,14 +115,28 @@ export default function LibraryScreen() {
   }, [searchQuery]);
 
   const filteredEssays = useMemo(() => {
-    if (!debouncedSearchQuery.trim()) {
-      return essays;
+    let result = essays;
+
+    // Apply status filter
+    if (activeFilter === 'read') {
+      result = result.filter((essay) => readingProgress[essay.id]?.isRead);
+    } else if (activeFilter === 'in-progress') {
+      result = result.filter((essay) => {
+        const progress = readingProgress[essay.id];
+        return progress && progress.progress > 0 && !progress.isRead;
+      });
     }
-    const query = debouncedSearchQuery.toLowerCase();
-    return essays.filter((essay) =>
-      essay.title.toLowerCase().includes(query)
-    );
-  }, [essays, debouncedSearchQuery]);
+
+    // Apply search filter
+    if (debouncedSearchQuery.trim()) {
+      const query = debouncedSearchQuery.toLowerCase();
+      result = result.filter((essay) =>
+        essay.title.toLowerCase().includes(query)
+      );
+    }
+
+    return result;
+  }, [essays, debouncedSearchQuery, activeFilter, readingProgress]);
 
   const handleClearSearch = () => {
     setSearchQuery('');
@@ -179,8 +196,53 @@ export default function LibraryScreen() {
     );
   }
 
+  // Count essays by status
+  const counts = useMemo(() => {
+    const all = essays.length;
+    const read = essays.filter((e) => readingProgress[e.id]?.isRead).length;
+    const inProgress = essays.filter((e) => {
+      const progress = readingProgress[e.id];
+      return progress && progress.progress > 0 && !progress.isRead;
+    }).length;
+    return { all, read, inProgress };
+  }, [essays, readingProgress]);
+
   return (
     <View style={styles.container}>
+      {/* Filter Tabs */}
+      <View style={styles.filterContainer}>
+        <TouchableOpacity
+          style={[styles.filterTab, activeFilter === 'all' && styles.filterTabActive]}
+          onPress={() => setActiveFilter('all')}
+          accessibilityLabel={`All essays, ${counts.all} total`}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.filterTabText, activeFilter === 'all' && styles.filterTabTextActive]}>
+            All {counts.all > 0 && `(${counts.all})`}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.filterTab, activeFilter === 'in-progress' && styles.filterTabActive]}
+          onPress={() => setActiveFilter('in-progress')}
+          accessibilityLabel={`In progress essays, ${counts.inProgress} total`}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.filterTabText, activeFilter === 'in-progress' && styles.filterTabTextActive]}>
+            In Progress {counts.inProgress > 0 && `(${counts.inProgress})`}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.filterTab, activeFilter === 'read' && styles.filterTabActive]}
+          onPress={() => setActiveFilter('read')}
+          accessibilityLabel={`Read essays, ${counts.read} total`}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.filterTabText, activeFilter === 'read' && styles.filterTabTextActive]}>
+            Read {counts.read > 0 && `(${counts.read})`}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -231,6 +293,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  filterTab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 8,
+    marginHorizontal: 4,
+    minHeight: 44,
+    justifyContent: 'center',
+  },
+  filterTabActive: {
+    backgroundColor: '#007AFF',
+  },
+  filterTabText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+  },
+  filterTabTextActive: {
+    color: '#fff',
   },
   searchContainer: {
     flexDirection: 'row',
