@@ -31,9 +31,9 @@ export function getMorningReminder(
 
   // Get most recently read essay
   const recentEssay = inProgress.sort((a, b) => {
-    const aTime = readingProgress[a.id]?.lastReadAt || 0;
-    const bTime = readingProgress[b.id]?.lastReadAt || 0;
-    return bTime - aTime;
+    const aTime = readingProgress[a.id]?.lastReadAt || '';
+    const bTime = readingProgress[b.id]?.lastReadAt || '';
+    return bTime.localeCompare(aTime);
   })[0];
 
   if (recentEssay) {
@@ -68,7 +68,7 @@ export function getEveningReminder(
   });
 
   // Count read today (last 24 hours)
-  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
   const readToday = Object.values(readingProgress).filter(
     p => p.lastReadAt && p.lastReadAt > oneDayAgo
   ).length;
