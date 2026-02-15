@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
 
@@ -13,6 +14,7 @@ export default function LibraryScreen() {
   const [essays, setEssays] = useState<EssayMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     try {
@@ -24,6 +26,31 @@ export default function LibraryScreen() {
       setLoading(false);
     }
   }, []);
+
+  // Filter essays based on search query with debouncing
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const filteredEssays = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) {
+      return essays;
+    }
+    const query = debouncedSearchQuery.toLowerCase();
+    return essays.filter((essay) =>
+      essay.title.toLowerCase().includes(query)
+    );
+  }, [essays, debouncedSearchQuery]);
+
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
 
   const renderEssayCard = ({ item }: { item: EssayMetadata }) => (
     <TouchableOpacity style={styles.card}>
@@ -56,8 +83,29 @@ export default function LibraryScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search essays..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          autoCapitalize="none"
+          autoCorrect={false}
+          clearButtonMode="never"
+        />
+        {searchQuery.length > 0 && (
+          <TouchableOpacity
+            style={styles.clearButton}
+            onPress={handleClearSearch}
+            accessibilityLabel="Clear search"
+            accessibilityRole="button"
+          >
+            <Text style={styles.clearButtonText}>✕</Text>
+          </TouchableOpacity>
+        )}
+      </View>
       <FlatList
-        data={essays}
+        data={filteredEssays}
         renderItem={renderEssayCard}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
@@ -76,6 +124,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
+    backgroundColor: '#fff',
+  },
+  searchInput: {
+    flex: 1,
+    height: 44,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#000',
+  },
+  clearButton: {
+    position: 'absolute',
+    right: 24,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  clearButtonText: {
+    fontSize: 20,
+    color: '#999',
+    fontWeight: '300',
   },
   listContent: {
     padding: 16,
