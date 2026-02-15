@@ -64,22 +64,27 @@ export default function LibraryScreen() {
     const progress = readingProgress[item.id];
     const progressPercentage = progress ? Math.round(progress.progress * 100) : 0;
     const hasProgress = progress && progress.progress > 0;
+    const isRead = progress?.isRead || false;
 
     return (
       <TouchableOpacity
         style={styles.card}
         onPress={() => handleEssayPress(item)}
-        accessibilityLabel={`Read ${item.title}${hasProgress ? `, ${progressPercentage}% complete` : ''}`}
+        accessibilityLabel={`Read ${item.title}${isRead ? ', read' : hasProgress ? `, ${progressPercentage}% complete` : ''}`}
         accessibilityRole="button"
       >
         <View style={styles.cardContent}>
           <View style={styles.titleRow}>
             <Text style={styles.title}>{item.title}</Text>
-            {hasProgress && (
+            {isRead ? (
+              <View style={styles.readBadge}>
+                <Text style={styles.readBadgeText}>✓ Read</Text>
+              </View>
+            ) : hasProgress ? (
               <View style={styles.progressBadge}>
                 <Text style={styles.progressText}>{progressPercentage}%</Text>
               </View>
-            )}
+            ) : null}
           </View>
           <View style={styles.metadata}>
             <Text style={styles.metadataText}>{item.year}</Text>
@@ -215,6 +220,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  readBadge: {
+    backgroundColor: '#34C759',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    alignItems: 'center',
+  },
+  readBadgeText: {
     fontSize: 12,
     fontWeight: '600',
     color: '#fff',
