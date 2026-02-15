@@ -138,6 +138,17 @@ export default function LibraryScreen() {
     return result;
   }, [essays, debouncedSearchQuery, activeFilter, readingProgress]);
 
+  // Count essays by status - MUST be before any conditional returns
+  const counts = useMemo(() => {
+    const all = essays.length;
+    const read = essays.filter((e) => readingProgress[e.id]?.isRead).length;
+    const inProgress = essays.filter((e) => {
+      const progress = readingProgress[e.id];
+      return progress && progress.progress > 0 && !progress.isRead;
+    }).length;
+    return { all, read, inProgress };
+  }, [essays, readingProgress]);
+
   const handleClearSearch = () => {
     setSearchQuery('');
   };
@@ -195,17 +206,6 @@ export default function LibraryScreen() {
       </View>
     );
   }
-
-  // Count essays by status
-  const counts = useMemo(() => {
-    const all = essays.length;
-    const read = essays.filter((e) => readingProgress[e.id]?.isRead).length;
-    const inProgress = essays.filter((e) => {
-      const progress = readingProgress[e.id];
-      return progress && progress.progress > 0 && !progress.isRead;
-    }).length;
-    return { all, read, inProgress };
-  }, [essays, readingProgress]);
 
   return (
     <View style={styles.container}>
