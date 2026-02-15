@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 16,
     overflow: 'hidden',
+    minHeight: 88, // Ensure adequate touch target (2x44 for content + padding)
   },
   cardContent: {
     padding: 16,

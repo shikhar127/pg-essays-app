@@ -12,6 +12,7 @@ export default function TabsLayout() {
           backgroundColor: '#fff',
           borderTopWidth: 1,
           borderTopColor: '#E5E5EA',
+          height: 60, // Ensure adequate height for 44x44 touch targets
         },
       }}
     >
@@ -21,7 +22,7 @@ export default function TabsLayout() {
           title: 'Library',
           tabBarLabel: 'Library',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="library" size={size} color={color} accessibilityLabel="Library tab" />
+            <Ionicons name="library" size={28} color={color} accessibilityLabel="Library tab" />
           ),
           tabBarAccessibilityLabel: 'Library tab',
         }}
@@ -32,7 +33,7 @@ export default function TabsLayout() {
           title: 'Favorites',
           tabBarLabel: 'Favorites',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="heart" size={size} color={color} accessibilityLabel="Favorites tab" />
+            <Ionicons name="heart" size={28} color={color} accessibilityLabel="Favorites tab" />
           ),
           tabBarAccessibilityLabel: 'Favorites tab',
         }}
@@ -43,7 +44,7 @@ export default function TabsLayout() {
           title: 'Settings',
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} accessibilityLabel="Settings tab" />
+            <Ionicons name="settings" size={28} color={color} accessibilityLabel="Settings tab" />
           ),
           tabBarAccessibilityLabel: 'Settings tab',
         }}

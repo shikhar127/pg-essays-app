@@ -218,6 +218,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
     borderRadius: 8,
     minWidth: 120,
+    minHeight: 44, // Ensure 44x44 minimum touch target
+    justifyContent: 'center',
     alignItems: 'center',
   },
   backButtonText: {
