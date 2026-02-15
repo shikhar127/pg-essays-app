@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
   badgeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
   },
   favoriteButton: {
     width: 44,
@@ -244,6 +243,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     minWidth: 50,
     alignItems: 'center',
+    marginLeft: 8,
   },
   progressText: {
     fontSize: 12,
@@ -264,11 +264,11 @@ const styles = StyleSheet.create({
   },
   metadata: {
     flexDirection: 'row',
-    gap: 8,
   },
   metadataText: {
     fontSize: 14,
     color: '#666',
+    marginRight: 8,
   },
   errorText: {
     fontSize: 16,

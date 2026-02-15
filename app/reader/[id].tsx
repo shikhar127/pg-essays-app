@@ -207,11 +207,11 @@ const styles = StyleSheet.create({
   },
   metadata: {
     flexDirection: 'row',
-    gap: 8,
   },
   metadataText: {
     fontSize: 14,
     color: '#666',
+    marginRight: 8,
   },
   loadingText: {
     marginTop: 12,
@@ -226,7 +226,6 @@ const styles = StyleSheet.create({
   },
   errorButtons: {
     flexDirection: 'row',
-    gap: 12,
   },
   retryButton: {
     paddingHorizontal: 24,
@@ -237,6 +236,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
   },
   retryButtonText: {
     fontSize: 16,
