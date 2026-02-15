@@ -9,12 +9,14 @@ import {
   TextInput,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
 
 export default function LibraryScreen() {
   const router = useRouter();
-  const { readingProgress } = useAppState();
+  const { readingProgress, favorites, toggleFavorite } = useAppState();
   const [essays, setEssays] = useState<EssayMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,31 +62,53 @@ export default function LibraryScreen() {
     router.push(`/reader/${essay.id}`);
   };
 
+  const handleToggleFavorite = (essayId: string, event: any) => {
+    event.stopPropagation(); // Prevent navigation when tapping heart
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    toggleFavorite(essayId);
+  };
+
   const renderEssayCard = ({ item }: { item: EssayMetadata }) => {
     const progress = readingProgress[item.id];
     const progressPercentage = progress ? Math.round(progress.progress * 100) : 0;
     const hasProgress = progress && progress.progress > 0;
     const isRead = progress?.isRead || false;
+    const isFavorite = favorites.has(item.id);
 
     return (
       <TouchableOpacity
         style={styles.card}
         onPress={() => handleEssayPress(item)}
-        accessibilityLabel={`Read ${item.title}${isRead ? ', read' : hasProgress ? `, ${progressPercentage}% complete` : ''}`}
+        accessibilityLabel={`Read ${item.title}${isRead ? ', read' : hasProgress ? `, ${progressPercentage}% complete` : ''}${isFavorite ? ', favorited' : ''}`}
         accessibilityRole="button"
       >
         <View style={styles.cardContent}>
           <View style={styles.titleRow}>
             <Text style={styles.title}>{item.title}</Text>
-            {isRead ? (
-              <View style={styles.readBadge}>
-                <Text style={styles.readBadgeText}>✓ Read</Text>
-              </View>
-            ) : hasProgress ? (
-              <View style={styles.progressBadge}>
-                <Text style={styles.progressText}>{progressPercentage}%</Text>
-              </View>
-            ) : null}
+            <View style={styles.badgeContainer}>
+              {isRead ? (
+                <View style={styles.readBadge}>
+                  <Text style={styles.readBadgeText}>✓ Read</Text>
+                </View>
+              ) : hasProgress ? (
+                <View style={styles.progressBadge}>
+                  <Text style={styles.progressText}>{progressPercentage}%</Text>
+                </View>
+              ) : null}
+              <TouchableOpacity
+                style={styles.favoriteButton}
+                onPress={(e) => handleToggleFavorite(item.id, e)}
+                accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                accessibilityRole="button"
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons
+                  name={isFavorite ? 'heart' : 'heart-outline'}
+                  size={24}
+                  color={isFavorite ? '#FF3B30' : '#999'}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.metadata}>
             <Text style={styles.metadataText}>{item.year}</Text>
@@ -210,6 +234,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#000',
     marginRight: 8,
+  },
+  badgeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  favoriteButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: -10, // Offset padding to align with card edge
   },
   progressBadge: {
     backgroundColor: '#007AFF',
