@@ -21,8 +21,9 @@ export default function TabsLayout() {
           title: 'Library',
           tabBarLabel: 'Library',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="library" size={size} color={color} />
+            <Ionicons name="library" size={size} color={color} accessibilityLabel="Library tab" />
           ),
+          tabBarAccessibilityLabel: 'Library tab',
         }}
       />
       <Tabs.Screen
@@ -31,8 +32,9 @@ export default function TabsLayout() {
           title: 'Favorites',
           tabBarLabel: 'Favorites',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="heart" size={size} color={color} />
+            <Ionicons name="heart" size={size} color={color} accessibilityLabel="Favorites tab" />
           ),
+          tabBarAccessibilityLabel: 'Favorites tab',
         }}
       />
       <Tabs.Screen
@@ -41,8 +43,9 @@ export default function TabsLayout() {
           title: 'Settings',
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} />
+            <Ionicons name="settings" size={size} color={color} accessibilityLabel="Settings tab" />
           ),
+          tabBarAccessibilityLabel: 'Settings tab',
         }}
       />
     </Tabs>

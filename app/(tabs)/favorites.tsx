@@ -132,6 +132,8 @@ export default function FavoritesScreen() {
         renderItem={renderEssayCard}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
+        accessibilityLabel="Favorited essays"
+        accessibilityHint={`Showing ${favoritedEssays.length} favorited essay${favoritedEssays.length === 1 ? '' : 's'}`}
       />
     </View>
   );

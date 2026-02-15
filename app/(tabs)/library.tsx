@@ -147,6 +147,8 @@ export default function LibraryScreen() {
           autoCapitalize="none"
           autoCorrect={false}
           clearButtonMode="never"
+          accessibilityLabel="Search essays"
+          accessibilityHint="Type to filter essays by title"
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity
@@ -164,6 +166,8 @@ export default function LibraryScreen() {
         renderItem={renderEssayCard}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
+        accessibilityLabel="Essay library"
+        accessibilityHint={`Showing ${filteredEssays.length} essay${filteredEssays.length === 1 ? '' : 's'}`}
       />
     </View>
   );

@@ -140,6 +140,8 @@ export default function ReaderScreen() {
         contentContainerStyle={styles.scrollContent}
         onScroll={handleScroll}
         scrollEventThrottle={16}
+        accessibilityLabel={metadata ? `Reading ${metadata.title}` : 'Essay reader'}
+        accessibilityHint="Scroll to read the essay"
       >
         {metadata && (
           <View style={styles.header}>
