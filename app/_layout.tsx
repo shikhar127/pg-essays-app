@@ -1,9 +1,16 @@
 import { Stack } from 'expo-router';
-import { AppStateProvider } from '@/contexts/AppStateContext';
+import { AppStateProvider, useAppState } from '@/contexts/AppStateContext';
+import OnboardingModal from '@/components/onboarding/OnboardingModal';
 
-export default function RootLayout() {
+function RootNavigator() {
+  const { settings, isLoading, updateSettings } = useAppState();
+
+  const handleOnboardingComplete = async () => {
+    await updateSettings({ hasCompletedOnboarding: true });
+  };
+
   return (
-    <AppStateProvider>
+    <>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -17,6 +24,20 @@ export default function RootLayout() {
           }}
         />
       </Stack>
+
+      {/* Show onboarding on first launch */}
+      <OnboardingModal
+        visible={!isLoading && !settings.hasCompletedOnboarding}
+        onComplete={handleOnboardingComplete}
+      />
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AppStateProvider>
+      <RootNavigator />
     </AppStateProvider>
   );
 }
