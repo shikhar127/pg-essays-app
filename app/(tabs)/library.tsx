@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { loadEssayIndex, EssayMetadata } from '@/lib/essays';
 
 export default function LibraryScreen() {
+  const router = useRouter();
   const [essays, setEssays] = useState<EssayMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,8 +54,17 @@ export default function LibraryScreen() {
     setSearchQuery('');
   };
 
+  const handleEssayPress = (essay: EssayMetadata) => {
+    router.push(`/reader/${essay.id}`);
+  };
+
   const renderEssayCard = ({ item }: { item: EssayMetadata }) => (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => handleEssayPress(item)}
+      accessibilityLabel={`Read ${item.title}`}
+      accessibilityRole="button"
+    >
       <View style={styles.cardContent}>
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.metadata}>
