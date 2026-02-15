@@ -81,8 +81,10 @@ export default function LibraryScreen() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
+  const loadEssays = () => {
     try {
+      setLoading(true);
+      setError(null);
       const essayData = loadEssayIndex();
       setEssays(essayData);
       setLoading(false);
@@ -90,6 +92,10 @@ export default function LibraryScreen() {
       setError(err instanceof Error ? err.message : 'Failed to load essays');
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    loadEssays();
   }, []);
 
   // Filter essays based on search query with debouncing
@@ -159,6 +165,14 @@ export default function LibraryScreen() {
     return (
       <View style={styles.centerContainer}>
         <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity
+          style={styles.retryButton}
+          onPress={loadEssays}
+          accessibilityLabel="Retry loading essays"
+          accessibilityRole="button"
+        >
+          <Text style={styles.retryButtonText}>Retry</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -322,5 +336,21 @@ const styles = StyleSheet.create({
     color: '#ff3b30',
     textAlign: 'center',
     paddingHorizontal: 32,
+    marginBottom: 24,
+  },
+  retryButton: {
+    paddingHorizontal: 32,
+    paddingVertical: 12,
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+    minWidth: 120,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
   },
 });

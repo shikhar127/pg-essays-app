@@ -25,36 +25,36 @@ export default function ReaderScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
   const updateProgressTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    async function loadContent() {
-      if (!id) {
-        setError('No essay ID provided');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Load essay content
-        const essayContent = await loadEssayContent(id);
-        setContent(essayContent);
-
-        // Load metadata to display title
-        const essayIndex = loadEssayIndex();
-        const essayMeta = essayIndex.find((e) => e.id === id);
-        if (essayMeta) {
-          setMetadata(essayMeta);
-        }
-
-        setLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load essay');
-        setLoading(false);
-      }
+  const loadContent = async () => {
+    if (!id) {
+      setError('No essay ID provided');
+      setLoading(false);
+      return;
     }
 
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Load essay content
+      const essayContent = await loadEssayContent(id);
+      setContent(essayContent);
+
+      // Load metadata to display title
+      const essayIndex = loadEssayIndex();
+      const essayMeta = essayIndex.find((e) => e.id === id);
+      if (essayMeta) {
+        setMetadata(essayMeta);
+      }
+
+      setLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load essay');
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadContent();
   }, [id]);
 
@@ -120,14 +120,24 @@ export default function ReaderScreen() {
     return (
       <View style={styles.centerContainer}>
         <Text style={styles.errorText}>{error}</Text>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-          accessibilityLabel="Go back"
-          accessibilityRole="button"
-        >
-          <Text style={styles.backButtonText}>Go Back</Text>
-        </TouchableOpacity>
+        <View style={styles.errorButtons}>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={loadContent}
+            accessibilityLabel="Retry loading essay"
+            accessibilityRole="button"
+          >
+            <Text style={styles.retryButtonText}>Retry</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.back()}
+            accessibilityLabel="Go back"
+            accessibilityRole="button"
+          >
+            <Text style={styles.backButtonText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -212,10 +222,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
   },
-  backButton: {
+  errorButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  retryButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
     backgroundColor: '#007AFF',
+    borderRadius: 8,
+    minWidth: 120,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  backButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#8E8E93',
     borderRadius: 8,
     minWidth: 120,
     minHeight: 44, // Ensure 44x44 minimum touch target

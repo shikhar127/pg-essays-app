@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { AppStateProvider, useAppState } from '@/contexts/AppStateContext';
 import OnboardingModal from '@/components/onboarding/OnboardingModal';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 function RootNavigator() {
   const { settings, isLoading, updateSettings } = useAppState();
@@ -36,8 +37,10 @@ function RootNavigator() {
 
 export default function RootLayout() {
   return (
-    <AppStateProvider>
-      <RootNavigator />
-    </AppStateProvider>
+    <ErrorBoundary>
+      <AppStateProvider>
+        <RootNavigator />
+      </AppStateProvider>
+    </ErrorBoundary>
   );
 }
