@@ -170,13 +170,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
-    gap: 8,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
     backgroundColor: '#D1D1D6',
+    marginHorizontal: 4,
   },
   dotActive: {
     backgroundColor: '#007AFF',
