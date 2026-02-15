@@ -1,0 +1,2282 @@
+[
+  {
+    "id": "the-shape-of-the-essay-field",
+    "title": "The Shape of the Essay Field",
+    "wordCount": 769,
+    "readingTimeMinutes": 4,
+    "year": 2025,
+    "month": 6,
+    "url": "https://paulgraham.com/field.html",
+    "filename": "The Shape of the Essay Field.md"
+  },
+  {
+    "id": "good-writing",
+    "title": "Good Writing",
+    "wordCount": 1645,
+    "readingTimeMinutes": 8,
+    "year": 2025,
+    "month": 5,
+    "url": "https://paulgraham.com/goodwriting.html",
+    "filename": "Good Writing.md"
+  },
+  {
+    "id": "what-to-do",
+    "title": "What to Do",
+    "wordCount": 1590,
+    "readingTimeMinutes": 8,
+    "year": 2025,
+    "month": 3,
+    "url": "https://paulgraham.com/do.html",
+    "filename": "What to Do.md"
+  },
+  {
+    "id": "the-origins-of-wokeness",
+    "title": "The Origins of Wokeness",
+    "wordCount": 6168,
+    "readingTimeMinutes": 31,
+    "year": 2025,
+    "month": 1,
+    "url": "https://paulgraham.com/woke.html",
+    "filename": "The Origins of Wokeness.md"
+  },
+  {
+    "id": "writes-and-write-nots",
+    "title": "Writes and Write-Nots",
+    "wordCount": 555,
+    "readingTimeMinutes": 3,
+    "year": 2024,
+    "month": 10,
+    "url": "https://paulgraham.com/writes.html",
+    "filename": "Writes and Write-Nots.md"
+  },
+  {
+    "id": "founder-mode",
+    "title": "Founder Mode",
+    "wordCount": 1244,
+    "readingTimeMinutes": 6,
+    "year": 2024,
+    "month": 9,
+    "url": "https://paulgraham.com/foundermode.html",
+    "filename": "Founder Mode.md"
+  },
+  {
+    "id": "when-to-do-what-you-love",
+    "title": "When To Do What You Love",
+    "wordCount": 1545,
+    "readingTimeMinutes": 8,
+    "year": 2024,
+    "month": 9,
+    "url": "https://paulgraham.com/when.html",
+    "filename": "When To Do What You Love.md"
+  },
+  {
+    "id": "the-right-kind-of-stubborn",
+    "title": "The Right Kind of Stubborn",
+    "wordCount": 1936,
+    "readingTimeMinutes": 10,
+    "year": 2024,
+    "month": 7,
+    "url": "https://paulgraham.com/persistence.html",
+    "filename": "The Right Kind of Stubborn.md"
+  },
+  {
+    "id": "how-to-start-google",
+    "title": "How to Start Google",
+    "wordCount": 2827,
+    "readingTimeMinutes": 14,
+    "year": 2024,
+    "month": 3,
+    "url": "https://paulgraham.com/google.html",
+    "filename": "How to Start Google.md"
+  },
+  {
+    "id": "the-best-essay",
+    "title": "The Best Essay",
+    "wordCount": 4338,
+    "readingTimeMinutes": 22,
+    "year": 2024,
+    "month": 3,
+    "url": "https://paulgraham.com/best.html",
+    "filename": "The Best Essay.md"
+  },
+  {
+    "id": "the-reddits",
+    "title": "The Reddits",
+    "wordCount": 1168,
+    "readingTimeMinutes": 6,
+    "year": 2024,
+    "month": 3,
+    "url": "https://paulgraham.com/reddits.html",
+    "filename": "The Reddits.md"
+  },
+  {
+    "id": "superlinear-returns",
+    "title": "Superlinear Returns",
+    "wordCount": 4259,
+    "readingTimeMinutes": 21,
+    "year": 2023,
+    "month": 10,
+    "url": "https://paulgraham.com/superlinear.html",
+    "filename": "Superlinear Returns.md"
+  },
+  {
+    "id": "how-to-do-great-work",
+    "title": "How to Do Great Work",
+    "wordCount": 11827,
+    "readingTimeMinutes": 59,
+    "year": 2023,
+    "month": 7,
+    "url": "https://paulgraham.com/greatwork.html",
+    "filename": "How to Do Great Work.md"
+  },
+  {
+    "id": "how-to-get-new-ideas",
+    "title": "How to Get New Ideas",
+    "wordCount": 147,
+    "readingTimeMinutes": 1,
+    "year": 2023,
+    "month": 1,
+    "url": "https://paulgraham.com/getideas.html",
+    "filename": "How to Get New Ideas.md"
+  },
+  {
+    "id": "the-need-to-read",
+    "title": "The Need to Read",
+    "wordCount": 446,
+    "readingTimeMinutes": 2,
+    "year": 2022,
+    "month": 11,
+    "url": "https://paulgraham.com/read.html",
+    "filename": "The Need to Read.md"
+  },
+  {
+    "id": "what-you-want-to-want",
+    "title": "What You (Want to)* Want",
+    "wordCount": 511,
+    "readingTimeMinutes": 3,
+    "year": 2022,
+    "month": 11,
+    "url": "https://paulgraham.com/want.html",
+    "filename": "What You (Want to) Want.md"
+  },
+  {
+    "id": "alien-truth",
+    "title": "Alien Truth",
+    "wordCount": 684,
+    "readingTimeMinutes": 3,
+    "year": 2022,
+    "month": 10,
+    "url": "https://paulgraham.com/alien.html",
+    "filename": "Alien Truth.md"
+  },
+  {
+    "id": "what-i-ve-learned-from-users",
+    "title": "What I've Learned from Users",
+    "wordCount": 2195,
+    "readingTimeMinutes": 11,
+    "year": 2022,
+    "month": 9,
+    "url": "https://paulgraham.com/users.html",
+    "filename": "What I've Learned from Users.md"
+  },
+  {
+    "id": "heresy",
+    "title": "Heresy",
+    "wordCount": 2114,
+    "readingTimeMinutes": 11,
+    "year": 2022,
+    "month": 4,
+    "url": "https://paulgraham.com/heresy.html",
+    "filename": "Heresy.md"
+  },
+  {
+    "id": "putting-ideas-into-words",
+    "title": "Putting Ideas into Words",
+    "wordCount": 1164,
+    "readingTimeMinutes": 6,
+    "year": 2022,
+    "month": 2,
+    "url": "https://paulgraham.com/words.html",
+    "filename": "Putting Ideas into Words.md"
+  },
+  {
+    "id": "is-there-such-a-thing-as-good-taste",
+    "title": "Is There Such a Thing as Good Taste?",
+    "wordCount": 1124,
+    "readingTimeMinutes": 6,
+    "year": 2021,
+    "month": 11,
+    "url": "https://paulgraham.com/goodtaste.html",
+    "filename": "Is There Such a Thing as Good Taste.md"
+  },
+  {
+    "id": "beyond-smart",
+    "title": "Beyond Smart",
+    "wordCount": 1422,
+    "readingTimeMinutes": 7,
+    "year": 2021,
+    "month": 10,
+    "url": "https://paulgraham.com/smart.html",
+    "filename": "Beyond Smart.md"
+  },
+  {
+    "id": "weird-languages",
+    "title": "Weird Languages",
+    "wordCount": 348,
+    "readingTimeMinutes": 2,
+    "year": 2021,
+    "month": 8,
+    "url": "https://paulgraham.com/weird.html",
+    "filename": "Weird Languages.md"
+  },
+  {
+    "id": "a-project-of-one-s-own",
+    "title": "A Project of One's Own",
+    "wordCount": 2510,
+    "readingTimeMinutes": 13,
+    "year": 2021,
+    "month": 6,
+    "url": "https://paulgraham.com/own.html",
+    "filename": "A Project of One's Own.md"
+  },
+  {
+    "id": "how-to-work-hard",
+    "title": "How to Work Hard",
+    "wordCount": 3319,
+    "readingTimeMinutes": 17,
+    "year": 2021,
+    "month": 6,
+    "url": "https://paulgraham.com/hwh.html",
+    "filename": "How to Work Hard.md"
+  },
+  {
+    "id": "an-nft-that-saves-lives",
+    "title": "An NFT That Saves Lives",
+    "wordCount": 314,
+    "readingTimeMinutes": 2,
+    "year": 2021,
+    "month": 5,
+    "url": "https://paulgraham.com/nft.html",
+    "filename": "An NFT That Saves Lives.md"
+  },
+  {
+    "id": "crazy-new-ideas",
+    "title": "Crazy New Ideas",
+    "wordCount": 1328,
+    "readingTimeMinutes": 7,
+    "year": 2021,
+    "month": 5,
+    "url": "https://paulgraham.com/newideas.html",
+    "filename": "Crazy New Ideas.md"
+  },
+  {
+    "id": "fierce-nerds",
+    "title": "Fierce Nerds",
+    "wordCount": 1248,
+    "readingTimeMinutes": 6,
+    "year": 2021,
+    "month": 5,
+    "url": "https://paulgraham.com/fn.html",
+    "filename": "Fierce Nerds.md"
+  },
+  {
+    "id": "how-people-get-rich-now",
+    "title": "How People Get Rich Now",
+    "wordCount": 2584,
+    "readingTimeMinutes": 13,
+    "year": 2021,
+    "month": 4,
+    "url": "https://paulgraham.com/richnow.html",
+    "filename": "How People Get Rich Now.md"
+  },
+  {
+    "id": "the-real-reason-to-end-the-death-penalty",
+    "title": "The Real Reason to End the Death Penalty",
+    "wordCount": 763,
+    "readingTimeMinutes": 4,
+    "year": 2021,
+    "month": 4,
+    "url": "https://paulgraham.com/real.html",
+    "filename": "The Real Reason to End the Death Penalty.md"
+  },
+  {
+    "id": "donate-unrestricted",
+    "title": "Donate Unrestricted",
+    "wordCount": 485,
+    "readingTimeMinutes": 2,
+    "year": 2021,
+    "month": 3,
+    "url": "https://paulgraham.com/donate.html",
+    "filename": "Donate Unrestricted.md"
+  },
+  {
+    "id": "write-simply",
+    "title": "Write Simply",
+    "wordCount": 511,
+    "readingTimeMinutes": 3,
+    "year": 2021,
+    "month": 3,
+    "url": "https://paulgraham.com/simply.html",
+    "filename": "Write Simply.md"
+  },
+  {
+    "id": "what-i-worked-on",
+    "title": "What I Worked On",
+    "wordCount": 13815,
+    "readingTimeMinutes": 69,
+    "year": 2021,
+    "month": 2,
+    "url": "https://paulgraham.com/worked.html",
+    "filename": "What I Worked On.md"
+  },
+  {
+    "id": "billionaires-build",
+    "title": "Billionaires Build",
+    "wordCount": 3425,
+    "readingTimeMinutes": 17,
+    "year": 2020,
+    "month": 12,
+    "url": "https://paulgraham.com/ace.html",
+    "filename": "Billionaires Build.md"
+  },
+  {
+    "id": "earnestness",
+    "title": "Earnestness",
+    "wordCount": 1671,
+    "readingTimeMinutes": 8,
+    "year": 2020,
+    "month": 12,
+    "url": "https://paulgraham.com/earnest.html",
+    "filename": "Earnestness.md"
+  },
+  {
+    "id": "the-airbnbs",
+    "title": "The Airbnbs",
+    "wordCount": 1102,
+    "readingTimeMinutes": 6,
+    "year": 2020,
+    "month": 12,
+    "url": "https://paulgraham.com/airbnbs.html",
+    "filename": "The Airbnbs.md"
+  },
+  {
+    "id": "how-to-think-for-yourself",
+    "title": "How to Think for Yourself",
+    "wordCount": 3449,
+    "readingTimeMinutes": 17,
+    "year": 2020,
+    "month": 11,
+    "url": "https://paulgraham.com/think.html",
+    "filename": "How to Think for Yourself.md"
+  },
+  {
+    "id": "early-work",
+    "title": "Early Work",
+    "wordCount": 2508,
+    "readingTimeMinutes": 13,
+    "year": 2020,
+    "month": 10,
+    "url": "https://paulgraham.com/early.html",
+    "filename": "Early Work.md"
+  },
+  {
+    "id": "modeling-a-wealth-tax",
+    "title": "Modeling a Wealth Tax",
+    "wordCount": 443,
+    "readingTimeMinutes": 2,
+    "year": 2020,
+    "month": 8,
+    "url": "https://paulgraham.com/wtax.html",
+    "filename": "Modeling a Wealth Tax.md"
+  },
+  {
+    "id": "orthodox-privilege",
+    "title": "Orthodox Privilege",
+    "wordCount": 653,
+    "readingTimeMinutes": 3,
+    "year": 2020,
+    "month": 7,
+    "url": "https://paulgraham.com/orth.html",
+    "filename": "Orthodox Privilege.md"
+  },
+  {
+    "id": "the-four-quadrants-of-conformism",
+    "title": "The Four Quadrants of Conformism",
+    "wordCount": 1971,
+    "readingTimeMinutes": 10,
+    "year": 2020,
+    "month": 7,
+    "url": "https://paulgraham.com/conformism.html",
+    "filename": "The Four Quadrants of Conformism.md"
+  },
+  {
+    "id": "coronavirus-and-credibility",
+    "title": "Coronavirus and Credibility",
+    "wordCount": 237,
+    "readingTimeMinutes": 1,
+    "year": 2020,
+    "month": 4,
+    "url": "https://paulgraham.com/cred.html",
+    "filename": "Coronavirus and Credibility.md"
+  },
+  {
+    "id": "how-to-write-usefully",
+    "title": "How to Write Usefully",
+    "wordCount": 2868,
+    "readingTimeMinutes": 14,
+    "year": 2020,
+    "month": 2,
+    "url": "https://paulgraham.com/useful.html",
+    "filename": "How to Write Usefully.md"
+  },
+  {
+    "id": "being-a-noob",
+    "title": "Being a Noob",
+    "wordCount": 373,
+    "readingTimeMinutes": 2,
+    "year": 2020,
+    "month": 1,
+    "url": "https://paulgraham.com/noob.html",
+    "filename": "Being a Noob.md"
+  },
+  {
+    "id": "haters",
+    "title": "Haters",
+    "wordCount": 1391,
+    "readingTimeMinutes": 7,
+    "year": 2020,
+    "month": 1,
+    "url": "https://paulgraham.com/fh.html",
+    "filename": "Haters.md"
+  },
+  {
+    "id": "fashionable-problems",
+    "title": "Fashionable Problems",
+    "wordCount": 190,
+    "readingTimeMinutes": 1,
+    "year": 2019,
+    "month": 12,
+    "url": "https://paulgraham.com/fp.html",
+    "filename": "Fashionable Problems.md"
+  },
+  {
+    "id": "having-kids",
+    "title": "Having Kids",
+    "wordCount": 1537,
+    "readingTimeMinutes": 8,
+    "year": 2019,
+    "month": 12,
+    "url": "https://paulgraham.com/kids.html",
+    "filename": "Having Kids.md"
+  },
+  {
+    "id": "the-lesson-to-unlearn",
+    "title": "The Lesson to Unlearn",
+    "wordCount": 4043,
+    "readingTimeMinutes": 20,
+    "year": 2019,
+    "month": 12,
+    "url": "https://paulgraham.com/lesson.html",
+    "filename": "The Lesson to Unlearn.md"
+  },
+  {
+    "id": "the-two-kinds-of-moderate",
+    "title": "The Two Kinds of Moderate",
+    "wordCount": 668,
+    "readingTimeMinutes": 3,
+    "year": 2019,
+    "month": 12,
+    "url": "https://paulgraham.com/mod.html",
+    "filename": "The Two Kinds of Moderate.md"
+  },
+  {
+    "id": "novelty-and-heresy",
+    "title": "Novelty and Heresy",
+    "wordCount": 255,
+    "readingTimeMinutes": 1,
+    "year": 2019,
+    "month": 11,
+    "url": "https://paulgraham.com/nov.html",
+    "filename": "Novelty and Heresy.md"
+  },
+  {
+    "id": "the-bus-ticket-theory-of-genius",
+    "title": "The Bus Ticket Theory of Genius",
+    "wordCount": 2636,
+    "readingTimeMinutes": 13,
+    "year": 2019,
+    "month": 11,
+    "url": "https://paulgraham.com/genius.html",
+    "filename": "The Bus Ticket Theory of Genius.md"
+  },
+  {
+    "id": "general-and-surprising",
+    "title": "General and Surprising",
+    "wordCount": 439,
+    "readingTimeMinutes": 2,
+    "year": 2017,
+    "month": 9,
+    "url": "https://paulgraham.com/sun.html",
+    "filename": "General and Surprising.md"
+  },
+  {
+    "id": "charisma-power",
+    "title": "Charisma / Power",
+    "wordCount": 121,
+    "readingTimeMinutes": 1,
+    "year": 2017,
+    "month": 1,
+    "url": "https://paulgraham.com/pow.html",
+    "filename": "Charisma  Power.md"
+  },
+  {
+    "id": "the-risk-of-discovery",
+    "title": "The Risk of Discovery",
+    "wordCount": 216,
+    "readingTimeMinutes": 1,
+    "year": 2017,
+    "month": 1,
+    "url": "https://paulgraham.com/disc.html",
+    "filename": "The Risk of Discovery.md"
+  },
+  {
+    "id": "this-year-we-can-end-the-death-penalty-in-california",
+    "title": "This Year We Can End the Death Penalty in California",
+    "wordCount": 187,
+    "readingTimeMinutes": 1,
+    "year": 2016,
+    "month": 11,
+    "url": "https://paulgraham.com/prop62.html",
+    "filename": "This Year We Can End the Death Penalty in California.md"
+  },
+  {
+    "id": "how-to-make-pittsburgh-a-startup-hub",
+    "title": "How to Make Pittsburgh a Startup Hub",
+    "wordCount": 2636,
+    "readingTimeMinutes": 13,
+    "year": 2016,
+    "month": 4,
+    "url": "https://paulgraham.com/pgh.html",
+    "filename": "How to Make Pittsburgh a Startup Hub.md"
+  },
+  {
+    "id": "economic-inequality",
+    "title": "Economic Inequality",
+    "wordCount": 3421,
+    "readingTimeMinutes": 17,
+    "year": 2016,
+    "month": 1,
+    "url": "https://paulgraham.com/ineq.html",
+    "filename": "Economic Inequality.md"
+  },
+  {
+    "id": "life-is-short",
+    "title": "Life is Short",
+    "wordCount": 1675,
+    "readingTimeMinutes": 8,
+    "year": 2016,
+    "month": 1,
+    "url": "https://paulgraham.com/vb.html",
+    "filename": "Life is Short.md"
+  },
+  {
+    "id": "the-refragmentation",
+    "title": "The Refragmentation",
+    "wordCount": 7187,
+    "readingTimeMinutes": 36,
+    "year": 2016,
+    "month": 1,
+    "url": "https://paulgraham.com/re.html",
+    "filename": "The Refragmentation.md"
+  },
+  {
+    "id": "jessica-livingston",
+    "title": "Jessica Livingston",
+    "wordCount": 1968,
+    "readingTimeMinutes": 10,
+    "year": 2015,
+    "month": 11,
+    "url": "https://paulgraham.com/jessica.html",
+    "filename": "Jessica Livingston.md"
+  },
+  {
+    "id": "a-way-to-detect-bias",
+    "title": "A Way to Detect Bias",
+    "wordCount": 565,
+    "readingTimeMinutes": 3,
+    "year": 2015,
+    "month": 10,
+    "url": "https://paulgraham.com/bias.html",
+    "filename": "A Way to Detect Bias.md"
+  },
+  {
+    "id": "default-alive-or-default-dead",
+    "title": "Default Alive or Default Dead?",
+    "wordCount": 1498,
+    "readingTimeMinutes": 7,
+    "year": 2015,
+    "month": 10,
+    "url": "https://paulgraham.com/aord.html",
+    "filename": "Default Alive or Default Dead.md"
+  },
+  {
+    "id": "write-like-you-talk",
+    "title": "Write Like You Talk",
+    "wordCount": 709,
+    "readingTimeMinutes": 4,
+    "year": 2015,
+    "month": 10,
+    "url": "https://paulgraham.com/talk.html",
+    "filename": "Write Like You Talk.md"
+  },
+  {
+    "id": "change-your-name",
+    "title": "Change Your Name",
+    "wordCount": 759,
+    "readingTimeMinutes": 4,
+    "year": 2015,
+    "month": 8,
+    "url": "https://paulgraham.com/name.html",
+    "filename": "Change Your Name.md"
+  },
+  {
+    "id": "why-it-s-safe-for-founders-to-be-nice",
+    "title": "Why It's Safe for Founders to Be Nice",
+    "wordCount": 785,
+    "readingTimeMinutes": 4,
+    "year": 2015,
+    "month": 8,
+    "url": "https://paulgraham.com/safe.html",
+    "filename": "Why It's Safe for Founders to Be Nice.md"
+  },
+  {
+    "id": "what-microsoft-is-this-the-altair-basic-of",
+    "title": "What Microsoft Is this the Altair Basic of?",
+    "wordCount": 377,
+    "readingTimeMinutes": 2,
+    "year": 2015,
+    "month": 2,
+    "url": "https://paulgraham.com/altair.html",
+    "filename": "What Microsoft Is this the Altair Basic of.md"
+  },
+  {
+    "id": "don-t-talk-to-corp-dev",
+    "title": "Don't Talk to Corp Dev",
+    "wordCount": 1293,
+    "readingTimeMinutes": 6,
+    "year": 2015,
+    "month": 1,
+    "url": "https://paulgraham.com/corpdev.html",
+    "filename": "Don't Talk to Corp Dev.md"
+  },
+  {
+    "id": "the-ronco-principle",
+    "title": "The Ronco Principle",
+    "wordCount": 630,
+    "readingTimeMinutes": 3,
+    "year": 2015,
+    "month": 1,
+    "url": "https://paulgraham.com/ronco.html",
+    "filename": "The Ronco Principle.md"
+  },
+  {
+    "id": "what-doesn-t-seem-like-work",
+    "title": "What Doesn't Seem Like Work?",
+    "wordCount": 483,
+    "readingTimeMinutes": 2,
+    "year": 2015,
+    "month": 1,
+    "url": "https://paulgraham.com/work.html",
+    "filename": "What Doesn't Seem Like Work.md"
+  },
+  {
+    "id": "how-you-know",
+    "title": "How You Know",
+    "wordCount": 648,
+    "readingTimeMinutes": 3,
+    "year": 2014,
+    "month": 12,
+    "url": "https://paulgraham.com/know.html",
+    "filename": "How You Know.md"
+  },
+  {
+    "id": "how-to-be-an-expert-in-a-changing-world",
+    "title": "How to Be an Expert in a Changing World",
+    "wordCount": 1061,
+    "readingTimeMinutes": 5,
+    "year": 2014,
+    "month": 12,
+    "url": "https://paulgraham.com/ecw.html",
+    "filename": "How to Be an Expert in a Changing World.md"
+  },
+  {
+    "id": "let-the-other-95-of-great-programmers-in",
+    "title": "Let the Other 95% of Great Programmers In",
+    "wordCount": 924,
+    "readingTimeMinutes": 5,
+    "year": 2014,
+    "month": 12,
+    "url": "https://paulgraham.com/95.html",
+    "filename": "Let the Other 95% of Great Programmers In.md"
+  },
+  {
+    "id": "the-fatal-pinch",
+    "title": "The Fatal Pinch",
+    "wordCount": 1602,
+    "readingTimeMinutes": 8,
+    "year": 2014,
+    "month": 12,
+    "url": "https://paulgraham.com/pinch.html",
+    "filename": "The Fatal Pinch.md"
+  },
+  {
+    "id": "mean-people-fail",
+    "title": "Mean People Fail",
+    "wordCount": 1138,
+    "readingTimeMinutes": 6,
+    "year": 2014,
+    "month": 11,
+    "url": "https://paulgraham.com/mean.html",
+    "filename": "Mean People Fail.md"
+  },
+  {
+    "id": "before-the-startup",
+    "title": "Before the Startup",
+    "wordCount": 4603,
+    "readingTimeMinutes": 23,
+    "year": 2014,
+    "month": 10,
+    "url": "https://paulgraham.com/before.html",
+    "filename": "Before the Startup.md"
+  },
+  {
+    "id": "how-to-raise-money",
+    "title": "How to Raise Money",
+    "wordCount": 10682,
+    "readingTimeMinutes": 53,
+    "year": 2013,
+    "month": 9,
+    "url": "https://paulgraham.com/fr.html",
+    "filename": "How to Raise Money.md"
+  },
+  {
+    "id": "how-to-convince-investors",
+    "title": "How to Convince Investors",
+    "wordCount": 3693,
+    "readingTimeMinutes": 18,
+    "year": 2013,
+    "month": 8,
+    "url": "https://paulgraham.com/convince.html",
+    "filename": "How to Convince Investors.md"
+  },
+  {
+    "id": "investor-herd-dynamics",
+    "title": "Investor Herd Dynamics",
+    "wordCount": 1107,
+    "readingTimeMinutes": 6,
+    "year": 2013,
+    "month": 8,
+    "url": "https://paulgraham.com/herd.html",
+    "filename": "Investor Herd Dynamics.md"
+  },
+  {
+    "id": "do-things-that-don-t-scale",
+    "title": "Do Things that Don't Scale",
+    "wordCount": 4356,
+    "readingTimeMinutes": 22,
+    "year": 2013,
+    "month": 7,
+    "url": "https://paulgraham.com/ds.html",
+    "filename": "Do Things that Don't Scale.md"
+  },
+  {
+    "id": "startup-investing-trends",
+    "title": "Startup Investing Trends",
+    "wordCount": 2955,
+    "readingTimeMinutes": 15,
+    "year": 2013,
+    "month": 6,
+    "url": "https://paulgraham.com/invtrend.html",
+    "filename": "Startup Investing Trends.md"
+  },
+  {
+    "id": "how-to-get-startup-ideas",
+    "title": "How to Get Startup Ideas",
+    "wordCount": 7221,
+    "readingTimeMinutes": 36,
+    "year": 2012,
+    "month": 11,
+    "url": "https://paulgraham.com/startupideas.html",
+    "filename": "How to Get Startup Ideas.md"
+  },
+  {
+    "id": "the-hardware-renaissance",
+    "title": "The Hardware Renaissance",
+    "wordCount": 403,
+    "readingTimeMinutes": 2,
+    "year": 2012,
+    "month": 10,
+    "url": "https://paulgraham.com/hw.html",
+    "filename": "The Hardware Renaissance.md"
+  },
+  {
+    "id": "black-swan-farming",
+    "title": "Black Swan Farming",
+    "wordCount": 2159,
+    "readingTimeMinutes": 11,
+    "year": 2012,
+    "month": 9,
+    "url": "https://paulgraham.com/swan.html",
+    "filename": "Black Swan Farming.md"
+  },
+  {
+    "id": "startup-growth",
+    "title": "Startup = Growth",
+    "wordCount": 5363,
+    "readingTimeMinutes": 27,
+    "year": 2012,
+    "month": 9,
+    "url": "https://paulgraham.com/growth.html",
+    "filename": "Startup = Growth.md"
+  },
+  {
+    "id": "the-top-of-my-todo-list",
+    "title": "The Top of My Todo List",
+    "wordCount": 234,
+    "readingTimeMinutes": 1,
+    "year": 2012,
+    "month": 4,
+    "url": "https://paulgraham.com/todo.html",
+    "filename": "The Top of My Todo List.md"
+  },
+  {
+    "id": "defining-property",
+    "title": "Defining Property",
+    "wordCount": 980,
+    "readingTimeMinutes": 5,
+    "year": 2012,
+    "month": 3,
+    "url": "https://paulgraham.com/property.html",
+    "filename": "Defining Property.md"
+  },
+  {
+    "id": "frighteningly-ambitious-startup-ideas",
+    "title": "Frighteningly Ambitious Startup Ideas",
+    "wordCount": 3790,
+    "readingTimeMinutes": 19,
+    "year": 2012,
+    "month": 3,
+    "url": "https://paulgraham.com/ambitious.html",
+    "filename": "Frighteningly Ambitious Startup Ideas.md"
+  },
+  {
+    "id": "how-y-combinator-started",
+    "title": "How Y Combinator Started",
+    "wordCount": 1447,
+    "readingTimeMinutes": 7,
+    "year": 2012,
+    "month": 3,
+    "url": "https://paulgraham.com/ycstart.html",
+    "filename": "How Y Combinator Started.md"
+  },
+  {
+    "id": "writing-and-speaking",
+    "title": "Writing and Speaking",
+    "wordCount": 1194,
+    "readingTimeMinutes": 6,
+    "year": 2012,
+    "month": 3,
+    "url": "https://paulgraham.com/speak.html",
+    "filename": "Writing and Speaking.md"
+  },
+  {
+    "id": "a-word-to-the-resourceful",
+    "title": "A Word to the Resourceful",
+    "wordCount": 800,
+    "readingTimeMinutes": 4,
+    "year": 2012,
+    "month": 1,
+    "url": "https://paulgraham.com/word.html",
+    "filename": "A Word to the Resourceful.md"
+  },
+  {
+    "id": "schlep-blindness",
+    "title": "Schlep Blindness",
+    "wordCount": 851,
+    "readingTimeMinutes": 4,
+    "year": 2012,
+    "month": 1,
+    "url": "https://paulgraham.com/schlep.html",
+    "filename": "Schlep Blindness.md"
+  },
+  {
+    "id": "why-startup-hubs-work",
+    "title": "Why Startup Hubs Work",
+    "wordCount": 1807,
+    "readingTimeMinutes": 9,
+    "year": 2011,
+    "month": 10,
+    "url": "https://paulgraham.com/hubs.html",
+    "filename": "Why Startup Hubs Work.md"
+  },
+  {
+    "id": "the-patent-pledge",
+    "title": "The Patent Pledge",
+    "wordCount": 680,
+    "readingTimeMinutes": 3,
+    "year": 2011,
+    "month": 8,
+    "url": "https://paulgraham.com/patentpledge.html",
+    "filename": "The Patent Pledge.md"
+  },
+  {
+    "id": "subject-airbnb",
+    "title": "Subject: Airbnb",
+    "wordCount": 1368,
+    "readingTimeMinutes": 7,
+    "year": 2011,
+    "month": 3,
+    "url": "https://paulgraham.com/airbnb.html",
+    "filename": "Subject Airbnb.md"
+  },
+  {
+    "id": "founder-control",
+    "title": "Founder Control",
+    "wordCount": 780,
+    "readingTimeMinutes": 4,
+    "year": 2010,
+    "month": 12,
+    "url": "https://paulgraham.com/control.html",
+    "filename": "Founder Control.md"
+  },
+  {
+    "id": "tablets",
+    "title": "Tablets",
+    "wordCount": 549,
+    "readingTimeMinutes": 3,
+    "year": 2010,
+    "month": 12,
+    "url": "https://paulgraham.com/tablets.html",
+    "filename": "Tablets.md"
+  },
+  {
+    "id": "the-new-funding-landscape",
+    "title": "The New Funding Landscape",
+    "wordCount": 3583,
+    "readingTimeMinutes": 18,
+    "year": 2010,
+    "month": 10,
+    "url": "https://paulgraham.com/superangels.html",
+    "filename": "The New Funding Landscape.md"
+  },
+  {
+    "id": "what-we-look-for-in-founders",
+    "title": "What We Look for in Founders",
+    "wordCount": 798,
+    "readingTimeMinutes": 4,
+    "year": 2010,
+    "month": 10,
+    "url": "https://paulgraham.com/founders.html",
+    "filename": "What We Look for in Founders.md"
+  },
+  {
+    "id": "where-to-see-silicon-valley",
+    "title": "Where to See Silicon Valley",
+    "wordCount": 1073,
+    "readingTimeMinutes": 5,
+    "year": 2010,
+    "month": 10,
+    "url": "https://paulgraham.com/seesv.html",
+    "filename": "Where to See Silicon Valley.md"
+  },
+  {
+    "id": "high-resolution-fundraising",
+    "title": "High Resolution Fundraising",
+    "wordCount": 713,
+    "readingTimeMinutes": 4,
+    "year": 2010,
+    "month": 9,
+    "url": "https://paulgraham.com/hiresfund.html",
+    "filename": "High Resolution Fundraising.md"
+  },
+  {
+    "id": "the-future-of-startup-funding",
+    "title": "The Future of Startup Funding",
+    "wordCount": 3879,
+    "readingTimeMinutes": 19,
+    "year": 2010,
+    "month": 8,
+    "url": "https://paulgraham.com/future.html",
+    "filename": "The Future of Startup Funding.md"
+  },
+  {
+    "id": "what-happened-to-yahoo",
+    "title": "What Happened to Yahoo",
+    "wordCount": 2050,
+    "readingTimeMinutes": 10,
+    "year": 2010,
+    "month": 8,
+    "url": "https://paulgraham.com/yahoo.html",
+    "filename": "What Happened to Yahoo.md"
+  },
+  {
+    "id": "how-to-lose-time-and-money",
+    "title": "How to Lose Time and Money",
+    "wordCount": 678,
+    "readingTimeMinutes": 3,
+    "year": 2010,
+    "month": 7,
+    "url": "https://paulgraham.com/selfindulgence.html",
+    "filename": "How to Lose Time and Money.md"
+  },
+  {
+    "id": "the-acceleration-of-addictiveness",
+    "title": "The Acceleration of Addictiveness",
+    "wordCount": 1273,
+    "readingTimeMinutes": 6,
+    "year": 2010,
+    "month": 7,
+    "url": "https://paulgraham.com/addiction.html",
+    "filename": "The Acceleration of Addictiveness.md"
+  },
+  {
+    "id": "the-top-idea-in-your-mind",
+    "title": "The Top Idea in Your Mind",
+    "wordCount": 1170,
+    "readingTimeMinutes": 6,
+    "year": 2010,
+    "month": 7,
+    "url": "https://paulgraham.com/top.html",
+    "filename": "The Top Idea in Your Mind.md"
+  },
+  {
+    "id": "organic-startup-ideas",
+    "title": "Organic Startup Ideas",
+    "wordCount": 1005,
+    "readingTimeMinutes": 5,
+    "year": 2010,
+    "month": 4,
+    "url": "https://paulgraham.com/organic.html",
+    "filename": "Organic Startup Ideas.md"
+  },
+  {
+    "id": "apple-s-mistake",
+    "title": "Apple's Mistake",
+    "wordCount": 2145,
+    "readingTimeMinutes": 11,
+    "year": 2009,
+    "month": 11,
+    "url": "https://paulgraham.com/apple.html",
+    "filename": "Apple's Mistake.md"
+  },
+  {
+    "id": "what-startups-are-really-like",
+    "title": "What Startups Are Really Like",
+    "wordCount": 5116,
+    "readingTimeMinutes": 26,
+    "year": 2009,
+    "month": 10,
+    "url": "https://paulgraham.com/really.html",
+    "filename": "What Startups Are Really Like.md"
+  },
+  {
+    "id": "persuade-xor-discover",
+    "title": "Persuade xor Discover",
+    "wordCount": 1301,
+    "readingTimeMinutes": 7,
+    "year": 2009,
+    "month": 9,
+    "url": "https://paulgraham.com/discover.html",
+    "filename": "Persuade xor Discover.md"
+  },
+  {
+    "id": "post-medium-publishing",
+    "title": "Post-Medium Publishing",
+    "wordCount": 1773,
+    "readingTimeMinutes": 9,
+    "year": 2009,
+    "month": 9,
+    "url": "https://paulgraham.com/publishing.html",
+    "filename": "Post-Medium Publishing.md"
+  },
+  {
+    "id": "the-anatomy-of-determination",
+    "title": "The Anatomy of Determination",
+    "wordCount": 1500,
+    "readingTimeMinutes": 8,
+    "year": 2009,
+    "month": 9,
+    "url": "https://paulgraham.com/determination.html",
+    "filename": "The Anatomy of Determination.md"
+  },
+  {
+    "id": "the-list-of-n-things",
+    "title": "The List of N Things",
+    "wordCount": 1446,
+    "readingTimeMinutes": 7,
+    "year": 2009,
+    "month": 9,
+    "url": "https://paulgraham.com/nthings.html",
+    "filename": "The List of N Things.md"
+  },
+  {
+    "id": "what-kate-saw-in-silicon-valley",
+    "title": "What Kate Saw in Silicon Valley",
+    "wordCount": 813,
+    "readingTimeMinutes": 4,
+    "year": 2009,
+    "month": 8,
+    "url": "https://paulgraham.com/kate.html",
+    "filename": "What Kate Saw in Silicon Valley.md"
+  },
+  {
+    "id": "maker-s-schedule-manager-s-schedule",
+    "title": "Maker's Schedule, Manager's Schedule",
+    "wordCount": 1149,
+    "readingTimeMinutes": 6,
+    "year": 2009,
+    "month": 7,
+    "url": "https://paulgraham.com/makersschedule.html",
+    "filename": "Maker's Schedule, Manager's Schedule.md"
+  },
+  {
+    "id": "ramen-profitable",
+    "title": "Ramen Profitable",
+    "wordCount": 1842,
+    "readingTimeMinutes": 9,
+    "year": 2009,
+    "month": 7,
+    "url": "https://paulgraham.com/ramenprofitable.html",
+    "filename": "Ramen Profitable.md"
+  },
+  {
+    "id": "the-trouble-with-the-segway",
+    "title": "The Trouble with the Segway",
+    "wordCount": 379,
+    "readingTimeMinutes": 2,
+    "year": 2009,
+    "month": 7,
+    "url": "https://paulgraham.com/segway.html",
+    "filename": "The Trouble with the Segway.md"
+  },
+  {
+    "id": "a-local-revolution",
+    "title": "A Local Revolution?",
+    "wordCount": 1339,
+    "readingTimeMinutes": 7,
+    "year": 2009,
+    "month": 4,
+    "url": "https://paulgraham.com/revolution.html",
+    "filename": "A Local Revolution.md"
+  },
+  {
+    "id": "five-founders",
+    "title": "Five Founders",
+    "wordCount": 757,
+    "readingTimeMinutes": 4,
+    "year": 2009,
+    "month": 4,
+    "url": "https://paulgraham.com/5founders.html",
+    "filename": "Five Founders.md"
+  },
+  {
+    "id": "the-founder-visa",
+    "title": "The Founder Visa",
+    "wordCount": 391,
+    "readingTimeMinutes": 2,
+    "year": 2009,
+    "month": 4,
+    "url": "https://paulgraham.com/foundervisa.html",
+    "filename": "The Founder Visa.md"
+  },
+  {
+    "id": "why-twitter-is-a-big-deal",
+    "title": "Why Twitter is a Big Deal",
+    "wordCount": 147,
+    "readingTimeMinutes": 1,
+    "year": 2009,
+    "month": 4,
+    "url": "https://paulgraham.com/twitter.html",
+    "filename": "Why Twitter is a Big Deal.md"
+  },
+  {
+    "id": "how-to-be-an-angel-investor",
+    "title": "How to Be an Angel Investor",
+    "wordCount": 3951,
+    "readingTimeMinutes": 20,
+    "year": 2009,
+    "month": 3,
+    "url": "https://paulgraham.com/angelinvesting.html",
+    "filename": "How to Be an Angel Investor.md"
+  },
+  {
+    "id": "relentlessly-resourceful",
+    "title": "Relentlessly Resourceful",
+    "wordCount": 1006,
+    "readingTimeMinutes": 5,
+    "year": 2009,
+    "month": 3,
+    "url": "https://paulgraham.com/relres.html",
+    "filename": "Relentlessly Resourceful.md"
+  },
+  {
+    "id": "why-tv-lost",
+    "title": "Why TV Lost",
+    "wordCount": 1529,
+    "readingTimeMinutes": 8,
+    "year": 2009,
+    "month": 3,
+    "url": "https://paulgraham.com/convergence.html",
+    "filename": "Why TV Lost.md"
+  },
+  {
+    "id": "can-you-buy-a-silicon-valley-maybe",
+    "title": "Can You Buy a Silicon Valley? Maybe.",
+    "wordCount": 1912,
+    "readingTimeMinutes": 10,
+    "year": 2009,
+    "month": 2,
+    "url": "https://paulgraham.com/maybe.html",
+    "filename": "Can You Buy a Silicon Valley Maybe..md"
+  },
+  {
+    "id": "keep-your-identity-small",
+    "title": "Keep Your Identity Small",
+    "wordCount": 867,
+    "readingTimeMinutes": 4,
+    "year": 2009,
+    "month": 2,
+    "url": "https://paulgraham.com/identity.html",
+    "filename": "Keep Your Identity Small.md"
+  },
+  {
+    "id": "startups-in-13-sentences",
+    "title": "Startups in 13 Sentences",
+    "wordCount": 1324,
+    "readingTimeMinutes": 7,
+    "year": 2009,
+    "month": 2,
+    "url": "https://paulgraham.com/13sentences.html",
+    "filename": "Startups in 13 Sentences.md"
+  },
+  {
+    "id": "what-i-ve-learned-from-hacker-news",
+    "title": "What I've Learned from Hacker News",
+    "wordCount": 2863,
+    "readingTimeMinutes": 14,
+    "year": 2009,
+    "month": 2,
+    "url": "https://paulgraham.com/hackernews.html",
+    "filename": "What I've Learned from Hacker News.md"
+  },
+  {
+    "id": "after-credentials",
+    "title": "After Credentials",
+    "wordCount": 2385,
+    "readingTimeMinutes": 12,
+    "year": 2008,
+    "month": 12,
+    "url": "https://paulgraham.com/credentials.html",
+    "filename": "After Credentials.md"
+  },
+  {
+    "id": "could-vc-be-a-casualty-of-the-recession",
+    "title": "Could VC be a Casualty of the Recession?",
+    "wordCount": 1350,
+    "readingTimeMinutes": 7,
+    "year": 2008,
+    "month": 12,
+    "url": "https://paulgraham.com/divergence.html",
+    "filename": "Could VC be a Casualty of the Recession.md"
+  },
+  {
+    "id": "the-high-res-society",
+    "title": "The High-Res Society",
+    "wordCount": 1523,
+    "readingTimeMinutes": 8,
+    "year": 2008,
+    "month": 12,
+    "url": "https://paulgraham.com/highres.html",
+    "filename": "The High-Res Society.md"
+  },
+  {
+    "id": "the-other-half-of-artists-ship",
+    "title": "The Other Half of \"Artists Ship\"",
+    "wordCount": 1309,
+    "readingTimeMinutes": 7,
+    "year": 2008,
+    "month": 11,
+    "url": "https://paulgraham.com/artistsship.html",
+    "filename": "The Other Half of Artists Ship.md"
+  },
+  {
+    "id": "why-to-start-a-startup-in-a-bad-economy",
+    "title": "Why to Start a Startup in a Bad Economy",
+    "wordCount": 1109,
+    "readingTimeMinutes": 6,
+    "year": 2008,
+    "month": 10,
+    "url": "https://paulgraham.com/badeconomy.html",
+    "filename": "Why to Start a Startup in a Bad Economy.md"
+  },
+  {
+    "id": "a-fundraising-survival-guide",
+    "title": "A Fundraising Survival Guide",
+    "wordCount": 4836,
+    "readingTimeMinutes": 24,
+    "year": 2008,
+    "month": 8,
+    "url": "https://paulgraham.com/fundraising.html",
+    "filename": "A Fundraising Survival Guide.md"
+  },
+  {
+    "id": "the-pooled-risk-company-management-company",
+    "title": "The Pooled-Risk Company Management Company",
+    "wordCount": 1260,
+    "readingTimeMinutes": 6,
+    "year": 2008,
+    "month": 7,
+    "url": "https://paulgraham.com/prcmc.html",
+    "filename": "The Pooled-Risk Company Management Company.md"
+  },
+  {
+    "id": "cities-and-ambition",
+    "title": "Cities and Ambition",
+    "wordCount": 3604,
+    "readingTimeMinutes": 18,
+    "year": 2008,
+    "month": 5,
+    "url": "https://paulgraham.com/cities.html",
+    "filename": "Cities and Ambition.md"
+  },
+  {
+    "id": "disconnecting-distraction",
+    "title": "Disconnecting Distraction",
+    "wordCount": 1147,
+    "readingTimeMinutes": 6,
+    "year": 2008,
+    "month": 5,
+    "url": "https://paulgraham.com/distraction.html",
+    "filename": "Disconnecting Distraction.md"
+  },
+  {
+    "id": "lies-we-tell-kids",
+    "title": "Lies We Tell Kids",
+    "wordCount": 5251,
+    "readingTimeMinutes": 26,
+    "year": 2008,
+    "month": 5,
+    "url": "https://paulgraham.com/lies.html",
+    "filename": "Lies We Tell Kids.md"
+  },
+  {
+    "id": "be-good",
+    "title": "Be Good",
+    "wordCount": 2948,
+    "readingTimeMinutes": 15,
+    "year": 2008,
+    "month": 4,
+    "url": "https://paulgraham.com/good.html",
+    "filename": "Be Good.md"
+  },
+  {
+    "id": "some-heroes",
+    "title": "Some Heroes",
+    "wordCount": 2695,
+    "readingTimeMinutes": 13,
+    "year": 2008,
+    "month": 4,
+    "url": "https://paulgraham.com/heroes.html",
+    "filename": "Some Heroes.md"
+  },
+  {
+    "id": "why-there-aren-t-more-googles",
+    "title": "Why There Aren't More Googles",
+    "wordCount": 1339,
+    "readingTimeMinutes": 7,
+    "year": 2008,
+    "month": 4,
+    "url": "https://paulgraham.com/googles.html",
+    "filename": "Why There Aren't More Googles.md"
+  },
+  {
+    "id": "a-new-venture-animal",
+    "title": "A New Venture Animal",
+    "wordCount": 1986,
+    "readingTimeMinutes": 10,
+    "year": 2008,
+    "month": 3,
+    "url": "https://paulgraham.com/ycombinator.html",
+    "filename": "A New Venture Animal.md"
+  },
+  {
+    "id": "how-to-disagree",
+    "title": "How to Disagree",
+    "wordCount": 1508,
+    "readingTimeMinutes": 8,
+    "year": 2008,
+    "month": 3,
+    "url": "https://paulgraham.com/disagree.html",
+    "filename": "How to Disagree.md"
+  },
+  {
+    "id": "you-weren-t-meant-to-have-a-boss",
+    "title": "You Weren't Meant to Have a Boss",
+    "wordCount": 2532,
+    "readingTimeMinutes": 13,
+    "year": 2008,
+    "month": 3,
+    "url": "https://paulgraham.com/boss.html",
+    "filename": "You Weren't Meant to Have a Boss.md"
+  },
+  {
+    "id": "six-principles-for-making-new-things",
+    "title": "Six Principles for Making New Things",
+    "wordCount": 1167,
+    "readingTimeMinutes": 6,
+    "year": 2008,
+    "month": 2,
+    "url": "https://paulgraham.com/newthings.html",
+    "filename": "Six Principles for Making New Things.md"
+  },
+  {
+    "id": "trolls",
+    "title": "Trolls",
+    "wordCount": 893,
+    "readingTimeMinutes": 4,
+    "year": 2008,
+    "month": 2,
+    "url": "https://paulgraham.com/trolls.html",
+    "filename": "Trolls.md"
+  },
+  {
+    "id": "the-future-of-web-startups",
+    "title": "The Future of Web Startups",
+    "wordCount": 3405,
+    "readingTimeMinutes": 17,
+    "year": 2007,
+    "month": 10,
+    "url": "https://paulgraham.com/webstartups.html",
+    "filename": "The Future of Web Startups.md"
+  },
+  {
+    "id": "why-to-move-to-a-startup-hub",
+    "title": "Why to Move to a Startup Hub",
+    "wordCount": 1457,
+    "readingTimeMinutes": 7,
+    "year": 2007,
+    "month": 10,
+    "url": "https://paulgraham.com/startuphubs.html",
+    "filename": "Why to Move to a Startup Hub.md"
+  },
+  {
+    "id": "how-to-do-philosophy",
+    "title": "How to Do Philosophy",
+    "wordCount": 4726,
+    "readingTimeMinutes": 24,
+    "year": 2007,
+    "month": 9,
+    "url": "https://paulgraham.com/philosophy.html",
+    "filename": "How to Do Philosophy.md"
+  },
+  {
+    "id": "news-from-the-front",
+    "title": "News from the Front",
+    "wordCount": 2216,
+    "readingTimeMinutes": 11,
+    "year": 2007,
+    "month": 9,
+    "url": "https://paulgraham.com/colleges.html",
+    "filename": "News from the Front.md"
+  },
+  {
+    "id": "holding-a-program-in-one-s-head",
+    "title": "Holding a Program in One's Head",
+    "wordCount": 1842,
+    "readingTimeMinutes": 9,
+    "year": 2007,
+    "month": 8,
+    "url": "https://paulgraham.com/head.html",
+    "filename": "Holding a Program in One's Head.md"
+  },
+  {
+    "id": "how-not-to-die",
+    "title": "How Not to Die",
+    "wordCount": 1974,
+    "readingTimeMinutes": 10,
+    "year": 2007,
+    "month": 8,
+    "url": "https://paulgraham.com/die.html",
+    "filename": "How Not to Die.md"
+  },
+  {
+    "id": "stuff",
+    "title": "Stuff",
+    "wordCount": 1246,
+    "readingTimeMinutes": 6,
+    "year": 2007,
+    "month": 7,
+    "url": "https://paulgraham.com/stuff.html",
+    "filename": "Stuff.md"
+  },
+  {
+    "id": "the-equity-equation",
+    "title": "The Equity Equation",
+    "wordCount": 1132,
+    "readingTimeMinutes": 6,
+    "year": 2007,
+    "month": 7,
+    "url": "https://paulgraham.com/equity.html",
+    "filename": "The Equity Equation.md"
+  },
+  {
+    "id": "an-alternative-theory-of-unions",
+    "title": "An Alternative Theory of Unions",
+    "wordCount": 515,
+    "readingTimeMinutes": 3,
+    "year": 2007,
+    "month": 5,
+    "url": "https://paulgraham.com/unions.html",
+    "filename": "An Alternative Theory of Unions.md"
+  },
+  {
+    "id": "microsoft-is-dead",
+    "title": "Microsoft is Dead",
+    "wordCount": 1288,
+    "readingTimeMinutes": 6,
+    "year": 2007,
+    "month": 4,
+    "url": "https://paulgraham.com/microsoft.html",
+    "filename": "Microsoft is Dead.md"
+  },
+  {
+    "id": "the-hacker-s-guide-to-investors",
+    "title": "The Hacker's Guide to Investors",
+    "wordCount": 6245,
+    "readingTimeMinutes": 31,
+    "year": 2007,
+    "month": 4,
+    "url": "https://paulgraham.com/guidetoinvestors.html",
+    "filename": "The Hacker's Guide to Investors.md"
+  },
+  {
+    "id": "two-kinds-of-judgement",
+    "title": "Two Kinds of Judgement",
+    "wordCount": 740,
+    "readingTimeMinutes": 4,
+    "year": 2007,
+    "month": 4,
+    "url": "https://paulgraham.com/judgement.html",
+    "filename": "Two Kinds of Judgement.md"
+  },
+  {
+    "id": "why-to-not-not-start-a-startup",
+    "title": "Why to Not Not Start a Startup",
+    "wordCount": 6284,
+    "readingTimeMinutes": 31,
+    "year": 2007,
+    "month": 3,
+    "url": "https://paulgraham.com/notnot.html",
+    "filename": "Why to Not Not Start a Startup.md"
+  },
+  {
+    "id": "is-it-worth-being-wise",
+    "title": "Is It Worth Being Wise?",
+    "wordCount": 3743,
+    "readingTimeMinutes": 19,
+    "year": 2007,
+    "month": 2,
+    "url": "https://paulgraham.com/wisdom.html",
+    "filename": "Is It Worth Being Wise.md"
+  },
+  {
+    "id": "learning-from-founders",
+    "title": "Learning from Founders",
+    "wordCount": 777,
+    "readingTimeMinutes": 4,
+    "year": 2007,
+    "month": 1,
+    "url": "https://paulgraham.com/foundersatwork.html",
+    "filename": "Learning from Founders.md"
+  },
+  {
+    "id": "how-art-can-be-good",
+    "title": "How Art Can Be Good",
+    "wordCount": 3624,
+    "readingTimeMinutes": 18,
+    "year": 2006,
+    "month": 12,
+    "url": "https://paulgraham.com/goodart.html",
+    "filename": "How Art Can Be Good.md"
+  },
+  {
+    "id": "a-student-s-guide-to-startups",
+    "title": "A Student's Guide to Startups",
+    "wordCount": 6458,
+    "readingTimeMinutes": 32,
+    "year": 2006,
+    "month": 10,
+    "url": "https://paulgraham.com/mit.html",
+    "filename": "A Student's Guide to Startups.md"
+  },
+  {
+    "id": "the-18-mistakes-that-kill-startups",
+    "title": "The 18 Mistakes That Kill Startups",
+    "wordCount": 5604,
+    "readingTimeMinutes": 28,
+    "year": 2006,
+    "month": 10,
+    "url": "https://paulgraham.com/startupmistakes.html",
+    "filename": "The 18 Mistakes That Kill Startups.md"
+  },
+  {
+    "id": "how-to-present-to-investors",
+    "title": "How to Present to Investors",
+    "wordCount": 2818,
+    "readingTimeMinutes": 14,
+    "year": 2006,
+    "month": 8,
+    "url": "https://paulgraham.com/investors.html",
+    "filename": "How to Present to Investors.md"
+  },
+  {
+    "id": "copy-what-you-like",
+    "title": "Copy What You Like",
+    "wordCount": 933,
+    "readingTimeMinutes": 5,
+    "year": 2006,
+    "month": 7,
+    "url": "https://paulgraham.com/copy.html",
+    "filename": "Copy What You Like.md"
+  },
+  {
+    "id": "the-island-test",
+    "title": "The Island Test",
+    "wordCount": 755,
+    "readingTimeMinutes": 4,
+    "year": 2006,
+    "month": 7,
+    "url": "https://paulgraham.com/island.html",
+    "filename": "The Island Test.md"
+  },
+  {
+    "id": "the-power-of-the-marginal",
+    "title": "The Power of the Marginal",
+    "wordCount": 6064,
+    "readingTimeMinutes": 30,
+    "year": 2006,
+    "month": 6,
+    "url": "https://paulgraham.com/marginal.html",
+    "filename": "The Power of the Marginal.md"
+  },
+  {
+    "id": "how-to-be-silicon-valley",
+    "title": "How to Be Silicon Valley",
+    "wordCount": 3604,
+    "readingTimeMinutes": 18,
+    "year": 2006,
+    "month": 5,
+    "url": "https://paulgraham.com/siliconvalley.html",
+    "filename": "How to Be Silicon Valley.md"
+  },
+  {
+    "id": "why-startups-condense-in-america",
+    "title": "Why Startups Condense in America",
+    "wordCount": 4765,
+    "readingTimeMinutes": 24,
+    "year": 2006,
+    "month": 5,
+    "url": "https://paulgraham.com/america.html",
+    "filename": "Why Startups Condense in America.md"
+  },
+  {
+    "id": "see-randomness",
+    "title": "See Randomness",
+    "wordCount": 593,
+    "readingTimeMinutes": 3,
+    "year": 2006,
+    "month": 4,
+    "url": "https://paulgraham.com/randomness.html",
+    "filename": "See Randomness.md"
+  },
+  {
+    "id": "the-hardest-lessons-for-startups-to-learn",
+    "title": "The Hardest Lessons for Startups to Learn",
+    "wordCount": 4826,
+    "readingTimeMinutes": 24,
+    "year": 2006,
+    "month": 4,
+    "url": "https://paulgraham.com/startuplessons.html",
+    "filename": "The Hardest Lessons for Startups to Learn.md"
+  },
+  {
+    "id": "6-631-372",
+    "title": "6,631,372",
+    "wordCount": 693,
+    "readingTimeMinutes": 3,
+    "year": 2006,
+    "month": 3,
+    "url": "https://paulgraham.com/6631327.html",
+    "filename": "6,631,372.md"
+  },
+  {
+    "id": "are-software-patents-evil",
+    "title": "Are Software Patents Evil?",
+    "wordCount": 4658,
+    "readingTimeMinutes": 23,
+    "year": 2006,
+    "month": 3,
+    "url": "https://paulgraham.com/softwarepatents.html",
+    "filename": "Are Software Patents Evil.md"
+  },
+  {
+    "id": "why-yc",
+    "title": "Why YC",
+    "wordCount": 376,
+    "readingTimeMinutes": 2,
+    "year": 2006,
+    "month": 3,
+    "url": "https://paulgraham.com/whyyc.html",
+    "filename": "Why YC.md"
+  },
+  {
+    "id": "how-to-do-what-you-love",
+    "title": "How to Do What You Love",
+    "wordCount": 4691,
+    "readingTimeMinutes": 23,
+    "year": 2006,
+    "month": 1,
+    "url": "https://paulgraham.com/love.html",
+    "filename": "How to Do What You Love.md"
+  },
+  {
+    "id": "good-and-bad-procrastination",
+    "title": "Good and Bad Procrastination",
+    "wordCount": 1805,
+    "readingTimeMinutes": 9,
+    "year": 2005,
+    "month": 12,
+    "url": "https://paulgraham.com/procrastination.html",
+    "filename": "Good and Bad Procrastination.md"
+  },
+  {
+    "id": "how-to-fund-a-startup",
+    "title": "How to Fund a Startup",
+    "wordCount": 8934,
+    "readingTimeMinutes": 45,
+    "year": 2005,
+    "month": 11,
+    "url": "https://paulgraham.com/startupfunding.html",
+    "filename": "How to Fund a Startup.md"
+  },
+  {
+    "id": "the-venture-capital-squeeze",
+    "title": "The Venture Capital Squeeze",
+    "wordCount": 1564,
+    "readingTimeMinutes": 8,
+    "year": 2005,
+    "month": 11,
+    "url": "https://paulgraham.com/vcsqueeze.html",
+    "filename": "The Venture Capital Squeeze.md"
+  },
+  {
+    "id": "web-2-0",
+    "title": "Web 2.0",
+    "wordCount": 3374,
+    "readingTimeMinutes": 17,
+    "year": 2005,
+    "month": 11,
+    "url": "https://paulgraham.com/web20.html",
+    "filename": "Web 2.0.md"
+  },
+  {
+    "id": "ideas-for-startups",
+    "title": "Ideas for Startups",
+    "wordCount": 3941,
+    "readingTimeMinutes": 20,
+    "year": 2005,
+    "month": 10,
+    "url": "https://paulgraham.com/ideas.html",
+    "filename": "Ideas for Startups.md"
+  },
+  {
+    "id": "what-i-did-this-summer",
+    "title": "What I Did this Summer",
+    "wordCount": 2574,
+    "readingTimeMinutes": 13,
+    "year": 2005,
+    "month": 10,
+    "url": "https://paulgraham.com/sfp.html",
+    "filename": "What I Did this Summer.md"
+  },
+  {
+    "id": "after-the-ladder",
+    "title": "After the Ladder",
+    "wordCount": 586,
+    "readingTimeMinutes": 3,
+    "year": 2005,
+    "month": 8,
+    "url": "https://paulgraham.com/ladder.html",
+    "filename": "After the Ladder.md"
+  },
+  {
+    "id": "inequality-and-risk",
+    "title": "Inequality and Risk",
+    "wordCount": 2819,
+    "readingTimeMinutes": 14,
+    "year": 2005,
+    "month": 8,
+    "url": "https://paulgraham.com/inequality.html",
+    "filename": "Inequality and Risk.md"
+  },
+  {
+    "id": "what-business-can-learn-from-open-source",
+    "title": "What Business Can Learn from Open Source",
+    "wordCount": 4355,
+    "readingTimeMinutes": 22,
+    "year": 2005,
+    "month": 8,
+    "url": "https://paulgraham.com/opensource.html",
+    "filename": "What Business Can Learn from Open Source.md"
+  },
+  {
+    "id": "hiring-is-obsolete",
+    "title": "Hiring is Obsolete",
+    "wordCount": 4788,
+    "readingTimeMinutes": 24,
+    "year": 2005,
+    "month": 5,
+    "url": "https://paulgraham.com/hiring.html",
+    "filename": "Hiring is Obsolete.md"
+  },
+  {
+    "id": "the-submarine",
+    "title": "The Submarine",
+    "wordCount": 2310,
+    "readingTimeMinutes": 12,
+    "year": 2005,
+    "month": 4,
+    "url": "https://paulgraham.com/submarine.html",
+    "filename": "The Submarine.md"
+  },
+  {
+    "id": "why-smart-people-have-bad-ideas",
+    "title": "Why Smart People Have Bad Ideas",
+    "wordCount": 3171,
+    "readingTimeMinutes": 16,
+    "year": 2005,
+    "month": 4,
+    "url": "https://paulgraham.com/bronze.html",
+    "filename": "Why Smart People Have Bad Ideas.md"
+  },
+  {
+    "id": "a-unified-theory-of-vc-suckage",
+    "title": "A Unified Theory of VC Suckage",
+    "wordCount": 1472,
+    "readingTimeMinutes": 7,
+    "year": 2005,
+    "month": 3,
+    "url": "https://paulgraham.com/venturecapital.html",
+    "filename": "A Unified Theory of VC Suckage.md"
+  },
+  {
+    "id": "how-to-start-a-startup",
+    "title": "How to Start a Startup",
+    "wordCount": 9750,
+    "readingTimeMinutes": 49,
+    "year": 2005,
+    "month": 3,
+    "url": "https://paulgraham.com/start.html",
+    "filename": "How to Start a Startup.md"
+  },
+  {
+    "id": "return-of-the-mac",
+    "title": "Return of the Mac",
+    "wordCount": 1004,
+    "readingTimeMinutes": 5,
+    "year": 2005,
+    "month": 3,
+    "url": "https://paulgraham.com/mac.html",
+    "filename": "Return of the Mac.md"
+  },
+  {
+    "id": "undergraduation",
+    "title": "Undergraduation",
+    "wordCount": 3662,
+    "readingTimeMinutes": 18,
+    "year": 2005,
+    "month": 3,
+    "url": "https://paulgraham.com/college.html",
+    "filename": "Undergraduation.md"
+  },
+  {
+    "id": "writing-briefly",
+    "title": "Writing, Briefly",
+    "wordCount": 459,
+    "readingTimeMinutes": 2,
+    "year": 2005,
+    "month": 3,
+    "url": "https://paulgraham.com/writing44.html",
+    "filename": "Writing, Briefly.md"
+  },
+  {
+    "id": "what-you-ll-wish-you-d-known",
+    "title": "What You'll Wish You'd Known",
+    "wordCount": 5070,
+    "readingTimeMinutes": 25,
+    "year": 2005,
+    "month": 1,
+    "url": "https://paulgraham.com/hs.html",
+    "filename": "What You'll Wish You'd Known.md"
+  },
+  {
+    "id": "bradley-s-ghost",
+    "title": "Bradley's Ghost",
+    "wordCount": 618,
+    "readingTimeMinutes": 3,
+    "year": 2004,
+    "month": 11,
+    "url": "https://paulgraham.com/polls.html",
+    "filename": "Bradley's Ghost.md"
+  },
+  {
+    "id": "it-s-charisma-stupid",
+    "title": "It's Charisma, Stupid",
+    "wordCount": 1498,
+    "readingTimeMinutes": 7,
+    "year": 2004,
+    "month": 11,
+    "url": "https://paulgraham.com/charisma.html",
+    "filename": "It's Charisma, Stupid.md"
+  },
+  {
+    "id": "made-in-usa",
+    "title": "Made in USA",
+    "wordCount": 1845,
+    "readingTimeMinutes": 9,
+    "year": 2004,
+    "month": 11,
+    "url": "https://paulgraham.com/usa.html",
+    "filename": "Made in USA.md"
+  },
+  {
+    "id": "a-version-1-0",
+    "title": "A Version 1.0",
+    "wordCount": 4266,
+    "readingTimeMinutes": 21,
+    "year": 2004,
+    "month": 10,
+    "url": "https://paulgraham.com/laundry.html",
+    "filename": "A Version 1.0.md"
+  },
+  {
+    "id": "the-age-of-the-essay",
+    "title": "The Age of the Essay",
+    "wordCount": 4524,
+    "readingTimeMinutes": 23,
+    "year": 2004,
+    "month": 9,
+    "url": "https://paulgraham.com/essay.html",
+    "filename": "The Age of the Essay.md"
+  },
+  {
+    "id": "what-the-bubble-got-right",
+    "title": "What the Bubble Got Right",
+    "wordCount": 3729,
+    "readingTimeMinutes": 19,
+    "year": 2004,
+    "month": 9,
+    "url": "https://paulgraham.com/bubble.html",
+    "filename": "What the Bubble Got Right.md"
+  },
+  {
+    "id": "the-python-paradox",
+    "title": "The Python Paradox",
+    "wordCount": 449,
+    "readingTimeMinutes": 2,
+    "year": 2004,
+    "month": 8,
+    "url": "https://paulgraham.com/pypar.html",
+    "filename": "The Python Paradox.md"
+  },
+  {
+    "id": "great-hackers",
+    "title": "Great Hackers",
+    "wordCount": 5229,
+    "readingTimeMinutes": 26,
+    "year": 2004,
+    "month": 7,
+    "url": "https://paulgraham.com/gh.html",
+    "filename": "Great Hackers.md"
+  },
+  {
+    "id": "how-to-make-wealth",
+    "title": "How to Make Wealth",
+    "wordCount": 8953,
+    "readingTimeMinutes": 45,
+    "year": 2004,
+    "month": 5,
+    "url": "https://paulgraham.com/wealth.html",
+    "filename": "How to Make Wealth.md"
+  },
+  {
+    "id": "mind-the-gap",
+    "title": "Mind the Gap",
+    "wordCount": 5690,
+    "readingTimeMinutes": 28,
+    "year": 2004,
+    "month": 5,
+    "url": "https://paulgraham.com/gap.html",
+    "filename": "Mind the Gap.md"
+  },
+  {
+    "id": "the-word-hacker",
+    "title": "The Word \"Hacker\"",
+    "wordCount": 1937,
+    "readingTimeMinutes": 10,
+    "year": 2004,
+    "month": 4,
+    "url": "https://paulgraham.com/gba.html",
+    "filename": "The Word Hacker.md"
+  },
+  {
+    "id": "what-you-can-t-say",
+    "title": "What You Can't Say",
+    "wordCount": 5413,
+    "readingTimeMinutes": 27,
+    "year": 2004,
+    "month": 1,
+    "url": "https://paulgraham.com/say.html",
+    "filename": "What You Can't Say.md"
+  },
+  {
+    "id": "filters-that-fight-back",
+    "title": "Filters that Fight Back",
+    "wordCount": 824,
+    "readingTimeMinutes": 4,
+    "year": 2003,
+    "month": 8,
+    "url": "https://paulgraham.com/ffb.html",
+    "filename": "Filters that Fight Back.md"
+  },
+  {
+    "id": "hackers-and-painters",
+    "title": "Hackers and Painters",
+    "wordCount": 5586,
+    "readingTimeMinutes": 28,
+    "year": 2003,
+    "month": 5,
+    "url": "https://paulgraham.com/hp.html",
+    "filename": "Hackers and Painters.md"
+  },
+  {
+    "id": "if-lisp-is-so-great",
+    "title": "If Lisp is So Great",
+    "wordCount": 418,
+    "readingTimeMinutes": 2,
+    "year": 2003,
+    "month": 5,
+    "url": "https://paulgraham.com/iflisp.html",
+    "filename": "If Lisp is So Great.md"
+  },
+  {
+    "id": "the-hundred-year-language",
+    "title": "The Hundred-Year Language",
+    "wordCount": 4791,
+    "readingTimeMinutes": 24,
+    "year": 2003,
+    "month": 4,
+    "url": "https://paulgraham.com/hundred.html",
+    "filename": "The Hundred-Year Language.md"
+  },
+  {
+    "id": "why-nerds-are-unpopular",
+    "title": "Why Nerds are Unpopular",
+    "wordCount": 5694,
+    "readingTimeMinutes": 28,
+    "year": 2003,
+    "month": 2,
+    "url": "https://paulgraham.com/nerds.html",
+    "filename": "Why Nerds are Unpopular.md"
+  },
+  {
+    "id": "better-bayesian-filtering",
+    "title": "Better Bayesian Filtering",
+    "wordCount": 4325,
+    "readingTimeMinutes": 22,
+    "year": 2003,
+    "month": 1,
+    "url": "https://paulgraham.com/better.html",
+    "filename": "Better Bayesian Filtering.md"
+  },
+  {
+    "id": "design-and-research",
+    "title": "Design and Research",
+    "wordCount": 2661,
+    "readingTimeMinutes": 13,
+    "year": 2003,
+    "month": 1,
+    "url": "https://paulgraham.com/desres.html",
+    "filename": "Design and Research.md"
+  },
+  {
+    "id": "a-plan-for-spam",
+    "title": "A Plan for Spam",
+    "wordCount": 5314,
+    "readingTimeMinutes": 27,
+    "year": 2002,
+    "month": 8,
+    "url": "https://paulgraham.com/spam.html",
+    "filename": "A Plan for Spam.md"
+  },
+  {
+    "id": "revenge-of-the-nerds",
+    "title": "Revenge of the Nerds",
+    "wordCount": 5851,
+    "readingTimeMinutes": 29,
+    "year": 2002,
+    "month": 5,
+    "url": "https://paulgraham.com/icad.html",
+    "filename": "Revenge of the Nerds.md"
+  },
+  {
+    "id": "succinctness-is-power",
+    "title": "Succinctness is Power",
+    "wordCount": 3002,
+    "readingTimeMinutes": 15,
+    "year": 2002,
+    "month": 5,
+    "url": "https://paulgraham.com/power.html",
+    "filename": "Succinctness is Power.md"
+  },
+  {
+    "id": "taste-for-makers",
+    "title": "Taste for Makers",
+    "wordCount": 4324,
+    "readingTimeMinutes": 22,
+    "year": 2002,
+    "month": 2,
+    "url": "https://paulgraham.com/taste.html",
+    "filename": "Taste for Makers.md"
+  },
+  {
+    "id": "what-made-lisp-different",
+    "title": "What Made Lisp Different",
+    "wordCount": 705,
+    "readingTimeMinutes": 4,
+    "year": 2001,
+    "month": 12,
+    "url": "https://paulgraham.com/diff.html",
+    "filename": "What Made Lisp Different.md"
+  },
+  {
+    "id": "the-other-road-ahead",
+    "title": "The Other Road Ahead",
+    "wordCount": 11974,
+    "readingTimeMinutes": 60,
+    "year": 2001,
+    "month": 9,
+    "url": "https://paulgraham.com/road.html",
+    "filename": "The Other Road Ahead.md"
+  },
+  {
+    "id": "being-popular",
+    "title": "Being Popular",
+    "wordCount": 7591,
+    "readingTimeMinutes": 38,
+    "year": 2001,
+    "month": 5,
+    "url": "https://paulgraham.com/popular.html",
+    "filename": "Being Popular.md"
+  },
+  {
+    "id": "five-questions-about-language-design",
+    "title": "Five Questions about Language Design",
+    "wordCount": 2941,
+    "readingTimeMinutes": 15,
+    "year": 2001,
+    "month": 5,
+    "url": "https://paulgraham.com/langdes.html",
+    "filename": "Five Questions about Language Design.md"
+  },
+  {
+    "id": "the-roots-of-lisp",
+    "title": "The Roots of Lisp",
+    "wordCount": 358,
+    "readingTimeMinutes": 2,
+    "year": 2001,
+    "month": 5,
+    "url": "https://paulgraham.com/rootsoflisp.html",
+    "filename": "The Roots of Lisp.md"
+  },
+  {
+    "id": "beating-the-averages",
+    "title": "Beating the Averages",
+    "wordCount": 4458,
+    "readingTimeMinutes": 22,
+    "year": 2001,
+    "month": 4,
+    "url": "https://paulgraham.com/avg.html",
+    "filename": "Beating the Averages.md"
+  },
+  {
+    "id": "java-s-cover",
+    "title": "Java's Cover",
+    "wordCount": 1365,
+    "readingTimeMinutes": 7,
+    "year": 2001,
+    "month": 4,
+    "url": "https://paulgraham.com/javacover.html",
+    "filename": "Java's Cover.md"
+  },
+  {
+    "id": "lisp-for-web-based-applications",
+    "title": "Lisp for Web-Based Applications",
+    "wordCount": 54,
+    "readingTimeMinutes": 1,
+    "year": 2001,
+    "month": 4,
+    "url": "https://paulgraham.com/lwba.html",
+    "filename": "Lisp for Web-Based Applications.md"
+  },
+  {
+    "id": "snapshot-viaweb-june-1998",
+    "title": "Snapshot: Viaweb, June 1998",
+    "wordCount": 869,
+    "readingTimeMinutes": 4,
+    "year": 1998,
+    "month": 6,
+    "url": "https://paulgraham.com/vw.html",
+    "filename": "Snapshot Viaweb, June 1998.md"
+  },
+  {
+    "id": "programming-bottom-up",
+    "title": "Programming Bottom-Up",
+    "wordCount": 928,
+    "readingTimeMinutes": 5,
+    "year": null,
+    "month": null,
+    "url": "https://paulgraham.com/progbot.html",
+    "filename": "Programming Bottom-Up.md"
+  },
+  {
+    "id": "what-languages-fix",
+    "title": "What Languages Fix",
+    "wordCount": 213,
+    "readingTimeMinutes": 1,
+    "year": null,
+    "month": null,
+    "url": "https://paulgraham.com/fix.html",
+    "filename": "What Languages Fix.md"
+  },
+  {
+    "id": "why-arc-isn-t-especially-object-oriented",
+    "title": "Why Arc Isn't Especially Object-Oriented",
+    "wordCount": 491,
+    "readingTimeMinutes": 2,
+    "year": null,
+    "month": null,
+    "url": "https://paulgraham.com/noop.html",
+    "filename": "Why Arc Isn't Especially Object-Oriented.md"
+  }
+]
