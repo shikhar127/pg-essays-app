@@ -1,0 +1,23 @@
+# Development files
+.git
+.github
+scripts/
+*.md
+!README.md
+.claude/
+
+# IDE
+.vscode/
+.idea/
+
+# Test and docs
+__tests__/
+__mocks__/
+docs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Ralph
+ralph/
