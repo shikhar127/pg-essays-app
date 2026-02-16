@@ -153,6 +153,18 @@ export default function LibraryScreen() {
     return { all, read, inProgress };
   }, [essays, readingProgress]);
 
+  const filters: FilterTab[] = ['all', 'in-progress', 'read'];
+  const scrollViewRef = useRef<ScrollView>(null);
+  const screenWidth = Dimensions.get('window').width;
+
+  // Set initial scroll position on mount
+  useEffect(() => {
+    const initialIndex = filters.indexOf(activeFilter);
+    setTimeout(() => {
+      scrollViewRef.current?.scrollTo({ x: initialIndex * screenWidth, animated: false });
+    }, 100);
+  }, []);
+
   const handleClearSearch = () => {
     setSearchQuery('');
   };
@@ -187,6 +199,23 @@ export default function LibraryScreen() {
     index,
   });
 
+  const handleFilterScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / screenWidth);
+    const newFilter = filters[index];
+    if (newFilter && newFilter !== activeFilter) {
+      setActiveFilter(newFilter);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+  };
+
+  const switchToFilter = (filter: FilterTab) => {
+    const index = filters.indexOf(filter);
+    setActiveFilter(filter);
+    scrollViewRef.current?.scrollTo({ x: index * screenWidth, animated: true });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   if (loading) {
     return (
       <View style={styles.centerContainer}>
@@ -210,35 +239,6 @@ export default function LibraryScreen() {
       </View>
     );
   }
-
-  const filters: FilterTab[] = ['all', 'in-progress', 'read'];
-  const scrollViewRef = useRef<ScrollView>(null);
-  const screenWidth = Dimensions.get('window').width;
-
-  const handleFilterScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const offsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(offsetX / screenWidth);
-    const newFilter = filters[index];
-    if (newFilter && newFilter !== activeFilter) {
-      setActiveFilter(newFilter);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
-  };
-
-  const switchToFilter = (filter: FilterTab) => {
-    const index = filters.indexOf(filter);
-    setActiveFilter(filter);
-    scrollViewRef.current?.scrollTo({ x: index * screenWidth, animated: true });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
-
-  // Set initial scroll position on mount
-  useEffect(() => {
-    const initialIndex = filters.indexOf(activeFilter);
-    setTimeout(() => {
-      scrollViewRef.current?.scrollTo({ x: initialIndex * screenWidth, animated: false });
-    }, 100);
-  }, []);
 
   return (
     <View style={styles.container}>
