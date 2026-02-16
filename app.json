@@ -7,14 +7,25 @@
     "userInterfaceStyle": "light",
     "scheme": "pg-essays",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "plugins": ["expo-router"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "package": "com.yourname.pgressays",
+      "package": "com.pgressays.app",
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "jsEngine": "hermes",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a1a2e"
+      }
     }
   }
 }
