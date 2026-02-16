@@ -1,7 +1,6 @@
 # Development files
 .git
 .github
-scripts/
 *.md
 !README.md
 .claude/
