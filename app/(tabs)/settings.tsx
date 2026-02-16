@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } f
 import * as Notifications from 'expo-notifications';
 import { useAppState } from '@/contexts/AppStateContext';
 import { getMorningReminder, getEveningReminder, REMINDER_TIMES } from '@/lib/reminderService';
+import { colors, sansFont, spacing } from '@/lib/theme';
 
 export default function SettingsScreen() {
   const { settings, readingProgress, updateSettings, clearProgress, clearFavorites } = useAppState();
@@ -53,19 +54,10 @@ export default function SettingsScreen() {
   const handleClearProgress = () => {
     Alert.alert(
       'Clear Reading Progress',
-      'This will remove all reading progress and marks for all essays. This action cannot be undone.',
+      'This will remove all reading progress and marks. This cannot be undone.',
       [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Clear',
-          style: 'destructive',
-          onPress: async () => {
-            await clearProgress();
-          },
-        },
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Clear', style: 'destructive', onPress: () => clearProgress() },
       ]
     );
   };
@@ -73,19 +65,10 @@ export default function SettingsScreen() {
   const handleClearFavorites = () => {
     Alert.alert(
       'Clear Favorites',
-      'This will remove all favorited essays. This action cannot be undone.',
+      'This will remove all favorited essays. This cannot be undone.',
       [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Clear',
-          style: 'destructive',
-          onPress: async () => {
-            await clearFavorites();
-          },
-        },
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Clear', style: 'destructive', onPress: () => clearFavorites() },
       ]
     );
   };
@@ -94,63 +77,62 @@ export default function SettingsScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Notifications</Text>
-
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Reading Reminders</Text>
-          <Switch
-            value={settings.remindersEnabled}
-            onValueChange={handleToggleReminders}
-            trackColor={{ false: '#E5E5EA', true: '#34C759' }}
-            accessibilityLabel="Toggle reading reminders"
-            accessibilityHint="Enables morning and evening reading reminders"
-          />
+        <View style={styles.sectionContent}>
+          <View style={styles.settingRow}>
+            <Text style={styles.settingLabel}>Reading Reminders</Text>
+            <Switch
+              value={settings.remindersEnabled}
+              onValueChange={handleToggleReminders}
+              trackColor={{ false: colors.border, true: colors.accent }}
+              accessibilityLabel="Toggle reading reminders"
+              accessibilityHint="Enables morning and evening reading reminders"
+            />
+          </View>
+          <Text style={styles.settingDescription}>
+            Receive gentle reminders at 8 AM and 8 PM.
+          </Text>
         </View>
-        <Text style={styles.settingDescription}>
-          Receive reminders at 8 AM and 8 PM to continue reading.
-        </Text>
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Tutorial</Text>
-
-        <TouchableOpacity
-          style={styles.settingRow}
-          onPress={handleShowTutorialAgain}
-          accessibilityLabel="Show tutorial again"
-          accessibilityRole="button"
-          accessibilityHint="Resets the onboarding tutorial to show it again on next launch"
-        >
-          <Text style={styles.settingLabel}>Show Tutorial Again</Text>
-          <Text style={styles.settingValue}>Reset</Text>
-        </TouchableOpacity>
+        <Text style={styles.sectionTitle}>General</Text>
+        <View style={styles.sectionContent}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            onPress={handleShowTutorialAgain}
+            accessibilityLabel="Show tutorial again"
+            accessibilityRole="button"
+            accessibilityHint="Resets the onboarding tutorial"
+          >
+            <Text style={styles.settingLabel}>Show Tutorial Again</Text>
+            <Text style={styles.settingAction}>Reset</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Data</Text>
-
-        <TouchableOpacity
-          style={styles.settingRow}
-          onPress={handleClearProgress}
-          accessibilityLabel="Clear reading progress"
-          accessibilityRole="button"
-          accessibilityHint="Removes all reading progress and marks for all essays"
-        >
-          <Text style={styles.settingLabel}>Clear Reading Progress</Text>
-          <Text style={styles.settingValueDestructive}>Clear</Text>
-        </TouchableOpacity>
-
-        <View style={styles.separator} />
-
-        <TouchableOpacity
-          style={styles.settingRow}
-          onPress={handleClearFavorites}
-          accessibilityLabel="Clear favorites"
-          accessibilityRole="button"
-          accessibilityHint="Removes all favorited essays"
-        >
-          <Text style={styles.settingLabel}>Clear Favorites</Text>
-          <Text style={styles.settingValueDestructive}>Clear</Text>
-        </TouchableOpacity>
+        <View style={styles.sectionContent}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            onPress={handleClearProgress}
+            accessibilityLabel="Clear reading progress"
+            accessibilityRole="button"
+          >
+            <Text style={styles.settingLabel}>Clear Reading Progress</Text>
+            <Text style={styles.settingDestructive}>Clear</Text>
+          </TouchableOpacity>
+          <View style={styles.separator} />
+          <TouchableOpacity
+            style={styles.settingRow}
+            onPress={handleClearFavorites}
+            accessibilityLabel="Clear favorites"
+            accessibilityRole="button"
+          >
+            <Text style={styles.settingLabel}>Clear Favorites</Text>
+            <Text style={styles.settingDestructive}>Clear</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -159,59 +141,62 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.bg,
   },
   section: {
-    marginTop: 32,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#C6C6C8',
+    marginTop: spacing.lg,
   },
   sectionTitle: {
-    fontSize: 13,
+    fontFamily: sansFont,
+    fontSize: 12,
     fontWeight: '600',
-    color: '#6D6D72',
+    color: colors.textMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-    backgroundColor: '#F2F2F7',
+    letterSpacing: 0.8,
+    paddingHorizontal: spacing.md,
+    paddingBottom: spacing.sm,
+  },
+  sectionContent: {
+    backgroundColor: colors.card,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.border,
   },
   settingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 14,
     minHeight: 44,
-    backgroundColor: '#fff',
   },
   settingLabel: {
-    fontSize: 17,
-    color: '#000',
+    fontFamily: sansFont,
+    fontSize: 16,
+    color: colors.text,
   },
-  settingValue: {
-    fontSize: 17,
-    color: '#007AFF',
+  settingAction: {
+    fontFamily: sansFont,
+    fontSize: 16,
+    color: colors.accent,
     fontWeight: '500',
   },
-  settingValueDestructive: {
-    fontSize: 17,
-    color: '#FF3B30',
+  settingDestructive: {
+    fontFamily: sansFont,
+    fontSize: 16,
+    color: colors.error,
     fontWeight: '500',
   },
   settingDescription: {
+    fontFamily: sansFont,
     fontSize: 13,
-    color: '#6D6D72',
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    backgroundColor: '#fff',
+    color: colors.textMuted,
+    paddingHorizontal: spacing.md,
+    paddingBottom: 14,
   },
   separator: {
     height: 1,
-    backgroundColor: '#C6C6C8',
-    marginLeft: 16,
+    backgroundColor: colors.border,
+    marginLeft: spacing.md,
   },
 });

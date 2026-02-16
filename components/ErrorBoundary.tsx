@@ -1,5 +1,6 @@
 import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors, serifFont, sansFont, spacing, radius } from '@/lib/theme';
 
 interface Props {
   children: ReactNode;
@@ -67,40 +68,43 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 32,
+    backgroundColor: colors.bg,
+    padding: spacing.xl,
   },
   emoji: {
     fontSize: 64,
-    marginBottom: 16,
+    marginBottom: spacing.md,
   },
   title: {
+    fontFamily: serifFont,
     fontSize: 24,
     fontWeight: '700',
-    color: '#000',
+    color: colors.text,
     marginBottom: 12,
     textAlign: 'center',
   },
   message: {
+    fontFamily: sansFont,
     fontSize: 16,
-    color: '#666',
+    color: colors.textSecondary,
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: spacing.xl,
     lineHeight: 24,
   },
   button: {
-    paddingHorizontal: 32,
+    paddingHorizontal: spacing.xl,
     paddingVertical: 12,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
+    backgroundColor: colors.accent,
+    borderRadius: radius.md,
     minWidth: 120,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
+    fontFamily: sansFont,
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: '#F7F5F0',
   },
 });

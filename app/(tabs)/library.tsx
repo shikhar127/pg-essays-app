@@ -18,9 +18,10 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { loadEssayIndex } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
+import { colors, serifFont, sansFont, spacing, radius } from '@/lib/theme';
+import { useTabBar } from '@/contexts/TabBarContext';
 import type { EssayMetadata } from '@/types/essay';
 
-// Memoized essay card component for better scroll performance
 interface EssayCardProps {
   essay: EssayMetadata;
   progress: { progress: number; isRead?: boolean; lastReadAt?: string } | undefined;
@@ -44,35 +45,33 @@ const EssayCard = React.memo(({ essay, progress, isFavorite, onPress, onToggleFa
       <View style={styles.cardContent}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>{essay.title}</Text>
-          <View style={styles.badgeContainer}>
-            {isRead ? (
-              <View style={styles.readBadge}>
-                <Text style={styles.readBadgeText}>✓ Read</Text>
-              </View>
-            ) : hasProgress ? (
-              <View style={styles.progressBadge}>
-                <Text style={styles.progressText}>{progressPercentage}%</Text>
-              </View>
-            ) : null}
-            <TouchableOpacity
-              style={styles.favoriteButton}
-              onPress={(e) => onToggleFavorite(essay.id, e)}
-              accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-              accessibilityRole="button"
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <Ionicons
-                name={isFavorite ? 'heart' : 'heart-outline'}
-                size={24}
-                color={isFavorite ? '#FF3B30' : '#999'}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.favoriteButton}
+            onPress={(e) => onToggleFavorite(essay.id, e)}
+            accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            accessibilityRole="button"
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Ionicons
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={20}
+              color={isFavorite ? colors.accent : colors.textMuted}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={styles.metadata}>
-          <Text style={styles.metadataText}>{essay.year}</Text>
-          <Text style={styles.metadataText}>•</Text>
-          <Text style={styles.metadataText}>{essay.wordCount.toLocaleString()} words</Text>
+        <View style={styles.cardFooter}>
+          <View style={styles.metaRow}>
+            <Text style={styles.metadataText}>{essay.year}</Text>
+            <Text style={styles.metaDot}>·</Text>
+            <Text style={styles.metadataText}>{essay.wordCount.toLocaleString()} words</Text>
+          </View>
+          {isRead ? (
+            <Text style={styles.readLabel}>Read</Text>
+          ) : hasProgress ? (
+            <View style={styles.progressBarContainer}>
+              <View style={[styles.progressBar, { width: `${progressPercentage}%` }]} />
+            </View>
+          ) : null}
         </View>
       </View>
     </TouchableOpacity>
@@ -84,11 +83,16 @@ type FilterTab = 'all' | 'in-progress' | 'read';
 export default function LibraryScreen() {
   const router = useRouter();
   const { readingProgress, favorites, toggleFavorite } = useAppState();
+  const { handleScroll: handleTabBarScroll, showTabBar } = useTabBar();
   const [essays, setEssays] = useState<EssayMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState<FilterTab>('in-progress');
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
+
+  const filters: FilterTab[] = ['all', 'in-progress', 'read'];
+  const scrollViewRef = useRef<ScrollView>(null);
+  const screenWidth = Dimensions.get('window').width;
 
   const loadEssays = () => {
     try {
@@ -107,21 +111,25 @@ export default function LibraryScreen() {
     loadEssays();
   }, []);
 
-  // Filter essays based on search query with debouncing
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
     }, 300);
-
     return () => clearTimeout(timer);
   }, [searchQuery]);
+
+  useEffect(() => {
+    const initialIndex = filters.indexOf(activeFilter);
+    setTimeout(() => {
+      scrollViewRef.current?.scrollTo({ x: initialIndex * screenWidth, animated: false });
+    }, 100);
+  }, []);
 
   const filteredEssays = useMemo(() => {
     let result = essays;
 
-    // Apply status filter
     if (activeFilter === 'read') {
       result = result.filter((essay) => readingProgress[essay.id]?.isRead);
     } else if (activeFilter === 'in-progress') {
@@ -131,7 +139,6 @@ export default function LibraryScreen() {
       });
     }
 
-    // Apply search filter
     if (debouncedSearchQuery.trim()) {
       const query = debouncedSearchQuery.toLowerCase();
       result = result.filter((essay) =>
@@ -142,7 +149,6 @@ export default function LibraryScreen() {
     return result;
   }, [essays, debouncedSearchQuery, activeFilter, readingProgress]);
 
-  // Count essays by status - MUST be before any conditional returns
   const counts = useMemo(() => {
     const all = essays.length;
     const read = essays.filter((e) => readingProgress[e.id]?.isRead).length;
@@ -153,46 +159,29 @@ export default function LibraryScreen() {
     return { all, read, inProgress };
   }, [essays, readingProgress]);
 
-  const filters: FilterTab[] = ['all', 'in-progress', 'read'];
-  const scrollViewRef = useRef<ScrollView>(null);
-  const screenWidth = Dimensions.get('window').width;
-
-  // Set initial scroll position on mount
-  useEffect(() => {
-    const initialIndex = filters.indexOf(activeFilter);
-    setTimeout(() => {
-      scrollViewRef.current?.scrollTo({ x: initialIndex * screenWidth, animated: false });
-    }, 100);
-  }, []);
-
-  const handleClearSearch = () => {
-    setSearchQuery('');
-  };
+  const handleClearSearch = () => setSearchQuery('');
 
   const handleEssayPress = (essay: EssayMetadata) => {
     router.push(`/reader/${essay.id}`);
   };
 
   const handleToggleFavorite = (essayId: string, event: GestureResponderEvent) => {
-    event.stopPropagation(); // Prevent navigation when tapping heart
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    event.stopPropagation();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     toggleFavorite(essayId);
   };
 
-  const renderEssayCard = ({ item }: { item: EssayMetadata }) => {
-    return (
-      <EssayCard
-        essay={item}
-        progress={readingProgress[item.id]}
-        isFavorite={favorites.has(item.id)}
-        onPress={handleEssayPress}
-        onToggleFavorite={handleToggleFavorite}
-      />
-    );
-  };
+  const renderEssayCard = ({ item }: { item: EssayMetadata }) => (
+    <EssayCard
+      essay={item}
+      progress={readingProgress[item.id]}
+      isFavorite={favorites.has(item.id)}
+      onPress={handleEssayPress}
+      onToggleFavorite={handleToggleFavorite}
+    />
+  );
 
-  // Performance optimization: getItemLayout for faster scrolling
-  const ITEM_HEIGHT = 88 + 16; // card minHeight (88) + marginBottom (16)
+  const ITEM_HEIGHT = 96 + 12;
   const getItemLayout = (_data: ArrayLike<EssayMetadata> | null | undefined, index: number) => ({
     length: ITEM_HEIGHT,
     offset: ITEM_HEIGHT * index,
@@ -209,6 +198,10 @@ export default function LibraryScreen() {
     }
   };
 
+  const handleListScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    handleTabBarScroll(event.nativeEvent.contentOffset.y);
+  };
+
   const switchToFilter = (filter: FilterTab) => {
     const index = filters.indexOf(filter);
     setActiveFilter(filter);
@@ -219,7 +212,7 @@ export default function LibraryScreen() {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={colors.accent} />
       </View>
     );
   }
@@ -234,7 +227,7 @@ export default function LibraryScreen() {
           accessibilityLabel="Retry loading essays"
           accessibilityRole="button"
         >
-          <Text style={styles.retryButtonText}>Retry</Text>
+          <Text style={styles.retryButtonText}>Try Again</Text>
         </TouchableOpacity>
       </View>
     );
@@ -244,36 +237,24 @@ export default function LibraryScreen() {
     <View style={styles.container}>
       {/* Filter Tabs */}
       <View style={styles.filterContainer}>
-        <TouchableOpacity
-          style={[styles.filterTab, activeFilter === 'all' && styles.filterTabActive]}
-          onPress={() => switchToFilter('all')}
-          accessibilityLabel={`All essays, ${counts.all} total`}
-          accessibilityRole="button"
-        >
-          <Text style={[styles.filterTabText, activeFilter === 'all' && styles.filterTabTextActive]}>
-            All {counts.all > 0 && `(${counts.all})`}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.filterTab, activeFilter === 'in-progress' && styles.filterTabActive]}
-          onPress={() => switchToFilter('in-progress')}
-          accessibilityLabel={`In progress essays, ${counts.inProgress} total`}
-          accessibilityRole="button"
-        >
-          <Text style={[styles.filterTabText, activeFilter === 'in-progress' && styles.filterTabTextActive]}>
-            In Progress {counts.inProgress > 0 && `(${counts.inProgress})`}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.filterTab, activeFilter === 'read' && styles.filterTabActive]}
-          onPress={() => switchToFilter('read')}
-          accessibilityLabel={`Read essays, ${counts.read} total`}
-          accessibilityRole="button"
-        >
-          <Text style={[styles.filterTabText, activeFilter === 'read' && styles.filterTabTextActive]}>
-            Read {counts.read > 0 && `(${counts.read})`}
-          </Text>
-        </TouchableOpacity>
+        {filters.map((filter) => {
+          const isActive = activeFilter === filter;
+          const count = filter === 'all' ? counts.all : filter === 'in-progress' ? counts.inProgress : counts.read;
+          const label = filter === 'all' ? 'All' : filter === 'in-progress' ? 'In Progress' : 'Read';
+          return (
+            <TouchableOpacity
+              key={filter}
+              style={[styles.filterTab, isActive && styles.filterTabActive]}
+              onPress={() => switchToFilter(filter)}
+              accessibilityLabel={`${label} essays, ${count} total`}
+              accessibilityRole="button"
+            >
+              <Text style={[styles.filterTabText, isActive && styles.filterTabTextActive]}>
+                {label}{count > 0 ? ` ${count}` : ''}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       {/* Swipeable Filter Content */}
@@ -283,15 +264,17 @@ export default function LibraryScreen() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={handleFilterScroll}
-        scrollEventThrottle={16}
+        scrollEventThrottle={8}
         style={styles.swipeContainer}
       >
         {filters.map((filter) => (
           <View key={filter} style={[styles.filterPage, { width: screenWidth }]}>
             <View style={styles.searchContainer}>
+              <Ionicons name="search-outline" size={18} color={colors.textMuted} style={styles.searchIcon} />
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search essays..."
+                placeholderTextColor={colors.textMuted}
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 autoCapitalize="none"
@@ -307,7 +290,7 @@ export default function LibraryScreen() {
                   accessibilityLabel="Clear search"
                   accessibilityRole="button"
                 >
-                  <Text style={styles.clearButtonText}>✕</Text>
+                  <Ionicons name="close-circle" size={18} color={colors.textMuted} />
                 </TouchableOpacity>
               )}
             </View>
@@ -321,6 +304,8 @@ export default function LibraryScreen() {
               maxToRenderPerBatch={10}
               windowSize={21}
               removeClippedSubviews={true}
+              onScroll={handleListScroll}
+              scrollEventThrottle={8}
               accessibilityLabel="Essay library"
               accessibilityHint={`Showing ${filteredEssays.length} essay${filteredEssays.length === 1 ? '' : 's'}`}
             />
@@ -334,13 +319,13 @@ export default function LibraryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.bg,
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.bg,
   },
   swipeContainer: {
     flex: 1,
@@ -350,154 +335,165 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.sm,
+    backgroundColor: colors.bg,
+    gap: spacing.sm,
   },
   filterTab: {
     flex: 1,
     paddingVertical: 10,
     alignItems: 'center',
-    borderRadius: 8,
-    marginHorizontal: 4,
+    borderRadius: radius.md,
     minHeight: 44,
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.bg,
   },
   filterTabActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   filterTabText: {
-    fontSize: 14,
+    fontFamily: sansFont,
+    fontSize: 13,
     fontWeight: '600',
-    color: '#666',
+    color: colors.textSecondary,
   },
   filterTabTextActive: {
-    color: '#fff',
+    color: '#F7F5F0',
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-    backgroundColor: '#fff',
+    marginHorizontal: spacing.md,
+    marginTop: spacing.md,
+    marginBottom: spacing.sm,
+    backgroundColor: colors.card,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    height: 44,
+    paddingHorizontal: 12,
+  },
+  searchIcon: {
+    marginRight: 8,
   },
   searchInput: {
     flex: 1,
+    fontFamily: sansFont,
+    fontSize: 15,
+    color: colors.text,
     height: 44,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    color: '#000',
   },
   clearButton: {
-    position: 'absolute',
-    right: 24,
     width: 44,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  clearButtonText: {
-    fontSize: 20,
-    color: '#999',
-    fontWeight: '300',
+    marginRight: -12,
   },
   listContent: {
-    padding: 16,
+    padding: spacing.md,
+    paddingBottom: 76,
   },
   card: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 12,
-    marginBottom: 16,
-    overflow: 'hidden',
-    minHeight: 88, // Ensure adequate touch target (2x44 for content + padding)
+    backgroundColor: colors.card,
+    borderRadius: radius.lg,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    minHeight: 96,
   },
   cardContent: {
-    padding: 16,
+    padding: spacing.md,
   },
   titleRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   title: {
     flex: 1,
-    fontSize: 18,
+    fontFamily: serifFont,
+    fontSize: 17,
     fontWeight: '600',
-    color: '#000',
-    marginRight: 8,
-  },
-  badgeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    color: colors.text,
+    lineHeight: 23,
+    marginRight: spacing.sm,
   },
   favoriteButton: {
     width: 44,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: -10, // Offset padding to align with card edge
+    marginTop: -8,
+    marginRight: -8,
   },
-  progressBadge: {
-    backgroundColor: '#007AFF',
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    minWidth: 50,
-    alignItems: 'center',
-    marginLeft: 8,
-  },
-  progressText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  readBadge: {
-    backgroundColor: '#34C759',
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    alignItems: 'center',
-  },
-  readBadgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  metadata: {
+  cardFooter: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   metadataText: {
-    fontSize: 14,
-    color: '#666',
-    marginRight: 8,
+    fontFamily: sansFont,
+    fontSize: 13,
+    color: colors.textSecondary,
+  },
+  metaDot: {
+    fontFamily: sansFont,
+    fontSize: 13,
+    color: colors.textMuted,
+    marginHorizontal: 6,
+  },
+  readLabel: {
+    fontFamily: sansFont,
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.accent,
+    letterSpacing: 0.3,
+  },
+  progressBarContainer: {
+    width: 48,
+    height: 4,
+    backgroundColor: colors.border,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: 4,
+    backgroundColor: colors.accent,
+    borderRadius: 2,
   },
   errorText: {
+    fontFamily: serifFont,
     fontSize: 16,
-    color: '#ff3b30',
+    color: colors.error,
     textAlign: 'center',
-    paddingHorizontal: 32,
-    marginBottom: 24,
+    paddingHorizontal: spacing.xl,
+    marginBottom: spacing.lg,
   },
   retryButton: {
-    paddingHorizontal: 32,
+    paddingHorizontal: spacing.xl,
     paddingVertical: 12,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
+    backgroundColor: colors.accent,
+    borderRadius: radius.md,
     minWidth: 120,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
   },
   retryButtonText: {
+    fontFamily: sansFont,
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: '#F7F5F0',
   },
 });

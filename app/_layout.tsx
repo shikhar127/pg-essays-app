@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { AppStateProvider, useAppState } from '@/contexts/AppStateContext';
 import OnboardingModal from '@/components/onboarding/OnboardingModal';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { colors, sansFont } from '@/lib/theme';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,7 +33,11 @@ function RootNavigator() {
             headerShown: true,
             headerTitle: '',
             headerBackTitle: 'Library',
-            headerTintColor: '#007AFF',
+            headerTintColor: colors.accent,
+            headerStyle: {
+              backgroundColor: colors.bg,
+            },
+            headerShadowVisible: false,
           }}
         />
       </Stack>

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { colors, serifFont, sansFont, spacing, radius } from '@/lib/theme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ interface OnboardingModalProps {
 const ONBOARDING_STEPS = [
   {
     title: 'Welcome to PG Essays',
-    description: 'Read all 228 of Paul Graham\'s essays in a beautiful, distraction-free experience.',
+    description: 'Read all 228 of Paul Graham\'s essays in a calm, distraction-free experience.',
     icon: '📚',
   },
   {
@@ -47,7 +48,7 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
   const handleNext = () => {
     if (isLastStep) {
       onComplete();
-      setCurrentStep(0); // Reset for next time
+      setCurrentStep(0);
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -55,7 +56,7 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
 
   const handleSkip = () => {
     onComplete();
-    setCurrentStep(0); // Reset for next time
+    setCurrentStep(0);
   };
 
   return (
@@ -67,7 +68,6 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
     >
       <View style={styles.overlay}>
         <View style={styles.container}>
-          {/* Skip Button */}
           <TouchableOpacity
             style={styles.skipButton}
             onPress={handleSkip}
@@ -77,14 +77,12 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
 
-          {/* Content */}
           <View style={styles.content}>
             <Text style={styles.icon}>{step.icon}</Text>
             <Text style={styles.title}>{step.title}</Text>
             <Text style={styles.description}>{step.description}</Text>
           </View>
 
-          {/* Progress Dots */}
           <View style={styles.dotsContainer}>
             {ONBOARDING_STEPS.map((_, index) => (
               <View
@@ -97,7 +95,6 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
             ))}
           </View>
 
-          {/* Next/Done Button */}
           <TouchableOpacity
             style={styles.nextButton}
             onPress={handleNext}
@@ -105,7 +102,7 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
             accessibilityRole="button"
           >
             <Text style={styles.nextButtonText}>
-              {isLastStep ? 'Done' : 'Next'}
+              {isLastStep ? 'Start Reading' : 'Next'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -117,17 +114,19 @@ export default function OnboardingModal({ visible, onComplete }: OnboardingModal
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: colors.overlay,
     justifyContent: 'center',
     alignItems: 'center',
   },
   container: {
     width: SCREEN_WIDTH - 48,
     maxWidth: 400,
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 24,
+    backgroundColor: colors.bg,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   skipButton: {
     alignSelf: 'flex-end',
@@ -139,62 +138,66 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   skipButtonText: {
-    fontSize: 16,
-    color: '#007AFF',
+    fontFamily: sansFont,
+    fontSize: 15,
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   content: {
     alignItems: 'center',
-    paddingVertical: 32,
+    paddingVertical: spacing.xl,
   },
   icon: {
-    fontSize: 64,
-    marginBottom: 24,
+    fontSize: 56,
+    marginBottom: spacing.lg,
   },
   title: {
+    fontFamily: serifFont,
     fontSize: 24,
     fontWeight: '600',
-    color: '#000',
-    marginBottom: 16,
+    color: colors.text,
+    marginBottom: spacing.md,
     textAlign: 'center',
   },
   description: {
-    fontSize: 16,
-    color: '#666',
+    fontFamily: sansFont,
+    fontSize: 15,
+    color: colors.textSecondary,
     textAlign: 'center',
-    lineHeight: 24,
-    paddingHorizontal: 16,
+    lineHeight: 23,
+    paddingHorizontal: spacing.md,
   },
   dotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#D1D1D6',
+    backgroundColor: colors.border,
     marginHorizontal: 4,
   },
   dotActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.accent,
     width: 24,
   },
   nextButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 32,
+    backgroundColor: colors.accent,
+    paddingHorizontal: spacing.xl,
     paddingVertical: 14,
-    borderRadius: 12,
-    minWidth: 120,
+    borderRadius: radius.md,
+    minWidth: 140,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
   },
   nextButtonText: {
-    fontSize: 17,
+    fontFamily: sansFont,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: '#F7F5F0',
   },
 });

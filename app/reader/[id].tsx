@@ -6,19 +6,24 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Animated,
+  Share,
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import Markdown from 'react-native-markdown-display';
+import { useLocalSearchParams, useRouter, useNavigation } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import Markdown, { RenderRules } from 'react-native-markdown-display';
 import { loadEssayContent, loadEssayIndex } from '@/lib/essays';
 import { useAppState } from '@/contexts/AppStateContext';
+import { colors, serifFont, sansFont, spacing, radius, MAX_READING_WIDTH } from '@/lib/theme';
 import type { EssayMetadata } from '@/types/essay';
 import type { ReaderParams } from '@/types/navigation';
 
 export default function ReaderScreen() {
   const { id } = useLocalSearchParams<ReaderParams>();
   const router = useRouter();
+  const navigation = useNavigation();
   const { readingProgress, updateProgress } = useAppState();
   const [content, setContent] = useState<string>('');
   const [metadata, setMetadata] = useState<EssayMetadata | null>(null);
@@ -26,6 +31,9 @@ export default function ReaderScreen() {
   const [error, setError] = useState<string | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const updateProgressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const headerBottomRef = useRef(0);
+  const [showHeaderTitle, setShowHeaderTitle] = useState(false);
+  const progressAnim = useRef(new Animated.Value(0)).current;
 
   const loadContent = async () => {
     if (!id) {
@@ -37,18 +45,11 @@ export default function ReaderScreen() {
     try {
       setLoading(true);
       setError(null);
-
-      // Load essay content
       const essayContent = await loadEssayContent(id);
       setContent(essayContent);
-
-      // Load metadata to display title
       const essayIndex = loadEssayIndex();
       const essayMeta = essayIndex.find((e) => e.id === id);
-      if (essayMeta) {
-        setMetadata(essayMeta);
-      }
-
+      if (essayMeta) setMetadata(essayMeta);
       setLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load essay');
@@ -60,50 +61,90 @@ export default function ReaderScreen() {
     loadContent();
   }, [id]);
 
-  // Restore scroll position when content loads
+  const handleShareEssay = async () => {
+    if (!metadata) return;
+    await Share.share({
+      message: `"${metadata.title}" by Paul Graham\n${metadata.url}`,
+    });
+  };
+
+  const handleShareText = async (text: string) => {
+    const attribution = metadata ? `\n\n— "${metadata.title}" by Paul Graham` : '';
+    await Share.share({
+      message: `"${text.trim()}"${attribution}`,
+    });
+  };
+
+  const renderRules: RenderRules = {
+    paragraph: (node, children, _parent, styles) => (
+      <TouchableOpacity
+        key={node.key}
+        onLongPress={() => {
+          const text = node.children
+            ?.map((child: any) => child.content || '')
+            .join('')
+            .trim();
+          if (text) handleShareText(text);
+        }}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.paragraph}>{children}</Text>
+      </TouchableOpacity>
+    ),
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: showHeaderTitle && metadata ? metadata.title : '',
+      headerTitleStyle: {
+        fontFamily: serifFont,
+        fontSize: 16,
+        fontWeight: '600' as const,
+        color: colors.text,
+      },
+      headerRight: () => metadata ? (
+        <TouchableOpacity
+          onPress={handleShareEssay}
+          style={{ padding: 8 }}
+          accessibilityLabel="Share essay"
+          accessibilityRole="button"
+        >
+          <Ionicons name="share-outline" size={22} color={colors.accent} />
+        </TouchableOpacity>
+      ) : null,
+    });
+  }, [metadata, navigation, showHeaderTitle]);
+
   useEffect(() => {
     if (!loading && id && content && scrollViewRef.current) {
       const progress = readingProgress[id];
       if (progress && progress.scrollPosition > 0) {
-        // Small delay to ensure content is rendered
         setTimeout(() => {
-          scrollViewRef.current?.scrollTo({
-            y: progress.scrollPosition,
-            animated: false,
-          });
+          scrollViewRef.current?.scrollTo({ y: progress.scrollPosition, animated: false });
         }, 100);
       }
     }
   }, [loading, id, content, readingProgress]);
 
-  // Cleanup timer on unmount
   useEffect(() => {
     return () => {
-      if (updateProgressTimerRef.current) {
-        clearTimeout(updateProgressTimerRef.current);
-      }
+      if (updateProgressTimerRef.current) clearTimeout(updateProgressTimerRef.current);
     };
   }, []);
 
-  // Handle scroll events with debouncing
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!id) return;
-
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
     const scrollPosition = contentOffset.y;
-    const scrollViewHeight = layoutMeasurement.height;
-    const contentHeight = contentSize.height;
-
-    // Calculate progress as a percentage (0-1)
-    const maxScroll = contentHeight - scrollViewHeight;
+    const maxScroll = contentSize.height - layoutMeasurement.height;
     const progress = maxScroll > 0 ? Math.min(scrollPosition / maxScroll, 1) : 0;
 
-    // Clear existing timer
-    if (updateProgressTimerRef.current) {
-      clearTimeout(updateProgressTimerRef.current);
-    }
+    progressAnim.setValue(progress);
 
-    // Debounce: wait 500ms after last scroll before saving
+    const pastHeader = scrollPosition > headerBottomRef.current;
+    if (pastHeader !== showHeaderTitle) setShowHeaderTitle(pastHeader);
+
+    if (updateProgressTimerRef.current) clearTimeout(updateProgressTimerRef.current);
     updateProgressTimerRef.current = setTimeout(() => {
       updateProgress(id, scrollPosition, progress);
     }, 500);
@@ -112,8 +153,8 @@ export default function ReaderScreen() {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.loadingText}>Loading essay...</Text>
+        <ActivityIndicator size="large" color={colors.accent} />
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -146,28 +187,39 @@ export default function ReaderScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.progressTrack}>
+        <Animated.View style={[styles.progressFill, {
+          width: progressAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0%', '100%'],
+          }),
+        }]} />
+      </View>
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
+        scrollEventThrottle={8}
         accessibilityLabel={metadata ? `Reading ${metadata.title}` : 'Essay reader'}
         accessibilityHint="Scroll to read the essay"
       >
-        {metadata && (
-          <View style={styles.header}>
-            <Text style={styles.title}>{metadata.title}</Text>
-            <View style={styles.metadata}>
-              <Text style={styles.metadataText}>{metadata.year}</Text>
-              <Text style={styles.metadataText}>•</Text>
-              <Text style={styles.metadataText}>
-                {metadata.readingTimeMinutes} min read
-              </Text>
+        <View style={styles.readingColumn}>
+          {metadata && (
+            <View
+              style={styles.header}
+              onLayout={(e) => { headerBottomRef.current = e.nativeEvent.layout.y + e.nativeEvent.layout.height; }}
+            >
+              <Text style={styles.title}>{metadata.title}</Text>
+              <View style={styles.metaRow}>
+                <Text style={styles.metadataText}>{metadata.year}</Text>
+                <Text style={styles.metaDot}>·</Text>
+                <Text style={styles.metadataText}>{metadata.readingTimeMinutes} min read</Text>
+              </View>
             </View>
-          </View>
-        )}
-        <Markdown style={markdownStyles}>{content}</Markdown>
+          )}
+          <Markdown style={markdownStyles} rules={renderRules}>{content}</Markdown>
+        </View>
       </ScrollView>
     </View>
   );
@@ -176,157 +228,201 @@ export default function ReaderScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.bg,
+  },
+  progressTrack: {
+    height: 2,
+    backgroundColor: colors.border,
+  },
+  progressFill: {
+    height: 2,
+    backgroundColor: colors.accent,
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 32,
+    backgroundColor: colors.bg,
+    padding: spacing.xl,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 20,
-    paddingBottom: 40,
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.md,
+  },
+  readingColumn: {
+    maxWidth: MAX_READING_WIDTH,
+    width: '100%',
+    paddingBottom: spacing.xxl,
   },
   header: {
-    marginBottom: 24,
-    paddingBottom: 16,
+    marginBottom: spacing.xl,
+    paddingBottom: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.border,
   },
   title: {
-    fontSize: 28,
+    fontFamily: serifFont,
+    fontSize: 30,
     fontWeight: '700',
-    color: '#000',
+    color: colors.text,
     marginBottom: 12,
-    lineHeight: 36,
+    lineHeight: 38,
+    letterSpacing: -0.3,
   },
-  metadata: {
+  metaRow: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   metadataText: {
+    fontFamily: sansFont,
     fontSize: 14,
-    color: '#666',
-    marginRight: 8,
+    color: colors.textSecondary,
+  },
+  metaDot: {
+    fontFamily: sansFont,
+    fontSize: 14,
+    color: colors.textMuted,
+    marginHorizontal: 8,
   },
   loadingText: {
     marginTop: 12,
-    fontSize: 16,
-    color: '#666',
+    fontFamily: sansFont,
+    fontSize: 15,
+    color: colors.textMuted,
   },
   errorText: {
+    fontFamily: serifFont,
     fontSize: 16,
-    color: '#ff3b30',
+    color: colors.error,
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   errorButtons: {
     flexDirection: 'row',
+    gap: 12,
   },
   retryButton: {
-    paddingHorizontal: 24,
+    paddingHorizontal: spacing.lg,
     paddingVertical: 12,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    minWidth: 120,
+    backgroundColor: colors.accent,
+    borderRadius: radius.md,
+    minWidth: 100,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
   },
   retryButtonText: {
+    fontFamily: sansFont,
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: '#F7F5F0',
   },
   backButton: {
-    paddingHorizontal: 24,
+    paddingHorizontal: spacing.lg,
     paddingVertical: 12,
-    backgroundColor: '#8E8E93',
-    borderRadius: 8,
-    minWidth: 120,
-    minHeight: 44, // Ensure 44x44 minimum touch target
+    borderRadius: radius.md,
+    minWidth: 100,
+    minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   backButtonText: {
+    fontFamily: sansFont,
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: colors.textSecondary,
   },
 });
 
 const markdownStyles = {
   body: {
+    fontFamily: serifFont,
     fontSize: 18,
-    lineHeight: 28,
-    color: '#1a1a1a',
+    lineHeight: 30,
+    color: colors.text,
   },
   paragraph: {
-    marginBottom: 16,
+    fontFamily: serifFont,
+    marginBottom: 20,
     fontSize: 18,
-    lineHeight: 28,
+    lineHeight: 30,
+    color: colors.text,
   },
   heading1: {
-    fontSize: 32,
-    fontWeight: '700',
-    marginTop: 24,
+    fontFamily: serifFont,
+    fontSize: 28,
+    fontWeight: '700' as const,
+    marginTop: 32,
     marginBottom: 16,
-    lineHeight: 40,
+    lineHeight: 36,
+    color: colors.text,
+    letterSpacing: -0.3,
   },
   heading2: {
-    fontSize: 26,
-    fontWeight: '600',
-    marginTop: 20,
+    fontFamily: serifFont,
+    fontSize: 24,
+    fontWeight: '600' as const,
+    marginTop: 28,
     marginBottom: 12,
-    lineHeight: 34,
+    lineHeight: 32,
+    color: colors.text,
+    letterSpacing: -0.2,
   },
   heading3: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginTop: 16,
+    fontFamily: serifFont,
+    fontSize: 20,
+    fontWeight: '600' as const,
+    marginTop: 24,
     marginBottom: 10,
-    lineHeight: 30,
+    lineHeight: 28,
+    color: colors.text,
   },
   link: {
-    color: '#007AFF',
+    color: colors.accent,
     textDecorationLine: 'underline' as const,
   },
   blockquote: {
-    backgroundColor: '#f8f8f8',
-    borderLeftWidth: 4,
-    borderLeftColor: '#007AFF',
+    backgroundColor: colors.accentLight,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.accent,
     paddingLeft: 16,
-    paddingVertical: 8,
-    marginVertical: 12,
-    fontStyle: 'italic',
+    paddingVertical: 10,
+    marginVertical: 16,
+    fontStyle: 'italic' as const,
   },
   code_inline: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.card,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
     fontFamily: 'Courier',
     fontSize: 16,
+    color: colors.text,
   },
   code_block: {
-    backgroundColor: '#f0f0f0',
-    padding: 12,
-    borderRadius: 8,
-    marginVertical: 12,
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: radius.md,
+    marginVertical: 16,
     fontFamily: 'Courier',
     fontSize: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   fence: {
-    backgroundColor: '#f0f0f0',
-    padding: 12,
-    borderRadius: 8,
-    marginVertical: 12,
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: radius.md,
+    marginVertical: 16,
     fontFamily: 'Courier',
     fontSize: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
 };
