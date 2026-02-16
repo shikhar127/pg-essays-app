@@ -24,6 +24,7 @@ const STORAGE_KEYS = {
 // Default values
 const DEFAULT_SETTINGS: Settings = {
   hasCompletedOnboarding: false,
+  remindersEnabled: false,
 };
 
 const AppStateContext = createContext<AppStateContextValue | undefined>(undefined);

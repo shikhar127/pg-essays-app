@@ -1,9 +1,50 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import { useAppState } from '@/contexts/AppStateContext';
+import { getMorningReminder, getEveningReminder, REMINDER_TIMES } from '@/lib/reminderService';
 
 export default function SettingsScreen() {
-  const { updateSettings, clearProgress, clearFavorites } = useAppState();
+  const { settings, readingProgress, updateSettings, clearProgress, clearFavorites } = useAppState();
+
+  const handleToggleReminders = async (enabled: boolean) => {
+    if (enabled) {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Notifications Disabled',
+          'Please enable notifications in your device Settings to receive reading reminders.'
+        );
+        return;
+      }
+
+      await Notifications.cancelAllScheduledNotificationsAsync();
+
+      const morning = getMorningReminder(readingProgress);
+      await Notifications.scheduleNotificationAsync({
+        content: { title: morning.title, body: morning.body },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour: REMINDER_TIMES.morning.hour,
+          minute: REMINDER_TIMES.morning.minute,
+        },
+      });
+
+      const evening = getEveningReminder(readingProgress);
+      await Notifications.scheduleNotificationAsync({
+        content: { title: evening.title, body: evening.body },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour: REMINDER_TIMES.evening.hour,
+          minute: REMINDER_TIMES.evening.minute,
+        },
+      });
+    } else {
+      await Notifications.cancelAllScheduledNotificationsAsync();
+    }
+
+    await updateSettings({ remindersEnabled: enabled });
+  };
 
   const handleShowTutorialAgain = async () => {
     await updateSettings({ hasCompletedOnboarding: false });
@@ -51,6 +92,24 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Notifications</Text>
+
+        <View style={styles.settingRow}>
+          <Text style={styles.settingLabel}>Reading Reminders</Text>
+          <Switch
+            value={settings.remindersEnabled}
+            onValueChange={handleToggleReminders}
+            trackColor={{ false: '#E5E5EA', true: '#34C759' }}
+            accessibilityLabel="Toggle reading reminders"
+            accessibilityHint="Enables morning and evening reading reminders"
+          />
+        </View>
+        <Text style={styles.settingDescription}>
+          Receive reminders at 8 AM and 8 PM to continue reading.
+        </Text>
+      </View>
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Tutorial</Text>
 
@@ -142,6 +201,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#FF3B30',
     fontWeight: '500',
+  },
+  settingDescription: {
+    fontSize: 13,
+    color: '#6D6D72',
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    backgroundColor: '#fff',
   },
   separator: {
     height: 1,

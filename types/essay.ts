@@ -39,7 +39,7 @@ export interface ReadingProgress {
  */
 export interface Settings {
   hasCompletedOnboarding: boolean;
-  // Future settings can be added here (theme, font size, etc.)
+  remindersEnabled: boolean;
 }
 
 /**

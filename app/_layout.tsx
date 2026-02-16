@@ -1,7 +1,18 @@
 import { Stack } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 import { AppStateProvider, useAppState } from '@/contexts/AppStateContext';
 import OnboardingModal from '@/components/onboarding/OnboardingModal';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
 function RootNavigator() {
   const { settings, isLoading, updateSettings } = useAppState();
