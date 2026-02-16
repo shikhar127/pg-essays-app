@@ -3,6 +3,7 @@
 .github
 *.md
 !README.md
+!assets/**/*.md
 .claude/
 
 # IDE
